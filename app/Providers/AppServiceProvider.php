@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +26,17 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        # Menu Sidebar
+        View::composer('back.parent.layout', function ($view) {
+            $title = config('titles.' . Route::currentRouteName());
+
+            $view->with(compact('title'));
+        });
+
+        # Conditionnel personnaliser
+        # @request
+        Blade::if('request', function ($url) {
+            return request()->is($url);
+        });
     }
 }
