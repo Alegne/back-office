@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
         # Users
-        User::withoutEvents(function () {
+        /*User::withoutEvents(function () {
             // Create 1 admin
             User::factory()->create([
                 'role' => 'admin',
@@ -39,16 +39,16 @@ class DatabaseSeeder extends Seeder
 
             // Create 2 users
             User::factory()->count(2)->create();
-        });
+        });*/
 
         # Call Seeder
         $this->call([
-            FormationSeeder::class,
-            NiveauSeeder::class,
-            ParcoursSeeder::class,
-            AnneUniversitaireSeeder::class,
-            LangueSeeder::class,
-            ConfigurationSeeder::class,
+            # FormationSeeder::class,
+            # NiveauSeeder::class,
+            # ParcoursSeeder::class,
+            # AnneUniversitaireSeeder::class,
+            # LangueSeeder::class,
+            # ConfigurationSeeder::class,
             EtudiantSeeder::class,
             NewsletterSeeder::class,
             ClubSeeder::class,

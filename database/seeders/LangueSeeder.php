@@ -14,7 +14,7 @@ class LangueSeeder extends Seeder
      */
     public function run()
     {
-        Langue::create([
+        Langue::insert([
             [
                 'libelle'  => 'English',
                 'code'     => 'en',

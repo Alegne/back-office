@@ -14,7 +14,7 @@ class ClubSeeder extends Seeder
      */
     public function run()
     {
-        Club::create([
+        Club::insert([
             [
                 'libelle'     => 'Linux',
                 'description' => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. "

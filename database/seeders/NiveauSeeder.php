@@ -15,7 +15,7 @@ class NiveauSeeder extends Seeder
     public function run()
     {
 
-        Niveau::create([
+        Niveau::insert([
             [
                 'libelle' => 'Licence 1',
                 'tag'     => 'L1',
@@ -34,7 +34,7 @@ class NiveauSeeder extends Seeder
             ],
             [
                 'libelle' => 'Master 2',
-                'tag'     => 'M1',
+                'tag'     => 'M2',
             ],
         ]);
     }

@@ -12,6 +12,13 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
+    protected $table = 'cactus_users';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array

@@ -17,29 +17,43 @@ class EtudiantSeeder extends Seeder
      */
     public function run()
     {
-        # $formation = Formation::factory('libelle', 'Licence')->create();
-        # $parcours  = Parcours::where('tag', 'GB')->get();
-        # $niveau    = Niveau::where('tag', 'L1')->get();
+        # $formation = Formation::where('libelle', 'Licence')->first();
+        # $parcours  = Parcours::where('tag', 'GB')->first();
+        # $niveau    = Niveau::where('tag', 'L1')->first();
+        $annee     = Niveau::first();
 
-        $formations = Formation::get();
-        $parcours   = Parcours::get();
+        /*$user = Etudiant::factory()->create([
+            'niveau_id'              => $niveau->id,
+            'parcours_id'            => $parcours->id,
+            'formation_id'           => $formation->id,
+            'annee_universitaire_id' => $annee->id
+        ]);*/
+
+        $formation_licence = Formation::where('libelle', 'Licence')->first();
+        $formation_master = Formation::where('libelle', 'Master')->first();
+        $parcours    = Parcours::get();
         $niveaux     = Niveau::get();
 
-        foreach ($formations as $formation)
-        {
-            foreach ($parcours as $parcour)
+        $licence = ['L1', 'L2', 'L3'];
+
+        #foreach ($formations as $formation) # Licence | Master
+        #{
+            foreach ($parcours as $parcour) # GB | SR | IG
             {
-                foreach ($niveaux as $niveau)
+                foreach ($niveaux as $niveau) # L1 | L2 | L3 | M1 | M2
                 {
-                    $etudiants = Etudiant::factory()
-                        ->count(50)
-                        ->forNiveau($niveau)
-                        ->forParcours($parcours)
-                        ->forFormation($formation)
-                        ->create();
+                    Etudiant::factory()
+                        ->count(2)
+                        ->create([
+                        'niveau_id'              => $niveau->id,
+                        'parcours_id'            => $parcour->id,
+                        'formation_id'           =>  in_array($niveau->tag, $licence) ?
+                                                        $formation_licence->id : $formation_master->id,
+                        'annee_universitaire_id' => $annee->id
+                    ]);
                 }
             }
-        }
+        #}
 
 
 

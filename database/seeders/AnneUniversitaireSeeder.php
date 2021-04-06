@@ -14,7 +14,7 @@ class AnneUniversitaireSeeder extends Seeder
      */
     public function run()
     {
-        AnneeUniversitaire::create([
+        AnneeUniversitaire::insert([
             [
                 'libelle' => '2020-2021'
             ],

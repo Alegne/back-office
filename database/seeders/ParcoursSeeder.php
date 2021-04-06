@@ -15,7 +15,7 @@ class ParcoursSeeder extends Seeder
      */
     public function run()
     {
-        Parcours::create([
+        Parcours::insert([
             [
                 'libelle' => 'Genie Logiciel et Base des donnees',
                 'tag'     => 'GB',

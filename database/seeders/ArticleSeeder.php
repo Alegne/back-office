@@ -21,8 +21,10 @@ class ArticleSeeder extends Seeder
         {
             $articles = Article::factory()
                 ->count(5)
-                ->forClub($club)
-                ->create();
+                # ->forClub($club)
+                ->create([
+                    'club_id' => $club->id
+                ]);
         }
     }
 }
