@@ -270,22 +270,22 @@ return [
             ]
         ],
     ],
-    'Blog' => [
+    'Article' => [
         'icon' => 'blog',
         'role'   => 'redacteur',
         'children' => [
             [
-                'name'  => 'All Blog',
+                'name'  => 'All Article',
                 'role'  => 'redacteur',
                 'route' => '', #'niveaux.index',
             ],
             [
-                'name'  => 'New Blog',
+                'name'  => 'New Article',
                 'role'  => 'redacteur',
                 'route' => '', #'comments.indexnew',
             ],
             [
-                'name'  => 'Add Blog',
+                'name'  => 'Add Article',
                 'role'  => 'redacteur',
                 'route' => '', #'comments.indexnew',
             ]

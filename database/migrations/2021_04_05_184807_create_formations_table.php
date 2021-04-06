@@ -13,9 +13,14 @@ class CreateFormationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('formations', function (Blueprint $table) {
+        Schema::create('cactus_formations', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->string('libelle');
+            $table->longText('description');
+            $table->string('slug');
+            $table->string('photo')->nullable();
+
+            # $table->timestamps();
         });
     }
 
@@ -26,6 +31,6 @@ class CreateFormationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('formations');
+        Schema::dropIfExists('cactus_formations');
     }
 }

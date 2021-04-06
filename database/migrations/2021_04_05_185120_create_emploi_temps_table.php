@@ -13,9 +13,12 @@ class CreateEmploiTempsTable extends Migration
      */
     public function up()
     {
-        Schema::create('emploi_temps', function (Blueprint $table) {
+        Schema::create('cactus_emploi_du_temps', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->date('date_debut');
+            $table->date('date_fin');
+
+            # $table->timestamps();
         });
     }
 
@@ -26,6 +29,6 @@ class CreateEmploiTempsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('emploi_temps');
+        Schema::dropIfExists('cactus_emploi_du_temps');
     }
 }

@@ -13,9 +13,55 @@ class CreateEtudiantsTable extends Migration
      */
     public function up()
     {
-        Schema::create('etudiants', function (Blueprint $table) {
+        Schema::create('cactus_etudiants', function (Blueprint $table) {
             $table->id();
+            $table->string('nom');
+            $table->string('prenom');
+            $table->string('email')->unique();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password');
+            $table->string('cin');
+            $table->date('date_naissance');
+            $table->string('lieu_naissance');
+            $table->string('adresse');
+            $table->enum('status', ['actif', 'ancien'])->default('actif');
+            $table->string('photo')->nullable();
+            $table->rememberToken();
             $table->timestamps();
+
+            # Key
+            $table->foreignId('niveau_id')
+                # ->nullable()
+                ->constrained('cactus_niveaux')
+                ->onDelete('restrict')
+                ->onUpdate('restrict');
+
+            $table->foreignId('parcours_id')
+                # ->nullable()
+                ->constrained('cactus_parcours')
+                ->onDelete('restrict')
+                ->onUpdate('restrict');
+
+            $table->foreignId('formation_id')
+                # ->nullable()
+                ->constrained('cactus_formations')
+                ->onDelete('restrict')
+                ->onUpdate('restrict');
+
+            $table->foreignId('annee_universitaire_id')
+                # ->nullable()
+                ->constrained('cactus_annee_universitaires')
+                ->onDelete('restrict')
+                ->onUpdate('restrict');
+
+            # Version verbose
+            # $table->unsignedBigInteger('niveau_id');
+            # $table->foreign('niveau_id')
+            #     ->references('id')
+            #     ->on('cactus_niveaux')
+            #     ->onDelete('restrict')
+            #     ->onUpdate('cascade')
+            # ;
         });
     }
 
@@ -26,6 +72,6 @@ class CreateEtudiantsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('etudiants');
+        Schema::dropIfExists('cactus_etudiants');
     }
 }

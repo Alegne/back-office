@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Formation extends Model
+class Enseignant extends Model
 {
     use HasFactory;
 
@@ -14,7 +14,7 @@ class Formation extends Model
      *
      * @var string
      */
-    protected $table = 'cactus_formations';
+    protected $table = 'cactus_enseignants';
 
     /**
      * The attributes that are mass assignable.
@@ -22,25 +22,24 @@ class Formation extends Model
      * @var array
      */
     protected $fillable = [
-        'libelle',
-        'description',
-        'slug',
+        'nom',
+        'prenom',
+        'titre',
+        'grade',
+        'identifiant',
+        'mot_de_passe',
+        'email',
+        'telephone',
+        'adresse',
         'photo'
     ];
 
     /**
-     * Desactive timestamps
-     *
-     * @var bool
+     * Get the piecesJointes for the enseignant.
      */
-    public $timestamps = false;
-
-    /**
-     * Get the etudiants for the club.
-     */
-    public function etudiants()
+    public function piecesJointes()
     {
         # foreignKey
-        return $this->hasMany(Etudiant::class, 'formation_id');
+        return $this->hasMany(EspaceNumerique::class, 'enseignant_id');
     }
 }

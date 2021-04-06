@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AlbumCategoryTable extends Migration
+class CreateRolesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,13 @@ class AlbumCategoryTable extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('cactus_roles', function (Blueprint $table) {
+            $table->id();
+            $table->string('libelle');
+            $table->longText('description');
+
+            # $table->timestamps();
+        });
     }
 
     /**
@@ -23,6 +29,6 @@ class AlbumCategoryTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('cactus_roles');
     }
 }

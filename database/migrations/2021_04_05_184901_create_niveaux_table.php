@@ -13,9 +13,12 @@ class CreateNiveauxTable extends Migration
      */
     public function up()
     {
-        Schema::create('niveaux', function (Blueprint $table) {
+        Schema::create('cactus_niveaux', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->string('libelle');
+            $table->string('tag');
+
+            # $table->timestamps();
         });
     }
 
@@ -26,6 +29,6 @@ class CreateNiveauxTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('niveaux');
+        Schema::dropIfExists('cactus_niveaux');
     }
 }

@@ -22,7 +22,16 @@ class EtudiantFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'nom'               => $this->faker->lastName,
+            'prenom'            => $this->faker->firstName,
+            'email'             => $this->faker->unique()->safeEmail,
+            'email_verified_at' => now(),
+            'password'          => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password,
+            'cin'               => '1234567890',
+            'date_naissance'    => $this->faker->dateTimeBetween($startDate = '-20 years', $endDate = 'now', $timezone = null),
+            'lieu_naissance'    => $this->faker->address,
+            'adresse'           => $this->faker->address,
+            'status'            => $this->faker->boolean(80) ? 'actif' : 'ancien',
         ];
     }
 }

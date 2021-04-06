@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateClubsTable extends Migration
+class CreateNotificationCactiTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateClubsTable extends Migration
      */
     public function up()
     {
-        Schema::create('cactus_clubs', function (Blueprint $table) {
+        Schema::create('cactus_notification_cactus', function (Blueprint $table) {
             $table->id();
-            $table->string('libelle');
-            $table->longText('description');
-            $table->string('image')->nullable();
+            $table->string('titre');
+            $table->string('message');
+            $table->string('destinataire')->default('*');
+            $table->string('destinateur');
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ class CreateClubsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cactus_clubs');
+        Schema::dropIfExists('cactus_notification_cactus');
     }
 }

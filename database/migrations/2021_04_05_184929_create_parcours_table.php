@@ -13,9 +13,12 @@ class CreateParcoursTable extends Migration
      */
     public function up()
     {
-        Schema::create('parcours', function (Blueprint $table) {
+        Schema::create('cactus_parcours', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->string('libelle');
+            $table->string('tag');
+
+            # $table->timestamps();
         });
     }
 
@@ -26,6 +29,6 @@ class CreateParcoursTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('parcours');
+        Schema::dropIfExists('cactus_parcours');
     }
 }

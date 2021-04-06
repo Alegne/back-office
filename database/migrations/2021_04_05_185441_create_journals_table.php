@@ -13,8 +13,11 @@ class CreateJournalsTable extends Migration
      */
     public function up()
     {
-        Schema::create('journals', function (Blueprint $table) {
+        Schema::create('cactus_journals', function (Blueprint $table) {
             $table->id();
+            $table->string('ip');
+            $table->dateTime('date_debut');
+            $table->string('action');
             $table->timestamps();
         });
     }
@@ -26,6 +29,6 @@ class CreateJournalsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('journals');
+        Schema::dropIfExists('cactus_journals');
     }
 }

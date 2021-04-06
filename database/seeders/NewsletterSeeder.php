@@ -13,6 +13,6 @@ class NewsletterSeeder extends Seeder
      */
     public function run()
     {
-        //
+        \App\Models\Newsletter::factory(5)->create();
     }
 }

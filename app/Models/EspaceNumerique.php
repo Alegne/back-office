@@ -8,4 +8,53 @@ use Illuminate\Database\Eloquent\Model;
 class EspaceNumerique extends Model
 {
     use HasFactory;
+
+    /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
+    protected $table = 'cactus_espace_numeriques';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'libelle',
+        'description',
+        'pieces_jointes',
+        'niveau_id',
+        'parcours_id',
+        'enseignant_id'
+    ];
+
+
+    /**
+     * Get the niveau that owns the items.
+     */
+    public function niveau()
+    {
+        # related, foreignKey, ownerKey, relation
+        return $this->belongsTo(Niveau::class, 'niveau_id', 'id');
+    }
+
+    /**
+     * Get the parcours that owns the items.
+     */
+    public function parcours()
+    {
+        # related, foreignKey, ownerKey, relation
+        return $this->belongsTo(Parcours::class, 'parcours_id', 'id');
+    }
+
+    /**
+     * Get the enseignant that owns the items.
+     */
+    public function enseignant()
+    {
+        # related, foreignKey, ownerKey, relation
+        return $this->belongsTo(Club::class, 'enseignant_id', 'id');
+    }
 }

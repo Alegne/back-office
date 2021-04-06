@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateStaffTable extends Migration
+class CreateArticlesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,23 +13,20 @@ class CreateStaffTable extends Migration
      */
     public function up()
     {
-        Schema::create('cactus_staff', function (Blueprint $table) {
+        Schema::create('cactus_articles', function (Blueprint $table) {
             $table->id();
-            $table->enum('type', array('leader', 'membre'))
-                ->default('membre');
+            $table->string('titre');
+            $table->longText('description');
+            $table->string('posteur');
+            $table->string('slug');
+            $table->string('image')->nullable();
+            $table->string('galerie')->nullable();
             $table->timestamps();
 
-            # Key
+
             $table->foreignId('club_id')
                 # ->nullable()
                 ->constrained('cactus_clubs')
-                ->onDelete('restrict')
-                ->onUpdate('restrict');
-
-            # Key
-            $table->foreignId('etudiant_id')
-                # ->nullable()
-                ->constrained('cactus_etudiants')
                 ->onDelete('restrict')
                 ->onUpdate('restrict');
         });
@@ -42,6 +39,6 @@ class CreateStaffTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cactus_staff');
+        Schema::dropIfExists('cactus_articles');
     }
 }

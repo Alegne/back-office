@@ -13,16 +13,15 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('cactus_users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('identifiant');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->enum('role', array('user', 'redacteur', 'admin', 'annonceur', 'administratif'))
+            $table->enum('role', array('user', 'redacteur', 'admin', 'annonceur', 'pedagogique'))
                 ->default('user');
-            $table->boolean('valid')->default(false);
-            $table->string('image')->nullable();
+            $$table->string('photo')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
@@ -35,6 +34,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('cactus_users');
     }
 }

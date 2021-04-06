@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Annonce;
 use Illuminate\Database\Seeder;
 
 class AnnonceSeeder extends Seeder
@@ -13,6 +14,9 @@ class AnnonceSeeder extends Seeder
      */
     public function run()
     {
-        //
+        Annonce::factory()
+            ->count(10)
+            # ->forClub($club)
+            ->create();
     }
 }

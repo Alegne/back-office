@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Annonce extends Model
+class Article extends Model
 {
     use HasFactory;
 
@@ -14,7 +14,7 @@ class Annonce extends Model
      *
      * @var string
      */
-    protected $table = 'cactus_annonces';
+    protected $table = 'cactus_articles';
 
     /**
      * The attributes that are mass assignable.
@@ -24,7 +24,19 @@ class Annonce extends Model
     protected $fillable = [
         'titre',
         'description',
+        'posteur',
+        'slug',
         'image',
         'galerie',
+        'club_id',
     ];
+
+    /**
+     * Get the club that owns the article.
+     */
+    public function club()
+    {
+        # related, foreignKey, ownerKey, relation
+        return $this->belongsTo(Club::class, 'club_id', 'id');
+    }
 }

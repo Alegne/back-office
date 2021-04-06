@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\Blog;
+use App\Models\Annonce;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class BlogFactory extends Factory
+class AnnonceFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Blog::class;
+    protected $model = Annonce::class;
 
     /**
      * Define the model's default state.
@@ -22,7 +22,8 @@ class BlogFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'titre'         => $this->faker->word,
+            'description'   => $this->faker->sentence,
         ];
     }
 }

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Annonce extends Model
+class AnneeUniversitaire extends Model
 {
     use HasFactory;
 
@@ -14,7 +14,7 @@ class Annonce extends Model
      *
      * @var string
      */
-    protected $table = 'cactus_annonces';
+    protected $table = 'cactus_annee_universitaires';
 
     /**
      * The attributes that are mass assignable.
@@ -22,9 +22,16 @@ class Annonce extends Model
      * @var array
      */
     protected $fillable = [
-        'titre',
-        'description',
-        'image',
-        'galerie',
+        'libelle',
     ];
+
+    /**
+     * Get the etudiants for the club.
+     */
+    public function etudiants()
+    {
+        # foreignKey
+        return $this->hasMany(Etudiant::class, 'annee_universitaire_id');
+    }
+
 }

@@ -22,7 +22,7 @@ class NewsletterFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'email' => $this->faker->unique()->safeEmail,
         ];
     }
 }

@@ -13,8 +13,17 @@ class CreateEvenementsTable extends Migration
      */
     public function up()
     {
-        Schema::create('evenements', function (Blueprint $table) {
+        Schema::create('cactus_evenements', function (Blueprint $table) {
             $table->id();
+            $table->string('titre');
+            $table->longText('description');
+            $table->dateTime('date_creation');
+            $table->string('posteur');
+            $table->string('slug');
+            $table->enum('type', array('actualite', 'nouvelle'))
+                ->default('nouvelle');
+            $table->string('image')->nullable();
+            $table->string('galerie')->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +35,6 @@ class CreateEvenementsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('evenements');
+        Schema::dropIfExists('cactus_evenements');
     }
 }

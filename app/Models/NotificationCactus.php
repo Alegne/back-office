@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Annonce extends Model
+class NotificationCactus extends Model
 {
     use HasFactory;
 
@@ -14,7 +14,7 @@ class Annonce extends Model
      *
      * @var string
      */
-    protected $table = 'cactus_annonces';
+    protected $table = 'cactus_notification_cactus';
 
     /**
      * The attributes that are mass assignable.
@@ -23,8 +23,8 @@ class Annonce extends Model
      */
     protected $fillable = [
         'titre',
-        'description',
-        'image',
-        'galerie',
+        'message',
+        'destinataire',
+        'destinateur'
     ];
 }

@@ -13,8 +13,12 @@ class CreateAnnoncesTable extends Migration
      */
     public function up()
     {
-        Schema::create('annonces', function (Blueprint $table) {
+        Schema::create('cactus_annonces', function (Blueprint $table) {
             $table->id();
+            $table->string('titre');
+            $table->longText('description');
+            $table->string('image')->nullable();
+            $table->string('galerie')->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +30,6 @@ class CreateAnnoncesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('annonces');
+        Schema::dropIfExists('cactus_annonces');
     }
 }

@@ -13,8 +13,11 @@ class CreateAlbumsTable extends Migration
      */
     public function up()
     {
-        Schema::create('albums', function (Blueprint $table) {
+        Schema::create('cactus_albums', function (Blueprint $table) {
             $table->id();
+            $table->string('titre');
+            $table->longText('description');
+            $table->string('photos')->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +29,6 @@ class CreateAlbumsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('albums');
+        Schema::dropIfExists('cactus_albums');
     }
 }

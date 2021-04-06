@@ -22,7 +22,12 @@ class EvenementFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'titre'         => $this->faker->word,
+            'description'   => $this->faker->sentence,
+            'date_creation' => now(),
+            'posteur'       => $this->faker->name,
+            'slug'          => $this->faker->slug,
+            'type'          => $this->faker->boolean(70) ? 'actualite' : 'nouvelle',
         ];
     }
 }
