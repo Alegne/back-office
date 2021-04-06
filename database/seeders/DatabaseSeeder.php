@@ -54,7 +54,8 @@ class DatabaseSeeder extends Seeder
             ClubSeeder::class,
             ArticleSeeder::class,
             AnnonceSeeder::class,
-            EvenementSeeder::class
+            EvenementSeeder::class,
+            EnseignantSeeder::class
         ]);
     }
 }
