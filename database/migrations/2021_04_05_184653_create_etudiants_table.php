@@ -30,11 +30,11 @@ class CreateEtudiantsTable extends Migration
             $table->timestamps();
 
             # Key
-            $table->foreignId('niveau_id')
-                # ->nullable()
-                ->constrained('cactus_niveaux')
-                ->onDelete('restrict')
-                ->onUpdate('restrict');
+            # $table->foreignId('niveau_id')
+            #     # ->nullable()
+            #     ->constrained('cactus_niveaux')
+            #     ->onDelete('restrict')
+            #     ->onUpdate('restrict');
 
             $table->foreignId('parcours_id')
                 # ->nullable()
@@ -42,17 +42,17 @@ class CreateEtudiantsTable extends Migration
                 ->onDelete('restrict')
                 ->onUpdate('restrict');
 
-            $table->foreignId('formation_id')
-                # ->nullable()
-                ->constrained('cactus_formations')
-                ->onDelete('restrict')
-                ->onUpdate('restrict');
+            # $table->foreignId('formation_id')
+            #     # ->nullable()
+            #     ->constrained('cactus_formations')
+            #     ->onDelete('restrict')
+            #     ->onUpdate('restrict');
 
-            $table->foreignId('annee_universitaire_id')
-                # ->nullable()
-                ->constrained('cactus_annee_universitaires')
-                ->onDelete('restrict')
-                ->onUpdate('restrict');
+            # $table->foreignId('annee_universitaire_id')
+            #     # ->nullable()
+            #     ->constrained('cactus_annee_universitaires')
+            #     ->onDelete('restrict')
+            #     ->onUpdate('restrict');
 
             # Version verbose
             # $table->unsignedBigInteger('niveau_id');

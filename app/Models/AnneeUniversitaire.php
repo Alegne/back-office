@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+# Table pivot Etudiant-Niveau-AnneeUniversitaire
 class AnneeUniversitaire extends Model
 {
     use HasFactory;
@@ -23,15 +24,20 @@ class AnneeUniversitaire extends Model
      */
     protected $fillable = [
         'libelle',
+        'etudiant_id',
+        'niveau_id',
+        'libelle_id',
     ];
 
     /**
      * Get the etudiants for the club.
      */
-    public function etudiants()
-    {
-        # foreignKey
-        return $this->hasMany(Etudiant::class, 'annee_universitaire_id');
-    }
+    # public function etudiants()
+    # {
+    #     # foreignKey
+    #     return $this->belongsToMany(
+    #         Etudiant::class,
+    #         'annee_universitaire_id');
+    # }
 
 }

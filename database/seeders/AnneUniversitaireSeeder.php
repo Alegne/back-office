@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\AnneeUniversitaire;
+use App\Models\AnneeUniversitaireLibelle;
 use Illuminate\Database\Seeder;
 
 class AnneUniversitaireSeeder extends Seeder
@@ -14,9 +15,9 @@ class AnneUniversitaireSeeder extends Seeder
      */
     public function run()
     {
-        AnneeUniversitaire::insert([
+        AnneeUniversitaireLibelle::insert([
             [
-                'libelle' => '2020-2021'
+                'libelle' => '2020-2021',
             ],
             [
                 'libelle' => '2019-2020'

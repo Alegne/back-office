@@ -36,11 +36,29 @@ class Formation extends Model
     public $timestamps = false;
 
     /**
-     * Get the etudiants for the club.
+     * Get the etudiants for the formation.
      */
     public function etudiants()
     {
         # foreignKey
-        return $this->hasMany(Etudiant::class, 'formation_id');
+        # return $this->hasMany(Etudiant::class, 'formation_id');
+
+        return $this->hasManyThrough(
+            Formation::class,
+            # Niveau::class,
+            AnneeUniversitaire::class,
+            'etudiant_id',
+            'formation_id',
+            'id',
+            'id');
+    }
+
+    /**
+     * Get the niveau for the formation.
+     */
+    public function niveau()
+    {
+        # foreignKey
+        return $this->hasMany(Niveau::class, 'formation_id');
     }
 }

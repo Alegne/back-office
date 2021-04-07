@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
 class Etudiant extends Model
 {
     use HasFactory;
@@ -33,10 +34,10 @@ class Etudiant extends Model
         'adresse',
         'status',
         'photo',
-        'niveau_id',
+        # 'niveau_id',
         'parcours_id',
-        'formation_id',
-        'annee_universitaire_id'
+        # 'formation_id',
+        # 'annee_universitaire_id'
     ];
 
     /**
@@ -65,7 +66,29 @@ class Etudiant extends Model
     public function niveau()
     {
         # related, foreignKey, ownerKey, relation
-        return $this->belongsTo(Niveau::class, 'niveau_id', 'id');
+        return $this->belongsToMany(
+            Niveau::class,
+            AnneeUniversitaire::class, # Pivot
+            'etudiant_id',
+            'niveau_id')
+            # ->withPivot('libelle')
+            ;
+    }
+
+
+    /**
+     * Get the libelle anneeUniversitaire that owns the etudiants.
+     */
+    public function annee()
+    {
+        # related, foreignKey, ownerKey, relation
+        return $this->belongsToMany(
+            AnneeUniversitaireLibelle::class,
+            AnneeUniversitaire::class, # Pivot
+            'etudiant_id',
+            'annee_id')
+            # ->withPivot('libelle')
+            ;
     }
 
     /**
@@ -79,21 +102,36 @@ class Etudiant extends Model
 
     /**
      * Get the formation that owns the etudiants.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     public function formation()
     {
-        # related, foreignKey, ownerKey, relation
-        return $this->belongsTo(Formation::class, 'formation_id', 'id');
+        return null # $this
+            # ->niveau()
+            # ->where('formation_id', '=', $formation)
+            # ->first('formation_id')
+            # ->formation()
+            ;
+
+        # return $this->hasOneThrough(
+        #     Formation::class,
+        #     Niveau::class,
+        #     # AnneeUniversitaire::class,
+        #     'etudiant_id',
+        #     'formation_id',
+        #     'id',
+        #     'id');
     }
 
-    /**
-     * Get the annee universitaire that owns the etudiants.
-     */
-    public function annee()
-    {
-        # related, foreignKey, ownerKey, relation
-        return $this->belongsTo(AnneeUniversitaire::class, 'annee_universitaire_id', 'id');
-    }
+    # /**
+    #  * Get the annee universitaire that owns the etudiants.
+    #  */
+    # public function annee()
+    # {
+    #     # related, foreignKey, ownerKey, relation
+    #     return $this->hasMany(AnneeUniversitaire::class, 'etudiant_id', 'id');
+    # }
 
     /**
      * get FullName

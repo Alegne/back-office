@@ -13,22 +13,31 @@ class CreateAnneeUniversitairesTable extends Migration
      */
     public function up()
     {
+        # Pivot Etudiant-Niveau-AnneeUniversitaire
         Schema::create('cactus_annee_universitaires', function (Blueprint $table) {
             $table->id();
-            $table->string('libelle');
+
+            # $table->string('libelle');
             # $table->timestamps();
 
             # Key
-            # $table->foreignId('niveau_id')
-            #     # ->nullable()
-            #     ->constrained('cactus_niveaux')
-            #     ->onDelete('restrict')
-            #     ->onUpdate('restrict');
-            # $table->foreignId('formation_id')
-            #     # ->nullable()
-            #     ->constrained('cactus_formations')
-            #     ->onDelete('restrict')
-            #     ->onUpdate('restrict');
+            $table->foreignId('niveau_id')
+                ->nullable()
+                ->constrained('cactus_niveaux')
+                ->onDelete('restrict')
+                ->onUpdate('restrict');
+
+            $table->foreignId('etudiant_id')
+                ->nullable()
+                ->constrained('cactus_etudiants')
+                ->onDelete('restrict')
+                ->onUpdate('restrict');
+
+            $table->foreignId('annee_id')
+                ->nullable()
+                ->constrained('cactus_annee_universitaire_libelles')
+                ->onDelete('restrict')
+                ->onUpdate('restrict');
         });
     }
 

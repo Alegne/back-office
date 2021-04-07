@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Niveau extends Model
+class AnneeUniversitaireLibelle extends Model
 {
     use HasFactory;
 
@@ -14,7 +14,7 @@ class Niveau extends Model
      *
      * @var string
      */
-    protected $table = 'cactus_niveaux';
+    protected $table = 'cactus_annee_universitaire_libelles';
 
     /**
      * The attributes that are mass assignable.
@@ -22,17 +22,9 @@ class Niveau extends Model
      * @var array
      */
     protected $fillable = [
-        'libelle',
-        'tag',
-        'formation_id'
+        'libelle'
     ];
 
-    /**
-     * Desactive timestamps
-     *
-     * @var bool
-     */
-    public $timestamps = false;
 
     /**
      * Get the etudiants for the niveau.
@@ -42,19 +34,10 @@ class Niveau extends Model
         # foreignKey
         return $this->belongsToMany(
             Etudiant::class,
-            AnneeUniversitaire::class,
-            'niveau_id',
+            AnneeUniversitaire::class, # Pivot
+            'annee_id',
             'etudiant_id')
             # ->withPivot('libelle')
             ;
-    }
-
-
-    /**
-     * Get the formation for the niveau.
-     */
-    public function formation()
-    {
-        return $this->belongsTo(Formation::class,'formation_id');
     }
 }

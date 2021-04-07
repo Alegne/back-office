@@ -19,6 +19,13 @@ class CreateNiveauxTable extends Migration
             $table->string('tag');
 
             # $table->timestamps();
+
+            # Key
+            $table->foreignId('formation_id')
+                # ->nullable()
+                ->constrained('cactus_formations')
+                ->onDelete('restrict')
+                ->onUpdate('restrict');
         });
     }
 
