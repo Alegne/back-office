@@ -1,9 +1,9 @@
 @props(['route', 'sub', 'icon'])
 
 <li class="nav-item">
-    <a  href="#" {{--href="{{ route($route) }}" --}}
+    <a  @if($route) href="{{ route($route) }}" @else href="#" @endif
        class="nav-link
-{{--                {{ currentRouteActive($route) }}--}}
+        @if($route) {{ currentRouteActive($route) }}@endif
             ">
         <i class="
 

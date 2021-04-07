@@ -80,7 +80,7 @@ return [
             [
                 'name'  => 'All Formations',
                 'role'  => 'admin',
-                'route' => '', #'formations.index',
+                'route' => 'formation.index', #'formations.index',
             ],
             [
                 'name'  => 'New Formations',

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Back\FormationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,3 +36,6 @@ require __DIR__.'/auth.php';
 Route::get('/layout', function () {
     return view('back.parent.layout');
 });
+
+# Formation
+Route::resource('formation', FormationController::class);
