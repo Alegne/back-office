@@ -1,6 +1,10 @@
 <?php
 
+use App\Http\Controllers\Back\EtudiantController;
 use App\Http\Controllers\Back\FormationController;
+use App\Http\Controllers\Back\NiveauController;
+use App\Http\Controllers\Back\ParcoursController;
+use App\Http\Controllers\Back\AnneeUniversitaireLibelleController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,3 +43,17 @@ Route::get('/layout', function () {
 
 # Formation
 Route::resource('formation', FormationController::class);
+
+# Parcours
+Route::resource('parcours', ParcoursController::class)->parameters(['parcours' => 'parcours']);
+
+# Annee Universitaire
+Route::resource('annee-universitaire', AnneeUniversitaireLibelleController::class)->parameters(['annee-universitaire' => 'annee']);
+
+# Niveau
+Route::resource('niveau', NiveauController::class);
+
+# Etudiants
+Route::resource('etudiant', EtudiantController::class);
+Route::name('etudiant.indexactif')->get('/etudiant-actif', [EtudiantController::class, 'index']);
+Route::name('etudiant.indexold')->get('/etudiant-ancien', [EtudiantController::class, 'index']);

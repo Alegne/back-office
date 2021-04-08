@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests\Back;
 
-use App\Rules\Slug;
 use Illuminate\Foundation\Http\FormRequest;
 
-class FormationRequest extends FormRequest
+class ParcoursRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,13 +23,9 @@ class FormationRequest extends FormRequest
      */
     public function rules()
     {
-        $id = $this->method() === 'PUT' ? ',' . basename($this->url()) : '';
-
-        return $rules = [
+        return [
             'libelle'     => 'required|max:255',
-            'description' => 'required',
-            # 'photo'     => 'required',
-            'slug'        => ['required', 'max:255', new Slug, 'unique:cactus_formations,slug' . $id],
+            'tag'         => 'required|max:20',
         ];
     }
 }

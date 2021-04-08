@@ -21,6 +21,22 @@ return [
         'route'  => '', #'admin',
         'icon'   => 'tachometer-alt',
     ],
+    'Annee Universitaire' => [
+        'icon' => 'university',
+        'role'   => 'administratif',
+        'children' => [
+            [
+                'name'  => 'All',
+                'role'  => 'administratif',
+                'route' => 'annee-universitaire.index',
+            ],
+            [
+                'name'  => 'Add',
+                'role'  => 'administratif',
+                'route' => 'annee-universitaire.create',
+            ],
+        ],
+    ],
     'Etudiants' => [
         'icon' => 'users',
         'role'   => 'administratif',
@@ -28,23 +44,23 @@ return [
             [
                 'name'  => 'All Etudiants',
                 'role'  => 'administratif',
-                'route' => '', #'etudiants.index',
+                'route' => 'etudiant.index',
             ],
             [
-                'name'  => 'New Etudiants',
+                'name'  => 'Actif Etudiants',
                 'role'  => 'administratif',
-                'route' => '', #'etudiants.indexnew',
+                'route' => 'etudiant.indexactif',
+            ],
+            [
+                'name'  => 'Ancien Etudiants',
+                'role'  => 'administratif',
+                'route' => 'etudiant.indexold',
             ],
             [
                 'name'  => 'Add',
                 'role'  => 'administratif',
-                'route' => '', #'etudiants.create',
-            ],
-            [
-                'name'  => 'fake', # NOT SHOWING
-                'role'  => 'administratif',
-                'route' => '', #'etudiants.edit',
-            ],
+                'route' => 'etudiant.create',
+            ]
         ],
     ],
     'Comptes' => [
@@ -83,9 +99,9 @@ return [
                 'route' => 'formation.index', #'formations.index',
             ],
             [
-                'name'  => 'New Formations',
+                'name'  => 'Add Formations',
                 'role'  => 'admin',
-                'route' => '', #'formations.indexnew',
+                'route' => 'formation.create', #'formations.indexnew',
             ],
             [
                 'name'  => 'fake',
@@ -101,22 +117,12 @@ return [
             [
                 'name'  => 'All Niveaux',
                 'role'  => 'administratif',
-                'route' => '', #'niveaux.index',
+                'route' => 'niveau.index',
             ],
             [
                 'name'  => 'New Niveaux',
                 'role'  => 'administratif',
-                'route' => '', #'comments.indexnew',
-            ],
-            [
-                'name'  => 'New Niveaux',
-                'role'  => 'administratif',
-                'route' => '', #'comments.indexnew',
-            ],
-            [
-                'name'  => 'fake',
-                'role'  => 'administratif',
-                'route' => '', #'comments.edit',
+                'route' => 'niveau.create',
             ],
         ],
     ],
@@ -127,23 +133,13 @@ return [
             [
                 'name'  => 'All Parcours',
                 'role'  => 'administratif',
-                'route' => '', #'niveaux.index',
-            ],
-            [
-                'name'  => 'New Parcours',
-                'role'  => 'administratif',
-                'route' => '', #'comments.indexnew',
+                'route' => 'parcours.index',
             ],
             [
                 'name'  => 'Add Parcours',
                 'role'  => 'administratif',
-                'route' => '', #'comments.indexnew',
-            ],
-            [
-                'name'  => 'fake',
-                'role'  => 'administratif',
-                'route' => '', #'comments.edit',
-            ],
+                'route' => 'parcours.create',
+            ]
         ],
     ],
     'Emploi du temps' => [

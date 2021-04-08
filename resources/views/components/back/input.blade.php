@@ -10,9 +10,10 @@
     'value' => '',
     'Values',
     'multiple' => false,
+    'col' => '',
 ])
 
-<div class="form-group">
+<div class="form-group {{ $col ? $col : '' }}">
 
     @isset($title)
         <label for="{{ $name }}">@lang($title)</label>
@@ -29,7 +30,7 @@
     @elseif ($input === 'checkbox')
         <div class="custom-control custom-checkbox">
             <input
-                class="custom-control-input"
+                class="custom-control-input {{ $name }}"
                 id="{{ $name }}"
                 name="{{ $name }}"
                 type="checkbox"
@@ -44,13 +45,23 @@
       @elseif ($input === 'select')
         <select
             @if($required) required @endif
-            class="form-control{{ $errors->has($name) ? ' is-invalid' : '' }}"
+            class="form-control select-single {{ $errors->has($name) ? ' is-invalid' : '' }}"
             name="{{ $name }}"
             id="{{ $name }}">
-            @foreach($options as $option)
+            @foreach($options as $id => $option)
+                {{--ID:{{ $id }} Option:{{ $option }} Value:{{ $value }}--}}
                 <option
-                    value="{{ $option }}"
-                    {{ old($name) ? (old($name) == $option ? 'selected' : '') : ($option == $value ? 'selected' : '') }}>
+                    value="{{ $id }}"
+{{--                    value="{{ $option }}"--}}
+                    @if ($value != '')
+
+                        {{--@dd($value)--}}
+
+                        {{ old($name) ? (old($name) == $id ? 'selected' : '') : ($id == $value ? 'selected' : '') }}
+                    @else
+                        False {{ $value }}
+                    @endif>
+{{--                    {{ old($name) ? (old($name) == $option ? 'selected' : '') : ($option == $value ? 'selected' : '') }}>--}}
                     {{ $option }}
                 </option>
             @endforeach
@@ -60,7 +71,7 @@
         <select
             multiple
             @if($required) required @endif
-            class="form-control{{ $errors->has($name) ? ' is-invalid' : '' }}"
+            class="form-control select-multiple {{ $errors->has($name) ? ' is-invalid' : '' }}"
             name="{{ $name }}[]"
             id="{{ $name }}">
             @foreach($options as $id => $title)
@@ -73,10 +84,18 @@
             @endforeach
         </select>
 
+    @elseif ($input === 'date')
+        <input type="date"
+            class="form-control input-date {{ $name }} {{ $errors->has($name) ? ' is-invalid' : '' }}"
+            id="{{ $name }}"
+            name="{{ $name }}"
+            value="{{ old($name, $value) }}"
+            @if($required) required @endif>
+
     @else
         <input
             type="text"
-            class="form-control{{ $errors->has($name) ? ' is-invalid' : '' }}"
+            class="form-control {{ $name }} {{ $errors->has($name) ? ' is-invalid' : '' }}"
             id="{{ $name }}"
             name="{{ $name }}"
             value="{{ old($name, $value) }}"

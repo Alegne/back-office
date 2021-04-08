@@ -16,6 +16,13 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="/admin/dist/css/adminlte.min.css">
 
+  <!-- Select 2 -->
+  <link rel="stylesheet" href="/admin/plugins/select2/css/select2.min.css">
+  <link rel="stylesheet" href="/admin/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+
+  <!-- Tempusdominus Bootstrap 4 -->
+  <link rel="stylesheet" href="/admin/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+
   <!-- Section Styles -->
   @yield('css')
 </head>
@@ -246,14 +253,39 @@
   <!-- ChartJS -->
   <script src="/admin/plugins/chart.js/Chart.min.js"></script>
 
+  <!-- Select 2 -->
+  <script src="/admin/plugins/select2/js/select2.min.js"></script>
+
+  <!-- Tempusdominus Bootstrap 4 -->
+  <script src="/admin/plugins/moment/moment.min.js"></script>
+  <script src="/admin/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+
   <!-- AdminLTE for demo purposes -->
   <!--<script src="dist/js/demo.js"></script>-->
   <script src="/admin/dist/js/admin.js"></script>
 
-  <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-  <script src="/admin/dist/js/pages/dashboard2.js"></script>
+
+  <script>
+    $(document).ready(function() {
+      $('.select-multiple').select2();
+
+      // $('.select-single').select2();
+
+      // $('[type="date"]').datepicker();
+
+      //Date picker
+      // $('.input-date').datepicker();
+
+      $('.input-date').datetimepicker();
+    });
+  </script>
+
 
   <!-- Section Scripts -->
   @yield('js')
+
+  <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+  {{--<script src="/admin/dist/js/pages/dashboard2.js" defer></script>--}}
+
 </body>
 </html>

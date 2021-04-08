@@ -60,6 +60,15 @@
   <script>
     (() => {
 
+        // Token
+        /*$.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });*/
+
+        console.log('X-CSRF-TOKEN', $('meta[name="csrf-token"]').attr('content'))
+
         // Variables
         const headers = {
             'X-CSRF-TOKEN': '{{ csrf_token() }}',
@@ -75,8 +84,8 @@
               icon: 'warning',
               showCancelButton: true,
               confirmButtonColor: '#DD6B55',
-              confirmButtonText: '@lang('Yes')',
-              cancelButtonText: '@lang('No')',
+              confirmButtonText: 'OUI',
+              cancelButtonText: 'NON',
               preConfirm: () => {
                   return fetch(e.target.getAttribute('href'), {
                       method: 'DELETE',
@@ -89,8 +98,8 @@
                       } else {
                         Swal.fire({
                             icon: 'error',
-                            title: '@lang('Whoops!')',
-                            text: '@lang('Something went wrong!')'
+                            title: 'Whoops!',
+                            text: "Il y a quelques problemes"
                         });
                       }
                   });
@@ -111,8 +120,8 @@
                 } else {
                   Swal.fire({
                       icon: 'error',
-                      title: '@lang('Whoops!')',
-                      text: '@lang('Something went wrong!')'
+                      title: 'Whoops!',
+                      text: "Il y a quelques problemes"
                   });
                 }
             });
