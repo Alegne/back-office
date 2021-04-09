@@ -23,6 +23,7 @@ class Etudiant extends Model
      * @var array
      */
     protected $fillable = [
+        'numero',
         'nom',
         'prenom',
         'email',
@@ -71,7 +72,8 @@ class Etudiant extends Model
             AnneeUniversitaire::class, # Pivot
             'etudiant_id',
             'niveau_id')
-            # ->withPivot('libelle')
+            ->withPivot('id')
+            ->orderBy('cactus_annee_universitaires.id', 'desc')
             ;
     }
 
@@ -87,7 +89,8 @@ class Etudiant extends Model
             AnneeUniversitaire::class, # Pivot
             'etudiant_id',
             'annee_id')
-            # ->withPivot('libelle')
+            ->withPivot('id')
+            ->orderBy('cactus_annee_universitaires.id', 'desc')
             ;
     }
 
@@ -136,8 +139,8 @@ class Etudiant extends Model
     /**
      * get FullName
      */
-    public function getFullName()
+    public function getFullNameAttribute()
     {
-        return $this->nom . ' ' . $this->prenom;
+        return "{$this->nom} {$this->prenom}";
     }
 }

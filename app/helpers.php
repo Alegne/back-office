@@ -46,3 +46,41 @@ if (!function_exists('isRole')) {
         return auth()->user()->role === $role;
     }
 }
+
+# Image
+if (!function_exists('getImage')) {
+    function getImage($model, $thumb = false)
+    {
+        $id     = $model ? $model->user->id : 1;
+        $image  = $model ? $model->image : 'image';
+
+        $url = "storage/photos/{$id}";
+
+        if($thumb) $url .= '/thumbs';
+
+        return asset("{$url}/{$image}");
+    }
+}
+
+# Formatage date  | 20 September 2002
+if (!function_exists('formatDate')) {
+    function formatDate($date)
+    {
+        return ucfirst(utf8_encode ($date->formatLocalized('%d %B %Y')));
+    }
+}
+
+# Formatage date  | 20/02/2002
+# 'date_format' => 'm/d/Y',
+# 'date_format_javascript' => 'MM/DD/YYYY',
+if (!function_exists('formatDateChiffre')) {
+    function formatDateChiffre($date)
+    {
+        # 2002-09-20  | yyyy-MM-dd
+        # return $date->formatLocalized('%Y-%m-%d');
+
+        return $date->format('d-m-Y');
+
+        #return date("dd-mm-YYYY", strtotime($date));
+    }
+}

@@ -27,6 +27,13 @@ class Parcours extends Model
     ];
 
     /**
+     * Desactive timestamps
+     *
+     * @var bool
+     */
+    public $timestamps = false;
+
+    /**
      * Get the etudiants for the club.
      */
     public function etudiants()
