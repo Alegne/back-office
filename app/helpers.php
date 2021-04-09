@@ -84,3 +84,12 @@ if (!function_exists('formatDateChiffre')) {
         #return date("dd-mm-YYYY", strtotime($date));
     }
 }
+
+if (!function_exists('getConfiguration')) {
+    function getConfiguration($cle)
+    {
+        $configuration = \App\Models\Configuration::where('cle', $cle)->first();
+
+        return $configuration->valeur;
+    }
+}
