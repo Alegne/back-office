@@ -24,7 +24,15 @@ class EtudiantRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'numero'         => 'required',
+            'nom'            => 'required',
+            'prenom'         => 'required',
+            'email'          => 'required',
+            'date_naissance' => 'required',
+            'lieu_naissance' => 'required',
+            'adresse'        => 'required',
+            'status'         => 'required',
+            'parcours_id'    => 'required',
         ];
     }
 }
