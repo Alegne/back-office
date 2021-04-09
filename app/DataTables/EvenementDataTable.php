@@ -2,14 +2,14 @@
 
 namespace App\DataTables;
 
-use App\Models\Article;
+use App\Models\Evenement;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class ArticleDataTable extends DataTable
+class EvenementDataTable extends DataTable
 {
     use DataTableTrait;
 
@@ -23,36 +23,33 @@ class ArticleDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            ->editColumn('club', function ($article) {
-                return $article->club->libelle;
-            })
-            ->editColumn('action', function ($article) {
+            ->editColumn('action', function ($evenement) {
                 return $this->button(
-                        'article.edit',
-                        $article->id,
+                        'evenement.edit',
+                        $evenement->id,
                         'warning',
                         'Editer',
                         'edit'
                     ). $this->button(
-                        'article.destroy',
-                        $article->id,
+                        'evenement.destroy',
+                        $evenement->id,
                         'danger',
                         'Supprimer',
                         'trash-alt',
                         __('Etes-vous sure de le supprimer ?')
                     );
             })
-            ->rawColumns(['club', 'action'])
+            ->rawColumns(['action'])
             ;
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\Article $model
+     * @param \App\Models\Evenement $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Article $model)
+    public function query(Evenement $model)
     {
         return $model->newQuery();
     }
@@ -65,11 +62,12 @@ class ArticleDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('article-table')
+                    ->setTableId('evenement-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('Bfrtip')
-                    ->orderBy(1);
+                    ->orderBy(1)
+            ;
     }
 
     /**
@@ -79,18 +77,14 @@ class ArticleDataTable extends DataTable
      */
     protected function getColumns()
     {
-        $columns =  [
+        return [
             Column::make('id')->title('ID')->addClass('align-middle text-center'),
             Column::make('titre')->title('Titre')->addClass('align-middle text-center font-weight-bold'),
             Column::make('posteur')->title('Posté par')->addClass('align-middle text-center font-weight-bold'),
+            Column::make('date_creation')->title('Date de publication')->addClass('align-middle text-center font-weight-bold'),
 
+            Column::computed('action')->title('Action')->addClass('align-middle text-center')
         ];
-
-        array_push($columns,
-            Column::computed('club')->title('Club')->addClass('align-middle text-center'),
-            Column::computed('action')->title('Action')->addClass('align-middle text-center'));
-
-        return $columns;
     }
 
     /**
@@ -100,6 +94,6 @@ class ArticleDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'Article_' . date('YmdHis');
+        return 'Evenement_' . date('YmdHis');
     }
 }

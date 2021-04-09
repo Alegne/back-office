@@ -2,22 +2,22 @@
 
 namespace App\Http\Controllers\Back;
 
-use App\DataTables\ArticleDataTable;
+use App\DataTables\EvenementDataTable;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Back\ArticleRequest;
-use App\Models\Article;
-use App\Models\Club;
+use App\Http\Requests\Back\EvenementRequest;
+use App\Models\Evenement;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
-class ArticleController extends Controller
+class EvenementController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @param ArticleDataTable $dataTable
+     * @param EvenementDataTable $dataTable
      * @return \Illuminate\Http\Response
      */
-    public function index(ArticleDataTable $dataTable)
+    public function index(EvenementDataTable $dataTable)
     {
         return $dataTable->render('back.shared.index');
     }
@@ -29,24 +29,26 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        $article = null;
+        $evenement = null;
 
-        $clubs = Club::all()->pluck('libelle', 'id');
+        $types = ['actualite' => 'Actualite', 'nouvelle' => 'Nouvelle'];
 
-        return view('back.article.form', compact('article', 'clubs'));
+        return view('back.evenement.form', compact('evenement', 'types'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param ArticleRequest $request
+     * @param EvenementRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ArticleRequest $request)
+    public function store(EvenementRequest $request)
     {
-        $inputs = $this->getInputs($request);
+        $merge = $request->merge(['date_creation' => Carbon::now()]);
 
-        Article::create($inputs);
+        $inputs = $this->getInputs($merge);
+
+        Evenement::create($inputs);
 
         return back()->with('ok', 'The post has been successfully created');
     }
@@ -54,10 +56,10 @@ class ArticleController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Article  $article
+     * @param  \App\Models\Evenement  $evenement
      * @return \Illuminate\Http\Response
      */
-    public function show(Article $article)
+    public function show(Evenement $evenement)
     {
         //
     }
@@ -65,23 +67,24 @@ class ArticleController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Article  $article
+     * @param  \App\Models\Evenement  $evenement
      * @return \Illuminate\Http\Response
      */
-    public function edit(Article $article)
+    public function edit(Evenement $evenement)
     {
-        $clubs = Club::all()->pluck('libelle', 'id');
-        return view('back.article.form', compact('article', 'clubs'));
+        $types = ['actualite' => 'Actualite', 'nouvelle' => 'Nouvelle'];
+
+        return view('back.evenement.form', compact('evenement', 'types'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param ArticleRequest $request
-     * @param  \App\Models\Article $article
+     * @param EvenementRequest $request
+     * @param  \App\Models\Evenement $evenement
      * @return \Illuminate\Http\Response
      */
-    public function update(ArticleRequest $request, Article $article)
+    public function update(EvenementRequest $request, Evenement $evenement)
     {
         $inputs = $this->getInputs($request);
 
@@ -89,7 +92,7 @@ class ArticleController extends Controller
             # $this->deleteImages($article);
         }
 
-        $article->update($inputs);
+        $evenement->update($inputs);
 
         return back()->with('ok', 'The post has been successfully updated');
     }
@@ -97,16 +100,17 @@ class ArticleController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Article $article
+     * @param  \App\Models\Evenement $evenement
      * @return \Illuminate\Http\Response
      * @throws \Exception
      */
-    public function destroy(Article $article)
+    public function destroy(Evenement $evenement)
     {
-        $article->delete();
+        $evenement->delete();
 
         return response()->json();
     }
+
 
     protected function getInputs($request)
     {
