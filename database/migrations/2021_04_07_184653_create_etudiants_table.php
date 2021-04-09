@@ -15,6 +15,7 @@ class CreateEtudiantsTable extends Migration
     {
         Schema::create('cactus_etudiants', function (Blueprint $table) {
             $table->id();
+            $table->string('numero');
             $table->string('nom');
             $table->string('prenom');
             $table->string('email')->unique();

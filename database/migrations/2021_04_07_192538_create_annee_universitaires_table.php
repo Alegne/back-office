@@ -18,7 +18,7 @@ class CreateAnneeUniversitairesTable extends Migration
             $table->id();
 
             # $table->string('libelle');
-            # $table->timestamps();
+            $table->timestamps();
 
             # Key
             $table->foreignId('niveau_id')
