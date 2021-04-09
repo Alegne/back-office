@@ -63,6 +63,22 @@ return [
             ]
         ],
     ],
+    'Enseignants' => [
+        'icon' => 'chalkboard-teacher',
+        'role'   => 'administratif',
+        'children' => [
+            [
+                'name'  => 'All ',
+                'role'  => 'administratif',
+                'route' => 'enseignant.index',
+            ],
+            [
+                'name'  => 'Add',
+                'role'  => 'administratif',
+                'route' => 'enseignant.create',
+            ]
+        ],
+    ],
     'Comptes' => [
         'icon' => 'user',
         'role'   => 'admin',
@@ -247,17 +263,12 @@ return [
             [
                 'name'  => 'All Club',
                 'role'  => 'redacteur',
-                'route' => '', #'niveaux.index',
-            ],
-            [
-                'name'  => 'New Club',
-                'role'  => 'redacteur',
-                'route' => '', #'comments.indexnew',
+                'route' => 'club.index',
             ],
             [
                 'name'  => 'Add Club',
                 'role'  => 'redacteur',
-                'route' => '', #'comments.indexnew',
+                'route' => 'club.create',
             ],
             [
                 'name'  => 'Staff',

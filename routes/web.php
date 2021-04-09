@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Back\ClubController;
+use App\Http\Controllers\Back\EnseignantController;
 use App\Http\Controllers\Back\EtudiantController;
 use App\Http\Controllers\Back\FormationController;
 use App\Http\Controllers\Back\NiveauController;
@@ -57,3 +59,9 @@ Route::resource('niveau', NiveauController::class);
 Route::resource('etudiant', EtudiantController::class);
 Route::name('etudiant.indexactif')->get('/etudiant-actif', [EtudiantController::class, 'index']);
 Route::name('etudiant.indexold')->get('/etudiant-ancien', [EtudiantController::class, 'index']);
+
+# Enseignants
+Route::resource('enseignant', EnseignantController::class);
+
+# Clubs
+Route::resource('club', ClubController::class);
