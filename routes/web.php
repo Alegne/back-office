@@ -7,6 +7,7 @@ use App\Http\Controllers\Back\FormationController;
 use App\Http\Controllers\Back\NiveauController;
 use App\Http\Controllers\Back\ParcoursController;
 use App\Http\Controllers\Back\AnneeUniversitaireLibelleController;
+use App\Http\Controllers\Back\LangueController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,7 +32,7 @@ Route::get('/dashboard', function () {
 /**
  * Route Authentification
  */
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 
 /**
@@ -65,3 +66,6 @@ Route::resource('enseignant', EnseignantController::class);
 
 # Clubs
 Route::resource('club', ClubController::class);
+
+# Clubs
+Route::resource('langue', LangueController::class);

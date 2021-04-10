@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: NRH
@@ -242,7 +243,7 @@ return [
             [
                 'name'  => 'Langue',
                 'role'  => 'admin',
-                'route' => '', #'comments.indexnew',
+                'route' => 'langue.index',
             ],
             [
                 'name'  => 'Lien',
