@@ -4,6 +4,7 @@ use App\Http\Controllers\Back\AnnonceController;
 use App\Http\Controllers\Back\ArticleController;
 use App\Http\Controllers\Back\ClubController;
 use App\Http\Controllers\Back\EnseignantController;
+use App\Http\Controllers\Back\EspaceNumeriqueController;
 use App\Http\Controllers\Back\EtudiantController;
 use App\Http\Controllers\Back\EvenementController;
 use App\Http\Controllers\Back\FormationController;
@@ -95,3 +96,7 @@ Route::view('/configuration/contact', 'back.configuration.contact')->name('confi
 Route::view('/configuration/lien', 'back.configuration.lien')->name('configuration.lien');
 
 Route::put('/configuration/update', [ConfigurationController::class, 'update'])->name('configuration.update');
+
+# Espace Numerique
+Route::resource('espace-numerique-travail', EspaceNumeriqueController::class)
+    ->parameters(['espace-numerique-travail' => 'espaceNumerique']);

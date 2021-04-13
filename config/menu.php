@@ -301,8 +301,19 @@ return [
     ],
     'ENT' => [
         'role'   => 'admin',
-        'route'  => '', #'admin',
         'icon'   => 'folder',
+        'children' => [
+            [
+                'name'  => 'All',
+                'role'  => 'admin',
+                'route' => 'espace-numerique-travail.index',
+            ],
+            [
+                'name'  => 'Add',
+                'role'  => 'admin',
+                'route' => 'espace-numerique-travail.create',
+            ],
+        ]
     ],
     'Journal' => [
         'role'   => 'admin',

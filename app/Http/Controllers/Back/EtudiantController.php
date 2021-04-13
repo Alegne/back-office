@@ -63,6 +63,7 @@ class EtudiantController extends Controller
         $etudiant = Etudiant::create($request->all());
 
         $etudiant->niveau()->attach($request->niveau_id);
+
         DB::table('cactus_annee_universitaires')
             ->where('etudiant_id', $etudiant->id)
             ->where('niveau_id', $request->niveau_id)
