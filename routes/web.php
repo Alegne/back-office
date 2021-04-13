@@ -12,6 +12,7 @@ use App\Http\Controllers\Back\NewsletterController;
 use App\Http\Controllers\Back\NiveauController;
 use App\Http\Controllers\Back\ParcoursController;
 use App\Http\Controllers\Back\AnneeUniversitaireLibelleController;
+use App\Http\Controllers\Back\ConfigurationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -69,7 +70,9 @@ Route::name('etudiant.indexold')->get('/etudiant-ancien', [EtudiantController::c
 Route::resource('enseignant', EnseignantController::class);
 
 # Clubs
-Route::resource('club', ClubController::class);
+Route::resource('club', ClubController::class);Route::view('/configuration/lien', 'back.configuration.lien')->name('configuration.lien');
+Route::get('/club/{club}/staff', [ClubController::class, 'addStaffView'])->name('club.staff.view');
+Route::post('/club/staff/add', [ClubController::class, 'addStaffStore'])->name('club.staff.add');
 
 # Articles
 Route::resource('article', ArticleController::class);
@@ -85,3 +88,10 @@ Route::resource('message', MessageController::class);
 
 # Newsletter
 Route::resource('newsletter', NewsletterController::class);
+
+# Configuration
+Route::view('/configuration/contenu', 'back.configuration.contenu')->name('configuration.contenu');
+Route::view('/configuration/contact', 'back.configuration.contact')->name('configuration.contact');
+Route::view('/configuration/lien', 'back.configuration.lien')->name('configuration.lien');
+
+Route::put('/configuration/update', [ConfigurationController::class, 'update'])->name('configuration.update');

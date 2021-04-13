@@ -14,7 +14,7 @@ class EtudiantAddColumn extends Migration
     public function up()
     {
         Schema::table('cactus_etudiants', function (Blueprint $table) {
-            $table->string('numero')->nullable();
+            # $table->string('numero')->nullable();
         });
     }
 

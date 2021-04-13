@@ -46,7 +46,13 @@ class EspaceNumerique extends Model
     public function parcours()
     {
         # related, foreignKey, ownerKey, relation
-        return $this->belongsTo(Parcours::class, 'parcours_id', 'id');
+        return $this->belongsToMany(
+            Parcours::class,
+            'cactus_ent_parcours',
+            'ent_id',
+            'parcours_id')
+            ->orderBy('cactus_ent_parcours.id', 'desc')
+        ;
     }
 
     /**

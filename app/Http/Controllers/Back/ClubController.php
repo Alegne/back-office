@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Back;
 use App\DataTables\ClubDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Back\ClubRequest;
+use App\Http\Requests\Back\StaffRequest;
 use App\Models\Club;
+use App\Models\Etudiant;
+use App\Models\Staff;
 use Illuminate\Http\Request;
 
 class ClubController extends Controller
@@ -102,6 +105,45 @@ class ClubController extends Controller
         $club->delete();
 
         return response()->json();
+    }
+
+    /**
+     * Add staff
+     *
+     * @param Request $request
+     * @param Club $club
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function addStaffView(Request $request, Club $club)
+    {
+        $etudiants = Etudiant::all()->pluck('numero', 'id');
+        $types = [
+            'leader' => 'Leader',
+            'membre' => 'Membre'
+        ];
+
+        return view('back.club.add_staff', compact('club', 'etudiants', 'types'));
+    }
+
+    /**
+     * Requete Ajax
+     *
+     * @param StaffRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function addStaffStore(StaffRequest $request)
+    {
+        Staff::insert([
+            'club_id'     => $request->club_id,
+            'etudiant_id' => $request->etudiant_id,
+            'type'        => $request->type
+        ]);
+
+        if (request()->ajax())
+        {
+            return response()->json();
+        }
+        return back()->with('ok', 'The post has been successfully updated');
     }
 
 

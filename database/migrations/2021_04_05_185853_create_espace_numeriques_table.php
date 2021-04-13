@@ -27,11 +27,11 @@ class CreateEspaceNumeriquesTable extends Migration
                 ->onDelete('restrict')
                 ->onUpdate('restrict');
 
-            $table->foreignId('parcours_id')
-                # ->nullable()
-                ->constrained('cactus_parcours')
-                ->onDelete('restrict')
-                ->onUpdate('restrict');
+            # $table->foreignId('parcours_id')
+            #     # ->nullable()
+            #     ->constrained('cactus_parcours')
+            #     ->onDelete('restrict')
+            #     ->onUpdate('restrict');
 
             $table->foreignId('enseignant_id')
                 # ->nullable()

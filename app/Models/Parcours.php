@@ -41,4 +41,19 @@ class Parcours extends Model
         # foreignKey
         return $this->hasMany(Etudiant::class, 'parcours_id');
     }
+
+    /**
+     * Get the files that owns the items.
+     */
+    public function fichiers()
+    {
+        # related, foreignKey, ownerKey, relation
+        return $this->belongsToMany(
+            EspaceNumerique::class,
+            'cactus_ent_parcours',
+            'parcours_id',
+            'ent_id')
+            ->orderBy('cactus_ent_parcours.id', 'desc')
+            ;
+    }
 }

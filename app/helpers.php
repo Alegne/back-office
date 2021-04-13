@@ -93,3 +93,4 @@ if (!function_exists('getConfiguration')) {
         return $configuration->valeur;
     }
 }
+

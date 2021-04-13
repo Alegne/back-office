@@ -205,34 +205,29 @@ return [
         'role'   => 'admin',
         'children' => [
             [
-                'name'  => 'Photo Slide',
-                'role'  => 'admin',
-                'route' => '', #'niveaux.index',
-            ],
-            [
                 'name'  => 'Contenu',
                 'role'  => 'admin',
-                'route' => '', #'comments.indexnew',
+                'route' => 'configuration.contenu',
             ],
             [
                 'name'  => 'Apropos',
                 'role'  => 'admin',
-                'route' => '', #'comments.indexnew',
+                'route' => '',
             ],
             [
                 'name'  => 'Langue',
                 'role'  => 'admin',
-                'route' => '', #'comments.indexnew',
+                'route' => '',
             ],
             [
                 'name'  => 'Lien',
                 'role'  => 'admin',
-                'route' => '', #'comments.indexnew',
+                'route' => 'configuration.lien',
             ],
             [
                 'name'  => 'Contact',
                 'role'  => 'admin',
-                'route' => '', #'comments.indexnew',
+                'route' => 'configuration.contact',
             ],
         ],
     ],

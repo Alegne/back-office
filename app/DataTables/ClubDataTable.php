@@ -25,12 +25,20 @@ class ClubDataTable extends DataTable
             ->eloquent($query)
             ->editColumn('action', function ($club) {
                 return $this->button(
+                        'club.staff.view',
+                        $club->id,
+                        'info',
+                        'Voir',
+                        'eye',
+                        $club->id
+                    ). $this->button(
                         'club.edit',
                         $club->id,
                         'warning',
                         'Editer',
                         'edit'
-                    ). $this->button(
+                    ).
+                    $this->button(
                         'club.destroy',
                         $club->id,
                         'danger',
