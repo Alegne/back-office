@@ -1,17 +1,18 @@
 @props([
-    'outline' => true, 
-    'type', 
-    'title', 
+    'outline' => true,
+    'type',
+    'title',
+    'id' => '',
 ])
 
-<div class="card @if($outline) card-outline @endif card-{{ $type }}">
+<div class="card @if($outline) card-outline @endif card-{{ $type }}" id="{{ $id }}">
     @if($title)
       <div class="card-header">
           <h3 class="card-title">{{ __($title) }}</h3>
           <div class="card-tools pull-right">
-              <button 
-                  type="button" 
-                  class="btn btn-tool" 
+              <button
+                  type="button"
+                  class="btn btn-tool"
                   data-card-widget="collapse">
                   <i class="fas fa-minus"></i>
               </button>

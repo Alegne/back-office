@@ -100,3 +100,9 @@ Route::put('/configuration/update', [ConfigurationController::class, 'update'])-
 # Espace Numerique
 Route::resource('espace-numerique-travail', EspaceNumeriqueController::class)
     ->parameters(['espace-numerique-travail' => 'espaceNumerique']);
+
+
+# File Manager
+Route::group(['prefix' => 'laravel-filemanager-webcup', 'middleware' => ['web', 'auth']], function (){
+    \UniSharp\LaravelFilemanager\Lfm::routes();
+});

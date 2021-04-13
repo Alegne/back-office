@@ -49,12 +49,13 @@ if (!function_exists('isRole')) {
 
 # Image
 if (!function_exists('getImage')) {
-    function getImage($model, $thumb = false)
+    function getImage($model, $thumb = false, $directory = 'upload')
     {
         $id     = $model ? $model->user->id : 1;
         $image  = $model ? $model->image : 'image';
 
-        $url = "storage/photos/{$id}";
+        # $url = "storage/photos/{$id}";
+        $url = "storage/photos/{$directory}";
 
         if($thumb) $url .= '/thumbs';
 
@@ -91,6 +92,58 @@ if (!function_exists('getConfiguration')) {
         $configuration = \App\Models\Configuration::where('cle', $cle)->first();
 
         return $configuration->valeur;
+    }
+}
+
+if (!function_exists('getImageSingle')) {
+    function getImageSingle($image, $thumb = false)
+    {
+        # $url = "storage/images/{$image}";
+        $url = "storage/images";
+
+        if($thumb) $url .= '/thumbs';
+
+        return asset("{$url}/{$image}");
+    }
+}
+
+if (!function_exists('getImageMultiple')) {
+    function getImageMultiple()
+    {
+
+        return null;
+    }
+}
+
+if (!function_exists('uploadImageSingle')) {
+    function uploadImageSingle()
+    {
+
+        return null;
+    }
+}
+
+if (!function_exists('uploadImageMultiple')) {
+    function uploadImageMultiple()
+    {
+
+        return null;
+    }
+}
+
+if (!function_exists('uploadFileSingle')) {
+    function uploadFileSingle()
+    {
+
+        return null;
+    }
+}
+
+if (!function_exists('uploadFileMultiple')) {
+    function uploadFileMultiple()
+    {
+
+        return null;
     }
 }
 
