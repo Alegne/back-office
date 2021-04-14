@@ -8,6 +8,8 @@ use App\Http\Requests\Back\EvenementRequest;
 use App\Models\Evenement;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Intervention\Image\Facades\Image;
 
 class EvenementController extends Controller
 {
@@ -89,7 +91,7 @@ class EvenementController extends Controller
         $inputs = $this->getInputs($request);
 
         if($request->has('image')) {
-            # $this->deleteImages($article);
+            $this->deleteImages($evenement);
         }
 
         $evenement->update($inputs);
@@ -111,6 +113,7 @@ class EvenementController extends Controller
         return response()->json();
     }
 
+    ### Manage upload image
 
     protected function getInputs($request)
     {
@@ -118,23 +121,36 @@ class EvenementController extends Controller
 
         # $inputs['active'] = $request->has('active');
 
-        if($request->photo) {
+        if($request->image) {
             $inputs['image'] = $this->saveImages($request);
         }
+
+        # dd($inputs);
 
         return $inputs;
     }
 
     protected function saveImages($request)
     {
+        # dd($request->file('image'));
+
         $image = $request->file('image');
         $name  = time() . '.' . $image->extension();
-        # $img   = InterventionImage::make($image->path());
-        $img   = '';
+        $img   = Image::make($image->path());
 
-        $img->widen(800)->encode()->save(public_path('/images/') . $name);
-        $img->widen(400)->encode()->save(public_path('/images/thumbs/') . $name);
+        # $img->resize(width, height);
+
+        $img->resize(1800, 800)->encode()->save(public_path('/storage/images/') . $name);
+        $img->widen(800)->encode()->save(public_path('/storage/images/thumbs/') . $name);
 
         return $name;
+    }
+
+    protected function deleteImages($formation)
+    {
+        File::delete([
+            public_path('/storage/images/') . $formation->image,
+            public_path('/storage/images/thumbs/') . $formation->image,
+        ]);
     }
 }

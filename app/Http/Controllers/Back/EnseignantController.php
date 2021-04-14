@@ -8,7 +8,9 @@ use App\Http\Requests\Back\EnseignantRequest;
 use App\Http\Requests\Back\EtudiantRequest;
 use App\Models\Enseignant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
+use Intervention\Image\Facades\Image;
 
 class EnseignantController extends Controller
 {
@@ -44,9 +46,6 @@ class EnseignantController extends Controller
     public function store(EnseignantRequest $request)
     {
         $request->merge(['mot_de_passe' => Hash::make($request->mot_de_passe)]);
-
-
-        # dd($request->all());
 
         $inputs = $this->getInputs($request);
 
@@ -91,7 +90,7 @@ class EnseignantController extends Controller
         $inputs = $this->getInputs($request);
 
         if($request->has('photo')) {
-            # $this->deleteImages($enseignant);
+            $this->deleteImages($enseignant);
         }
 
         $enseignant->update($inputs);
@@ -114,6 +113,8 @@ class EnseignantController extends Controller
     }
 
 
+    ### Manage upload image
+
     protected function getInputs($request)
     {
         $inputs = $request->except(['photo']);
@@ -124,19 +125,32 @@ class EnseignantController extends Controller
             $inputs['photo'] = $this->saveImages($request);
         }
 
+        # dd($inputs);
+
         return $inputs;
     }
 
     protected function saveImages($request)
     {
+        # dd($request->file('photo'));
+
         $image = $request->file('photo');
         $name  = time() . '.' . $image->extension();
-        # $img   = InterventionImage::make($image->path());
-        $img   = '';
+        $img   = Image::make($image->path());
 
-        $img->widen(800)->encode()->save(public_path('/images/') . $name);
-        $img->widen(400)->encode()->save(public_path('/images/thumbs/') . $name);
+        # $img->resize(width, height);
+
+        $img->widen(800)->encode()->save(public_path('/storage/images/') . $name);
+        $img->widen(400)->encode()->save(public_path('/storage/images/thumbs/') . $name);
 
         return $name;
+    }
+
+    protected function deleteImages($enseignant)
+    {
+        File::delete([
+            public_path('/storage/images/') . $enseignant->photo,
+            public_path('/storage/images/thumbs/') . $enseignant->photo,
+        ]);
     }
 }

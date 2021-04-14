@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Back\AnnonceRequest;
 use App\Models\Annonce;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Intervention\Image\Facades\Image;
 
 class AnnonceController extends Controller
 {
@@ -82,7 +84,7 @@ class AnnonceController extends Controller
         $inputs = $this->getInputs($request);
 
         if($request->has('image')) {
-            # $this->deleteImages($article);
+            $this->deleteImages($annonce);
         }
 
         $annonce->update($inputs);
@@ -105,29 +107,45 @@ class AnnonceController extends Controller
     }
 
 
+
+    ### Manage upload image
+
     protected function getInputs($request)
     {
         $inputs = $request->except(['image']);
 
         # $inputs['active'] = $request->has('active');
 
-        if($request->photo) {
+        if($request->image) {
             $inputs['image'] = $this->saveImages($request);
         }
+
+        # dd($inputs);
 
         return $inputs;
     }
 
     protected function saveImages($request)
     {
+        # dd($request->file('image'));
+
         $image = $request->file('image');
         $name  = time() . '.' . $image->extension();
-        # $img   = InterventionImage::make($image->path());
-        $img   = '';
+        $img   = Image::make($image->path());
 
-        $img->widen(800)->encode()->save(public_path('/images/') . $name);
-        $img->widen(400)->encode()->save(public_path('/images/thumbs/') . $name);
+        # $img->resize(width, height);
+
+        $img->widen(1000)->encode()->save(public_path('/storage/images/') . $name);
+        $img->widen(400)->encode()->save(public_path('/storage/images/thumbs/') . $name);
 
         return $name;
+    }
+
+    protected function deleteImages($formation)
+    {
+        File::delete([
+            public_path('/storage/images/') . $formation->image,
+            public_path('/storage/images/thumbs/') . $formation->image,
+        ]);
     }
 }
