@@ -80,7 +80,9 @@ if (!function_exists('formatDateChiffre')) {
         # 2002-09-20  | yyyy-MM-dd
         # return $date->formatLocalized('%Y-%m-%d');
 
-        return $date->format('d-m-Y');
+        # return utf8_encode ($date->format('d-m-Y'));
+        return utf8_encode ($date->format('Y-m-d'))
+            ;
 
         #return date("dd-mm-YYYY", strtotime($date));
     }

@@ -11,7 +11,9 @@ use App\Models\Niveau;
 use App\Models\Parcours;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
+use Intervention\Image\Facades\Image;
 
 class EtudiantController extends Controller
 {
@@ -54,13 +56,12 @@ class EtudiantController extends Controller
      */
     public function store(EtudiantRequest $request)
     {
-        # dd($request);
-
         $request->merge(['password' => Hash::make($request->password)]);
 
-        # dd($request->all());
+        # $inputs = $this->getInputs($request->all());
+        $inputs = $this->getInputs($request);
 
-        $etudiant = Etudiant::create($request->all());
+        $etudiant = Etudiant::create($inputs);
 
         $etudiant->niveau()->attach($request->niveau_id);
 
@@ -115,14 +116,17 @@ class EtudiantController extends Controller
 
         $request->merge(['password' => Hash::make($request->password)]);
 
-        $etudiant->update($request->all());
+        $inputs = $this->getInputs($request);
+
+        if($request->has('photo')) {
+            $this->deleteImages($etudiant);
+        }
+
+        $etudiant->update($inputs);
+
+        # $etudiant->update($request->all());
 
         $etudiant->niveau()->sync($request->niveau_id);
-
-        # dd($request->annee_id, $request->niveau_id,
-        #     count($request->niveau_id),
-        #     $request->niveau_id[0], gettype($request->niveau_id[0]),
-        #     gettype((int) $request->niveau_id[0]));
 
         for ($i = 0; $i < count($request->niveau_id); $i++) {
             DB::table('cactus_annee_universitaires')
@@ -132,16 +136,6 @@ class EtudiantController extends Controller
                     'annee_id' => (int)$request->annee_id[$i]
                 ]);
         }
-
-        # foreach ($request->annee_id as $annee)
-        # {
-        #     DB::table('cactus_annee_universitaires')
-        #         ->where('etudiant_id', $etudiant->id)
-        #         ->where('niveau_id', $request->niveau_id)
-        #         ->update([
-        #             'annee_id' => $annee
-        #         ]);
-        # }
 
         return back()->with('ok', 'The post has been successfully updated');
     }
@@ -158,5 +152,46 @@ class EtudiantController extends Controller
         $etudiant->delete();
 
         return response()->json();
+    }
+
+    ### Manage upload image
+
+    protected function getInputs($request)
+    {
+        $inputs = $request->except(['photo']);
+
+        # $inputs['active'] = $request->has('active');
+
+        if($request->photo) {
+            $inputs['photo'] = $this->saveImages($request);
+        }
+
+        # dd($inputs);
+
+        return $inputs;
+    }
+
+    protected function saveImages($request)
+    {
+        # dd($request->file('photo'));
+
+        $image = $request->file('photo');
+        $name  = time() . '.' . $image->extension();
+        $img   = Image::make($image->path());
+
+        # $img->resize(width, height);
+
+        $img->widen(800)->encode()->save(public_path('/storage/images/') . $name);
+        $img->widen(400)->encode()->save(public_path('/storage/images/thumbs/') . $name);
+
+        return $name;
+    }
+
+    protected function deleteImages($formation)
+    {
+        File::delete([
+            public_path('/storage/images/') . $formation->photo,
+            public_path('/storage/images/thumbs/') . $formation->photo,
+        ]);
     }
 }

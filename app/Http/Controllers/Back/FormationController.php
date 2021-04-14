@@ -113,7 +113,7 @@ class FormationController extends Controller
         return response()->json();
     }
 
-
+    ### Manage upload image
 
     protected function getInputs($request)
     {

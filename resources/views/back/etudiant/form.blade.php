@@ -12,7 +12,8 @@
 @section('main')
     <form
             method="post"
-            action="{{ Route::currentRouteName() === 'etudiant.edit' ? route('etudiant.update', $etudiant->id) : route('etudiant.store') }}">
+            action="{{ Route::currentRouteName() === 'etudiant.edit' ? route('etudiant.update', $etudiant->id) : route('etudiant.store') }}"
+            enctype="multipart/form-data">
 
         @if(Route::currentRouteName() === 'etudiant.edit')
             @method('PUT')
@@ -86,6 +87,9 @@
                                 input='date'
                                 :required="true">
                         </x-back.input>
+
+                        <input type="hidden" id="date_naissance_clone" @if(isset($etudiant)) value="{{ $etudiant->date_naissance }}" @endif>
+
                         <x-back.input
                                 col="col-md-6"
                                 name='lieu_naissance'
@@ -131,7 +135,7 @@
 
 
 
-                    @if(Route::currentRouteName() === 'etudiant.create')
+
                     <div class="form-row">
                         <x-back.input
                                 col="col-md-4"
@@ -143,9 +147,8 @@
                                 :required="true">
                         </x-back.input>
 
-
-
-                        <x-back.input
+                        @if(Route::currentRouteName() === 'etudiant.create')
+                            <x-back.input
                                 col="col-md-4"
                                 name='niveau_id'
                                 title='Niveau'
@@ -153,9 +156,9 @@
                                 input='select'
                                 :options="$niveaux"
                                 :required="true">
-                        </x-back.input>
+                            </x-back.input>
 
-                        <x-back.input
+                            <x-back.input
                                 col="col-md-4"
                                 name='annee_id'
                                 title='Annee Universitaire'
@@ -163,9 +166,10 @@
                                 input='select'
                                 :options="$annees"
                                 :required="true">
-                        </x-back.input>
+                            </x-back.input>
+
+                        @endif
                     </div>
-                    @endif
 
                     <button type="submit" class="btn btn-primary">Valider</button>
                 </x-back.card>
@@ -173,6 +177,8 @@
 
 
             <div class="col-md-4">
+
+                {{-- File Manager --}}
                 <x-back.card
                         type='primary'
                         :outline="false"
@@ -232,6 +238,57 @@
                     </div>
                 </x-back.card>
                 @endif
+
+                {{-- Upload --}}
+                <x-back.card
+                        id="photo_upload"
+                        type='primary'
+                        :outline="false"
+                        title='Photo Upload'>
+
+                    <div class="form-group{{ $errors->has('photo') ? ' is-invalid' : '' }}">
+                        <label for="changeImage">Image</label>
+                        @if(isset($etudiant) && !$errors->has('photo'))
+                            <div>
+                                <p><img src="{{ getImageSingle($etudiant->photo, true) }}" style="width:100%;"></p>
+                                <button type="button" id="changeImage" class="btn btn-warning"
+                                        data-update="@if(isset($etudiant)) show @endif">
+                                    Changer d'image</button>
+                            </div>
+                        @endif
+                        <div id="wrapper" class="@if(isset($etudiant)) d-none @endif">
+                            {{--@if(!isset($formation) || $errors->has('photo'))--}}
+                            <div class="custom-file">
+                                <input type="file" id="image_upload" name="photo"
+                                       class="{{ $errors->has('photo') ? ' is-invalid ' : '' }} custom-file-input"
+                                       required>
+
+                                <label class="custom-file-label" for="image_upload"></label>
+
+                                <div class="text-center my-1 py-2" style="margin-bottom:15px;">
+                                    <label class="label" for="image_upload">
+                                        <img id="previewImg" class="m-2" style="width:100%; cursor: pointer;" src=""
+                                             {{--src="{{ getImage($formation, true) }}" --}}
+                                             alt="">
+                                    </label>
+                                </div>
+
+                                <div class="row justify-content-center">
+                                    <button type="button" id="btn-delete-image" class="btn btn-outline-danger d-none">Supprimer</button>
+                                </div>
+
+
+                                @if ($errors->has('photo'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('photo') }}
+                                    </div>
+                                @endif
+                            </div>
+                            {{--@endif--}}
+                        </div>
+                    </div>
+
+                </x-back.card>
             </div>
         </div>
 
@@ -242,4 +299,80 @@
 @section('js')
     {{--@include('back.shared.editorScript')--}}
     @include('back.shared.slugScript')
+
+    <script type="text/javascript" src="/admin/plugins/moment/moment.min.js"></script>
+
+    <script>
+        $(document).ready(() => {
+            $('form').on('change', '#image_upload', e => {
+                $(e.currentTarget).next('.custom-file-label').text(e.target.files[0].name);
+
+                previewFile(e.currentTarget)
+            });
+
+            $('#changeImage').click(e => {
+                $(e.currentTarget).parent().hide();
+
+                /*console.log($(e.currentTarget), 'changeImage data-update',
+                    $(e.currentTarget).data("update"))*/
+
+                let show = $.trim($(e.currentTarget).data("update"))
+
+                if ( show === 'show')
+                {
+                    $('#wrapper').removeClass('d-none')
+
+                    // $("label[for='image_upload']").click()
+                    $('.label').click()
+
+                    console.log('changeImage open')
+                }
+            });
+
+            $('#btn-delete-image').click(e => {
+                $('#previewImg').attr("src", '#')
+
+                $('#photo_upload').css("height", "223px")
+                $('#previewImg').css("height", "0px")
+                $(e.currentTarget).addClass('d-none')
+                $('.custom-file-label').text('')
+            })
+
+            // console.log('Update', $('#date_naissance_clone').val())
+
+            if ($('#date_naissance_clone').val())
+            {
+                let data_input = $('#date_naissance_clone').val() // Oct 23
+
+                let dateObject = new Date(data_input)
+
+                let dateString = moment(dateObject).format('YYYY-MM-DD');
+                console.log('Moment.js', dateString) // Output: 2020-07-21
+
+                $('#date_naissance').val(dateString)
+            }
+        });
+
+        function previewFile(input){
+            let file = $(input).get(0).files[0]
+
+            if(file){
+                let reader = new FileReader()
+
+                reader.onload = function(){
+                    $('#previewImg').attr("src", reader.result)
+
+                    $('#previewImg').css("height", "300px")
+
+                    $('#photo_upload').css("height", "600px")
+
+                    $('#btn-delete-image').removeClass('d-none')
+
+                    // console.log($("#previewImg").attr("src"))
+                }
+
+                reader.readAsDataURL(file)
+            }
+        }
+    </script>
 @endsection
