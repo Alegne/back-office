@@ -171,22 +171,12 @@ return [
             [
                 'name'  => 'All Evenements',
                 'role'  => 'annonceur',
-                'route' => '', #'niveaux.index',
-            ],
-            [
-                'name'  => 'New Evenements',
-                'role'  => 'annonceur',
-                'route' => '', #'comments.indexnew',
+                'route' => 'evenement.index',
             ],
             [
                 'name'  => 'Add Evenements',
                 'role'  => 'annonceur',
-                'route' => '', #'comments.indexnew',
-            ],
-            [
-                'name'  => 'fake',
-                'role'  => 'annonceur',
-                'route' => '', #'comments.edit',
+                'route' => 'evenement.create',
             ],
         ],
     ],
@@ -197,22 +187,12 @@ return [
             [
                 'name'  => 'All Annonces',
                 'role'  => 'annonceur',
-                'route' => '', #'niveaux.index',
-            ],
-            [
-                'name'  => 'New Annonces',
-                'role'  => 'annonceur',
-                'route' => '', #'comments.indexnew',
+                'route' => 'annonce.index',
             ],
             [
                 'name'  => 'Add Annonces',
                 'role'  => 'annonceur',
-                'route' => '', #'comments.indexnew',
-            ],
-            [
-                'name'  => 'fake',
-                'role'  => 'annonceur',
-                'route' => '', #'comments.edit',
+                'route' => 'annonce.create',
             ],
         ],
     ],
@@ -285,23 +265,23 @@ return [
             [
                 'name'  => 'All Article',
                 'role'  => 'redacteur',
-                'route' => '', #'niveaux.index',
-            ],
-            [
-                'name'  => 'New Article',
-                'role'  => 'redacteur',
-                'route' => '', #'comments.indexnew',
+                'route' => 'article.index',
             ],
             [
                 'name'  => 'Add Article',
                 'role'  => 'redacteur',
-                'route' => '', #'comments.indexnew',
+                'route' => 'article.create',
             ]
         ],
     ],
+    'Message' => [
+        'role'   => 'admin',
+        'route'  => 'message.index',
+        'icon'   => 'id-card',
+    ],
     'NewsLetter' => [
         'role'   => 'admin',
-        'route'  => '', #'admin',
+        'route'  => 'newsletter.index',
         'icon'   => 'envelope-open-text',
     ],
     'Album' => [

@@ -2,22 +2,21 @@
 
 namespace App\Http\Controllers\Back;
 
-use App\DataTables\ArticleDataTable;
+use App\DataTables\AnnonceDataTable;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Back\ArticleRequest;
-use App\Models\Article;
-use App\Models\Club;
+use App\Http\Requests\Back\AnnonceRequest;
+use App\Models\Annonce;
 use Illuminate\Http\Request;
 
-class ArticleController extends Controller
+class AnnonceController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @param ArticleDataTable $dataTable
+     * @param AnnonceDataTable $dataTable
      * @return \Illuminate\Http\Response
      */
-    public function index(ArticleDataTable $dataTable)
+    public function index(AnnonceDataTable $dataTable)
     {
         return $dataTable->render('back.shared.index');
     }
@@ -29,24 +28,22 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        $article = null;
+        $annonce = null;
 
-        $clubs = Club::all()->pluck('libelle', 'id');
-
-        return view('back.article.form', compact('article', 'clubs'));
+        return view('back.annonce.form', compact('annonce'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param ArticleRequest $request
+     * @param AnnonceRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ArticleRequest $request)
+    public function store(AnnonceRequest $request)
     {
         $inputs = $this->getInputs($request);
 
-        Article::create($inputs);
+        Annonce::create($inputs);
 
         return back()->with('ok', 'The post has been successfully created');
     }
@@ -54,10 +51,10 @@ class ArticleController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Article  $article
+     * @param  \App\Models\Annonce  $annonce
      * @return \Illuminate\Http\Response
      */
-    public function show(Article $article)
+    public function show(Annonce $annonce)
     {
         //
     }
@@ -65,23 +62,22 @@ class ArticleController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Article  $article
+     * @param  \App\Models\Annonce  $annonce
      * @return \Illuminate\Http\Response
      */
-    public function edit(Article $article)
+    public function edit(Annonce $annonce)
     {
-        $clubs = Club::all()->pluck('libelle', 'id');
-        return view('back.article.form', compact('article', 'clubs'));
+        return view('back.annonce.form', compact('annonce'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param ArticleRequest $request
-     * @param  \App\Models\Article $article
+     * @param AnnonceRequest $request
+     * @param  \App\Models\Annonce $annonce
      * @return \Illuminate\Http\Response
      */
-    public function update(ArticleRequest $request, Article $article)
+    public function update(AnnonceRequest $request, Annonce $annonce)
     {
         $inputs = $this->getInputs($request);
 
@@ -89,7 +85,7 @@ class ArticleController extends Controller
             # $this->deleteImages($article);
         }
 
-        $article->update($inputs);
+        $annonce->update($inputs);
 
         return back()->with('ok', 'The post has been successfully updated');
     }
@@ -97,16 +93,17 @@ class ArticleController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Article $article
+     * @param  \App\Models\Annonce $annonce
      * @return \Illuminate\Http\Response
      * @throws \Exception
      */
-    public function destroy(Article $article)
+    public function destroy(Annonce $annonce)
     {
-        $article->delete();
+        $annonce->delete();
 
         return response()->json();
     }
+
 
     protected function getInputs($request)
     {

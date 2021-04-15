@@ -4,7 +4,7 @@ namespace App\Http\Requests\Back;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ArticleRequest extends FormRequest
+class EvenementRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,8 +13,7 @@ class ArticleRequest extends FormRequest
      */
     public function authorize()
     {
-        return true
-            ;
+        return true;
     }
 
     /**
@@ -28,7 +27,7 @@ class ArticleRequest extends FormRequest
             'titre'         => 'required',
             'description'   => 'required',
             'posteur'       => 'required',
-            'club_id'       => 'required',
+            'type'          => 'required',
         ];
     }
 }

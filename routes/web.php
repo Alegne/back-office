@@ -1,9 +1,14 @@
 <?php
 
+use App\Http\Controllers\Back\AnnonceController;
+use App\Http\Controllers\Back\ArticleController;
 use App\Http\Controllers\Back\ClubController;
 use App\Http\Controllers\Back\EnseignantController;
 use App\Http\Controllers\Back\EtudiantController;
+use App\Http\Controllers\Back\EvenementController;
 use App\Http\Controllers\Back\FormationController;
+use App\Http\Controllers\Back\MessageController;
+use App\Http\Controllers\Back\NewsletterController;
 use App\Http\Controllers\Back\NiveauController;
 use App\Http\Controllers\Back\ParcoursController;
 use App\Http\Controllers\Back\AnneeUniversitaireLibelleController;
@@ -67,5 +72,20 @@ Route::resource('enseignant', EnseignantController::class);
 # Clubs
 Route::resource('club', ClubController::class);
 
-# Clubs
+# Langue
 Route::resource('langue', LangueController::class);
+
+# Articles
+Route::resource('article', ArticleController::class);
+
+# Evenements
+Route::resource('evenement', EvenementController::class);
+
+# Annonces
+Route::resource('annonce', AnnonceController::class);
+
+# Message
+Route::resource('message', MessageController::class);
+
+# Newsletter
+Route::resource('newsletter', NewsletterController::class);
