@@ -57,4 +57,14 @@ class Niveau extends Model
     {
         return $this->belongsTo(Formation::class,'formation_id');
     }
+
+    /**
+     * Get files for the niveau
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function fichiers()
+    {
+        return $this->hasMany(EspaceNumerique::class, 'niveau_id');
+    }
 }

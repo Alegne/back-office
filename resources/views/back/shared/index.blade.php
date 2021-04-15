@@ -9,6 +9,7 @@
 
 @section('main')
   {{ $dataTable->table(['class' => 'table table-bordered table-hover table-sm'], true) }}
+
 @endsection
 
 @section('js')

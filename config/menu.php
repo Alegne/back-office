@@ -206,19 +206,14 @@ return [
         'role'   => 'admin',
         'children' => [
             [
-                'name'  => 'Photo Slide',
-                'role'  => 'admin',
-                'route' => '', #'niveaux.index',
-            ],
-            [
                 'name'  => 'Contenu',
                 'role'  => 'admin',
-                'route' => '', #'comments.indexnew',
+                'route' => 'configuration.contenu',
             ],
             [
                 'name'  => 'Apropos',
                 'role'  => 'admin',
-                'route' => '', #'comments.indexnew',
+                'route' => '',
             ],
             [
                 'name'  => 'Langue',
@@ -228,12 +223,12 @@ return [
             [
                 'name'  => 'Lien',
                 'role'  => 'admin',
-                'route' => '', #'comments.indexnew',
+                'route' => 'configuration.lien',
             ],
             [
                 'name'  => 'Contact',
                 'role'  => 'admin',
-                'route' => '', #'comments.indexnew',
+                'route' => 'configuration.contact',
             ],
         ],
     ],
@@ -307,8 +302,19 @@ return [
     ],
     'ENT' => [
         'role'   => 'admin',
-        'route'  => '', #'admin',
         'icon'   => 'folder',
+        'children' => [
+            [
+                'name'  => 'All',
+                'role'  => 'admin',
+                'route' => 'espace-numerique-travail.index',
+            ],
+            [
+                'name'  => 'Add',
+                'role'  => 'admin',
+                'route' => 'espace-numerique-travail.create',
+            ],
+        ]
     ],
     'Journal' => [
         'role'   => 'admin',

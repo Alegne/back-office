@@ -14,7 +14,7 @@ class Staff extends Model
      *
      * @var string
      */
-    protected $table = 'cactus_niveaux';
+    protected $table = 'cactus_staff';
 
     /**
      * The attributes that are mass assignable.

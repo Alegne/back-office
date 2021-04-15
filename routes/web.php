@@ -4,6 +4,7 @@ use App\Http\Controllers\Back\AnnonceController;
 use App\Http\Controllers\Back\ArticleController;
 use App\Http\Controllers\Back\ClubController;
 use App\Http\Controllers\Back\EnseignantController;
+use App\Http\Controllers\Back\EspaceNumeriqueController;
 use App\Http\Controllers\Back\EtudiantController;
 use App\Http\Controllers\Back\EvenementController;
 use App\Http\Controllers\Back\FormationController;
@@ -13,6 +14,7 @@ use App\Http\Controllers\Back\NiveauController;
 use App\Http\Controllers\Back\ParcoursController;
 use App\Http\Controllers\Back\AnneeUniversitaireLibelleController;
 use App\Http\Controllers\Back\LangueController;
+use App\Http\Controllers\Back\ConfigurationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -70,7 +72,9 @@ Route::name('etudiant.indexold')->get('/etudiant-ancien', [EtudiantController::c
 Route::resource('enseignant', EnseignantController::class);
 
 # Clubs
-Route::resource('club', ClubController::class);
+Route::resource('club', ClubController::class);Route::view('/configuration/lien', 'back.configuration.lien')->name('configuration.lien');
+Route::get('/club/{club}/staff', [ClubController::class, 'addStaffView'])->name('club.staff.view');
+Route::post('/club/staff/add', [ClubController::class, 'addStaffStore'])->name('club.staff.add');
 
 # Langue
 Route::resource('langue', LangueController::class);
@@ -89,3 +93,20 @@ Route::resource('message', MessageController::class);
 
 # Newsletter
 Route::resource('newsletter', NewsletterController::class);
+
+# Configuration
+Route::view('/configuration/contenu', 'back.configuration.contenu')->name('configuration.contenu');
+Route::view('/configuration/contact', 'back.configuration.contact')->name('configuration.contact');
+Route::view('/configuration/lien', 'back.configuration.lien')->name('configuration.lien');
+
+Route::put('/configuration/update', [ConfigurationController::class, 'update'])->name('configuration.update');
+
+# Espace Numerique
+Route::resource('espace-numerique-travail', EspaceNumeriqueController::class)
+    ->parameters(['espace-numerique-travail' => 'espaceNumerique']);
+
+
+# File Manager
+Route::group(['prefix' => 'laravel-filemanager-webcup', 'middleware' => ['web', 'auth']], function (){
+    \UniSharp\LaravelFilemanager\Lfm::routes();
+});
