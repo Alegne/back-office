@@ -30,6 +30,11 @@ class EspaceNumerique extends Model
         'enseignant_id'
     ];
 
+    protected $casts = [
+        # 'pieces_jointes' => 'json',
+        # 'pieces_jointes' => 'array',
+    ];
+
 
     /**
      * Get the niveau that owns the items.
@@ -61,6 +66,29 @@ class EspaceNumerique extends Model
     public function enseignant()
     {
         # related, foreignKey, ownerKey, relation
-        return $this->belongsTo(Club::class, 'enseignant_id', 'id');
+        return $this->belongsTo(Enseignant::class, 'enseignant_id', 'id');
+    }
+
+    /**
+     * Get Piece jointe.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getPiecesJointesAttribute($value)
+    {
+        # pieces_jointes
+        return  json_decode($value);
+    }
+
+    /**
+     * Set Piece Jointes.
+     *
+     * @param  string  $value
+     * @return void
+     */
+    public function setPieceJointesAttribute($value)
+    {
+        $this->attributes['pieces_jointes'] = json_encode($value);
     }
 }

@@ -88,7 +88,7 @@ class FormationController extends Controller
     {
         $inputs = $this->getInputs($request);
 
-        if($request->has('photo')) {
+        if($request->has('photo') && $request->photo) {
             $this->deleteImages($formation);
         }
 
@@ -108,7 +108,7 @@ class FormationController extends Controller
     {
         $formation->delete();
 
-        deleteImages($formation);
+        $this->deleteImages($formation);
 
         return response()->json();
     }

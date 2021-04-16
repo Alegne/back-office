@@ -115,9 +115,17 @@
 
                         <div class="form-group{{ $errors->has('photo') ? ' is-invalid' : '' }}">
                             <label for="changeImage">Image</label>
+
                             @if(isset($formation) && !$errors->has('photo'))
                                 <div>
-                                    <p><img src="{{ getImageSingle($formation->photo, true) }}" style="width:100%;"></p>
+                                    <p>
+                                        @if($formation->photo)
+                                            <img src="{{ getImageSingle($formation->photo, true) }}" style="width:100%;">
+                                        @else
+                                            <img src="{{ asset('/default.png') }}" style="width:100%;">
+                                        @endif
+
+                                    </p>
                                     <button type="button" id="changeImage" class="btn btn-warning"
                                             data-update="@if(isset($formation)) show @endif">
                                         Changer d'image</button>
@@ -127,7 +135,8 @@
                                 {{--@if(!isset($formation) || $errors->has('photo'))--}}
                                     <div class="custom-file">
                                         <input type="file" id="image_upload" name="photo"
-                                               class="{{ $errors->has('photo') ? ' is-invalid ' : '' }} custom-file-input" required>
+                                               class="{{ $errors->has('photo') ? ' is-invalid ' : '' }} custom-file-input"
+                                               @if(Route::currentRouteName() === 'formation.store') required @endif>
 
                                         <label class="custom-file-label" for="image_upload"></label>
 
