@@ -93,6 +93,7 @@
                       headers: headers
                   })
                   .then(response => {
+                      console.log(response.statusText)
                       if (response.ok) {
                           // Si la réponse est OK on supprime la ligne du tableau
                           e.target.parentNode.parentNode.remove();

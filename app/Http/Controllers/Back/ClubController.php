@@ -156,9 +156,11 @@ class ClubController extends Controller
     {
         $inputs = $request->except(['image']);
 
+        # dd($request->all());
+
         # $inputs['active'] = $request->has('active');
 
-        if($request->image) {
+        if($request->file('image')) {
             $inputs['image'] = $this->saveImages($request);
         }
 

@@ -11,6 +11,7 @@
     'Values',
     'multiple' => false,
     'col' => '',
+    'maxlength' => 255
 ])
 
 <div class="form-group {{ $col ? $col : '' }}">
@@ -92,6 +93,33 @@
             value="{{ old($name, $value) }}"
             @if($required) required @endif>
 
+    @elseif ($input === 'email')
+        <input type="email"
+            class="form-control input-date {{ $name }} {{ $errors->has($name) ? ' is-invalid' : '' }}"
+            id="{{ $name }}"
+            name="{{ $name }}"
+            value="{{ old($name, $value) }}"
+            @if($required) required @endif>
+
+    @elseif ($input === 'number')
+        <input type="number"
+            class="form-control input-date {{ $name }} {{ $errors->has($name) ? ' is-invalid' : '' }}"
+            id="{{ $name }}"
+            name="{{ $name }}"
+            value="{{ old($name, $value) }}"
+            maxlength="{{ $maxlength }}"
+            @if($required) required @endif>
+
+    @elseif ($input === 'url')
+        <input type="url"
+            class="form-control input-date {{ $name }} {{ $errors->has($name) ? ' is-invalid' : '' }}"
+            id="{{ $name }}"
+            name="{{ $name }}"
+            value="{{ old($name, $value) }}"
+            placeholder="https://example.com"
+            pattern="https://.*"
+            @if($required) required @endif>
+
     @else
         <input
             type="text"
@@ -99,6 +127,7 @@
             id="{{ $name }}"
             name="{{ $name }}"
             value="{{ old($name, $value) }}"
+            maxlength="{{ $maxlength }}"
             @if($required) required @endif>
 
     @endif

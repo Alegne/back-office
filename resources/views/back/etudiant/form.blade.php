@@ -54,7 +54,8 @@
                                 name='cin'
                                 title='CIN'
                                 :value="isset($etudiant) ? $etudiant->cin : ''"
-                                input='text'
+                                input='number'
+                                maxlength="12"
                                 :required="true">
                         </x-back.input>
                     </div>

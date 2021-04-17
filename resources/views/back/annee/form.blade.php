@@ -42,11 +42,13 @@
                     <div class="form-row">
                         <div class="form-group col">
                             <label for="debut">Debut</label>
-                            <input type="text" id="debut" class="yearpicker form-control" value="" autofocus />
+                            <input type="text" id="debut" class="yearpicker form-control"
+                                   maxlength="4" size="4" value="" pattern="[0-9]{4}" autofocus />
                         </div>
                         <div class="form-group col">
                             <label for="fin">Fin</label>
-                            <input type="text" id="fin" class="yearpicker form-control" value="" />
+                            <input type="text" id="fin" class="yearpicker form-control"
+                                   maxlength="4" size="4" value="" pattern="[0-9]{4}" />
                         </div>
                     </div>
 

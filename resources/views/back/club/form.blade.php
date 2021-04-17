@@ -120,7 +120,7 @@
                         <div id="wrapper" class="@if(isset($club)) d-none @endif">
                             {{--@if(!isset($club) || $errors->has('image'))--}}
                             <div class="custom-file">
-                                <input type="file" id="image_upload" name="photo"
+                                <input type="file" id="image_upload" name="image"
                                        class="{{ $errors->has('image') ? ' is-invalid ' : '' }} custom-file-input"
                                        @if(Route::currentRouteName() === 'club.store') required @endif>
 
