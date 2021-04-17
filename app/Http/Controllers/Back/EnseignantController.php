@@ -85,11 +85,12 @@ class EnseignantController extends Controller
      */
     public function update(EnseignantRequest $request, Enseignant $enseignant)
     {
+        #dd($request->all());
         $request->merge(['mot_de_passe' => Hash::make($request->mot_de_passe)]);
 
         $inputs = $this->getInputs($request);
 
-        if($request->has('photo') && $request->photo) {
+        if ($request->has('photo') && $request->photo) {
             $this->deleteImages($enseignant);
         }
 
@@ -122,7 +123,7 @@ class EnseignantController extends Controller
 
         # $inputs['active'] = $request->has('active');
 
-        if($request->photo) {
+        if ($request->photo && $request->file('photo')) {
             $inputs['photo'] = $this->saveImages($request);
         }
 
@@ -133,7 +134,7 @@ class EnseignantController extends Controller
 
     protected function saveImages($request)
     {
-        # dd($request->file('photo'));
+        # dd($request->file('photo'), $request->photo);
 
         $image = $request->file('photo');
         $name  = time() . '.' . $image->extension();
