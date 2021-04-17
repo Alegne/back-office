@@ -100,6 +100,7 @@ Route::view('/configuration/contact', 'back.configuration.contact')->name('confi
 Route::view('/configuration/lien', 'back.configuration.lien')->name('configuration.lien');
 
 Route::put('/configuration/update', [ConfigurationController::class, 'update'])->name('configuration.update');
+Route::get('/configuration/update', [ConfigurationController::class, 'edit'])->name('configuration.edit');
 
 # Espace Numerique
 Route::resource('espace-numerique-travail', EspaceNumeriqueController::class)

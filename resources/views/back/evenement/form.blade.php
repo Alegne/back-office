@@ -128,7 +128,13 @@
                         <label for="changeImage">Image</label>
                         @if(isset($evenement) && !$errors->has('image'))
                             <div>
-                                <p><img src="{{ getImageSingle($evenement->image, true) }}" style="width:100%;"></p>
+                                <p>
+                                    @if($evenement->image)
+                                        <img src="{{ getImageSingle($evenement->image, true) }}" style="width:100%;">
+                                    @else
+                                        <img src="{{ asset('/default.png') }}" style="width:100%;">
+                                    @endif
+                                </p>
                                 <button type="button" id="changeImage" class="btn btn-warning"
                                         data-update="@if(isset($evenement)) show @endif">
                                     Changer d'image</button>
@@ -137,9 +143,9 @@
                         <div id="wrapper" class="@if(isset($evenement)) d-none @endif">
                             {{--@if(!isset($evenement) || $errors->has('image'))--}}
                             <div class="custom-file">
-                                <input type="file" id="image_upload" name="photo"
+                                <input type="file" id="image_upload" name="image"
                                        class="{{ $errors->has('image') ? ' is-invalid ' : '' }} custom-file-input"
-                                       required>
+                                       @if(Route::currentRouteName() === 'evenement.store') required @endif>
 
                                 <label class="custom-file-label" for="image_upload"></label>
 

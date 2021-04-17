@@ -10,6 +10,7 @@ use App\Models\EspaceNumerique;
 use App\Models\Niveau;
 use App\Models\Parcours;
 use Illuminate\Http\Request;
+use Intervention\Image\Facades\Image;
 
 class EspaceNumeriqueController extends Controller
 {
@@ -48,11 +49,13 @@ class EspaceNumeriqueController extends Controller
      */
     public function store(EspaceNumeriqueRequest $request)
     {
+        # dd($request->all());
+
+        # $request->pieces_jointes
+
         $inputs = $this->getInputs($request);
 
         $espace = EspaceNumerique::create($inputs);
-
-        # $etudiant = EspaceNumerique::create($request->all());
 
         $espace->parcours()->attach($request->parcours_id);
 
@@ -82,6 +85,10 @@ class EspaceNumeriqueController extends Controller
         $niveaux     = Niveau::all()->pluck('tag', 'id');
         $enseignants = Enseignant::all()->pluck('nom', 'id');
 
+        # dd($espaceNumerique, $espaceNumerique->pieces_jointes,
+        #     $espaceNumerique->pieces_jointes[0],
+        #     explode('.', $espaceNumerique->pieces_jointes[0])[1]);
+
         return view('back.ent.form', compact('espaceNumerique', 'parcours', 'niveaux', 'enseignants'));
     }
 
@@ -96,7 +103,7 @@ class EspaceNumeriqueController extends Controller
     {
         $inputs = $this->getInputs($request);
 
-        if($request->has('photo')) {
+        if($request->has('pieces_jointes') && $request->pieces_jointes) {
             # $this->deleteImages($enseignant);
         }
 
@@ -123,27 +130,76 @@ class EspaceNumeriqueController extends Controller
 
     protected function getInputs($request)
     {
-        $inputs = $request->except(['photo']);
+        $inputs = $request->except(['pieces_jointes', 'MAX_FILE_SIZE', '_token', 'parcours_id']);
 
         # $inputs['active'] = $request->has('active');
 
-        if($request->photo) {
-            $inputs['photo'] = $this->saveImages($request);
+        if($request->pieces_jointes) {
+            $inputs['pieces_jointes'] = json_encode($this->saveFiles($request));
+            # $inputs['pieces_jointes'] = $this->saveFiles($request);
+
+            # $inputs['pieces_jointes'] = collect($this->saveFiles($request))->implode('|');
         }
 
         return $inputs;
     }
 
-    protected function saveImages($request)
+    protected function saveFiles($request)
     {
-        $image = $request->file('photo');
-        $name  = time() . '.' . $image->extension();
-        # $img   = InterventionImage::make($image->path());
-        $img   = '';
+        # $request->pieces_jointes
 
-        $img->widen(800)->encode()->save(public_path('/images/') . $name);
-        $img->widen(400)->encode()->save(public_path('/images/thumbs/') . $name);
+        $fichiers = [];
 
-        return $name;
+        $extensions_images = [
+            'jpeg',
+            'pjpeg',
+            'png',
+            'gif',
+            'jpg'
+        ];
+
+        # dd($request->pieces_jointes);
+
+        foreach ($request->pieces_jointes as $jointe)
+        {
+            if ($jointe->extension())
+            {
+                $name  = time() . '.' . $jointe->extension();
+            } else {
+                $name  = time() . '.' . $jointe->getClientOriginalExtension();
+            }
+
+
+            # mimeType: "text/plain"
+
+            # dd($jointe, $jointe->extension(), $name,
+            #     $jointe->getClientOriginalName(), $jointe->getClientMimeType(),
+            #     $jointe->getClientOriginalExtension());
+
+            array_push($fichiers, $name);
+
+            if (in_array($jointe->extension(), $extensions_images))
+            {
+
+                $img   = Image::make($jointe->path());
+                $img->widen(800)->encode()->save(public_path('/storage/images/') . $name);
+                $img->widen(400)->encode()->save(public_path('/storage/images/thumbs/') . $name);
+
+            }else{
+
+                # dd(public_path('/storage/fichiers/')); # D:\projet M1\WebCup\_projet\projet-back-office-webcup\public\/storage/fichiers/
+                # dd(public_path('storage\fichiers'));  # D:\projet M1\WebCup\_projet\projet-back-office-webcup\public\storage\fichiers
+
+
+                $jointe->storeAs('public\fichiers', $name);
+                # $jointe->move(public_path('storage\fichiers'), $name);
+
+
+            }
+        }
+
+        # dd($fichiers);
+
+        return $fichiers;
     }
 }

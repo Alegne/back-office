@@ -87,7 +87,7 @@ class ArticleController extends Controller
     {
         $inputs = $this->getInputs($request);
 
-        if($request->has('image')) {
+        if($request->has('image') && $request->image) {
             $this->deleteImages($article);
         }
 
@@ -106,6 +106,7 @@ class ArticleController extends Controller
     public function destroy(Article $article)
     {
         $article->delete();
+        $this->deleteImages($article);
 
         return response()->json();
     }
@@ -144,11 +145,11 @@ class ArticleController extends Controller
         return $name;
     }
 
-    protected function deleteImages($annonce)
+    protected function deleteImages($article)
     {
         File::delete([
-            public_path('/storage/images/') . $annonce->image,
-            public_path('/storage/images/thumbs/') . $annonce->image,
+            public_path('/storage/images/') . $article->image,
+            public_path('/storage/images/thumbs/') . $article->image,
         ]);
     }
 }

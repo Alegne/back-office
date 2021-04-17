@@ -83,7 +83,7 @@ class AnnonceController extends Controller
     {
         $inputs = $this->getInputs($request);
 
-        if($request->has('image')) {
+        if($request->has('image') && $request->image) {
             $this->deleteImages($annonce);
         }
 
@@ -102,6 +102,8 @@ class AnnonceController extends Controller
     public function destroy(Annonce $annonce)
     {
         $annonce->delete();
+
+        $this->deleteImages($annonce);
 
         return response()->json();
     }
@@ -141,11 +143,11 @@ class AnnonceController extends Controller
         return $name;
     }
 
-    protected function deleteImages($formation)
+    protected function deleteImages($annonce)
     {
         File::delete([
-            public_path('/storage/images/') . $formation->image,
-            public_path('/storage/images/thumbs/') . $formation->image,
+            public_path('/storage/images/') . $annonce->image,
+            public_path('/storage/images/thumbs/') . $annonce->image,
         ]);
     }
 }

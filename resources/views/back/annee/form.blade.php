@@ -7,6 +7,7 @@
             width: 100%;
         }
     </style>
+    <link rel="stylesheet" href="/admin/plugins/year-picker-text-input/yearpicker.css">
 @endsection
 
 @section('main')
@@ -34,7 +35,20 @@
 
                 <x-back.card
                         type='primary'
-                        title='annee'>
+                        title='Annee Universitaire'>
+
+
+
+                    <div class="form-row">
+                        <div class="form-group col">
+                            <label for="debut">Debut</label>
+                            <input type="text" id="debut" class="yearpicker form-control" value="" autofocus />
+                        </div>
+                        <div class="form-group col">
+                            <label for="fin">Fin</label>
+                            <input type="text" id="fin" class="yearpicker form-control" value="" />
+                        </div>
+                    </div>
 
                     <x-back.input
                             name='libelle'
@@ -43,6 +57,9 @@
                             input='text'
                             :required="true">
                     </x-back.input>
+
+
+
 
                     <button type="submit" class="btn btn-primary">Valider</button>
                 </x-back.card>
@@ -56,4 +73,31 @@
 @section('js')
     {{--@include('back.shared.editorScript')--}}
     {{--    @include('back.shared.slugScript')--}}
+
+    <script type="text/javascript" src="/admin/plugins/year-picker-text-input/yearpicker.js"></script>
+
+    <script>
+        $('.yearpicker').yearpicker()
+
+        $(document).ready(() => {
+            $('#libelle').attr('readonly', 'readonly')
+
+            $('#debut').change(function (e) {
+                $('#fin').val(parseInt($(this).val()) + 1)
+
+                $('#libelle').val($(this).val() + '-' + $('#fin').val())
+
+                console.log($(this).val(), $('#fin').val(), $('#libelle').val())
+            })
+
+
+            $('#fin').change(function (e) {
+                $('#debut').val(parseInt($(this).val()) - 1)
+
+                $('#libelle').val($('#debut').val() + '-' + $(this).val())
+
+                console.log($(this).val(), $('#fin').val(), $('#libelle').val())
+            })
+        })
+    </script>
 @endsection

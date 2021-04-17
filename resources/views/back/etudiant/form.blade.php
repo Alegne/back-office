@@ -12,7 +12,8 @@
 @section('main')
     <form
             method="post"
-            action="{{ Route::currentRouteName() === 'etudiant.edit' ? route('etudiant.update', $etudiant->id) : route('etudiant.store') }}"
+            action="{{ Route::currentRouteName() === 'etudiant.edit' ? route('etudiant.update', $etudiant->id) :
+                                                                       route('etudiant.store') }}"
             enctype="multipart/form-data">
 
         @if(Route::currentRouteName() === 'etudiant.edit')
@@ -88,7 +89,9 @@
                                 :required="true">
                         </x-back.input>
 
-                        <input type="hidden" id="date_naissance_clone" @if(isset($etudiant)) value="{{ $etudiant->date_naissance }}" @endif>
+                        <input type="hidden" id="date_naissance_clone"
+                        value="{{ old('date_naissance', isset($etudiant) ? $etudiant->date_naissance : '') }}">
+                        {{--value="{{ old('photo', isset($etudiant) ? getImage($etudiant->date_naissance) : '') }}"--}}
 
                         <x-back.input
                                 col="col-md-6"
@@ -248,9 +251,16 @@
 
                     <div class="form-group{{ $errors->has('photo') ? ' is-invalid' : '' }}">
                         <label for="changeImage">Image</label>
+
                         @if(isset($etudiant) && !$errors->has('photo'))
                             <div>
-                                <p><img src="{{ getImageSingle($etudiant->photo, true) }}" style="width:100%;"></p>
+                                <p>
+                                    @if($etudiant->photo)
+                                        <img src="{{ getImageSingle($etudiant->photo, true) }}" style="width:100%;">
+                                    @else
+                                        <img src="{{ asset('/default.png') }}" style="width:100%;">
+                                    @endif
+                                </p>
                                 <button type="button" id="changeImage" class="btn btn-warning"
                                         data-update="@if(isset($etudiant)) show @endif">
                                     Changer d'image</button>
@@ -261,7 +271,8 @@
                             <div class="custom-file">
                                 <input type="file" id="image_upload" name="photo"
                                        class="{{ $errors->has('photo') ? ' is-invalid ' : '' }} custom-file-input"
-                                       required>
+                                       value="{{ old('photo', isset($etudiant) ? $etudiant->photo : '') }}"
+                                @if(Route::currentRouteName() === 'etudiant.store') required @endif>
 
                                 <label class="custom-file-label" for="image_upload"></label>
 
@@ -304,6 +315,15 @@
 
     <script>
         $(document).ready(() => {
+
+            console.log($('#image_upload').attr('value'))
+
+            if ($('#image_upload').attr('value') != '') {
+                $('#image_upload').next('.custom-file-label').text($('#image_upload').attr('value'))
+
+                console.log('COndition FIle', $('#image_upload').attr('value'))
+            }
+
             $('form').on('change', '#image_upload', e => {
                 $(e.currentTarget).next('.custom-file-label').text(e.target.files[0].name);
 

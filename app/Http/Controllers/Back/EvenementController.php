@@ -90,7 +90,7 @@ class EvenementController extends Controller
     {
         $inputs = $this->getInputs($request);
 
-        if($request->has('image')) {
+        if($request->has('image') && $request->image) {
             $this->deleteImages($evenement);
         }
 
@@ -109,6 +109,8 @@ class EvenementController extends Controller
     public function destroy(Evenement $evenement)
     {
         $evenement->delete();
+
+        $this->deleteImages($evenement);
 
         return response()->json();
     }
@@ -146,11 +148,11 @@ class EvenementController extends Controller
         return $name;
     }
 
-    protected function deleteImages($formation)
+    protected function deleteImages($evenement)
     {
         File::delete([
-            public_path('/storage/images/') . $formation->image,
-            public_path('/storage/images/thumbs/') . $formation->image,
+            public_path('/storage/images/') . $evenement->image,
+            public_path('/storage/images/thumbs/') . $evenement->image,
         ]);
     }
 }

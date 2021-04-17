@@ -25,13 +25,13 @@ class EspaceNumeriqueDataTable extends DataTable
             ->eloquent($query)
             ->editColumn('action', function ($espaceNumerique) {
                 return $this->button(
-                        'espaceNumerique.edit',
+                        'espace-numerique-travail.edit',
                         $espaceNumerique->id,
                         'warning',
                         'Editer',
                         'edit'
                     ). $this->button(
-                        'espaceNumerique.destroy',
+                        'espace-numerique-travail.destroy',
                         $espaceNumerique->id,
                         'danger',
                         'Supprimer',

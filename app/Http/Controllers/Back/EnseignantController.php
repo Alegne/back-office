@@ -89,7 +89,7 @@ class EnseignantController extends Controller
 
         $inputs = $this->getInputs($request);
 
-        if($request->has('photo')) {
+        if($request->has('photo') && $request->photo) {
             $this->deleteImages($enseignant);
         }
 
@@ -108,6 +108,7 @@ class EnseignantController extends Controller
     public function destroy(Enseignant $enseignant)
     {
         $enseignant->delete();
+        $this->deleteImages($enseignant);
 
         return response()->json();
     }

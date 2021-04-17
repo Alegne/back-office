@@ -168,7 +168,13 @@
                         <label for="changeImage">Image</label>
                         @if(isset($enseignant) && !$errors->has('photo'))
                             <div>
-                                <p><img src="{{ getImageSingle($enseignant->photo, true) }}" style="width:100%;"></p>
+                                <p>
+                                    @if($enseignant->photo)
+                                        <img src="{{ getImageSingle($enseignant->photo, true) }}" style="width:100%;">
+                                    @else
+                                        <img src="{{ asset('/default.png') }}" style="width:100%;">
+                                    @endif
+                                </p>
                                 <button type="button" id="changeImage" class="btn btn-warning"
                                         data-update="@if(isset($enseignant)) show @endif">
                                     Changer d'image</button>
@@ -179,7 +185,7 @@
                             <div class="custom-file">
                                 <input type="file" id="image_upload" name="photo"
                                        class="{{ $errors->has('photo') ? ' is-invalid ' : '' }} custom-file-input"
-                                       required>
+                                       @if(Route::currentRouteName() === 'enseignant.store') required @endif>
 
                                 <label class="custom-file-label" for="image_upload"></label>
 

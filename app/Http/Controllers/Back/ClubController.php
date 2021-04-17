@@ -86,7 +86,7 @@ class ClubController extends Controller
     {
         $inputs = $this->getInputs($request);
 
-        if($request->has('image')) {
+        if($request->has('image') && $request->image) {
             $this->deleteImages($club);
         }
 
@@ -105,6 +105,7 @@ class ClubController extends Controller
     public function destroy(Club $club)
     {
         $club->delete();
+        $this->deleteImages($club);
 
         return response()->json();
     }

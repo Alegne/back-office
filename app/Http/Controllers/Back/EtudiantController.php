@@ -56,6 +56,9 @@ class EtudiantController extends Controller
      */
     public function store(EtudiantRequest $request)
     {
+
+        # dd($request->all(), $request->has('photo'), $request->photo);
+
         $request->merge(['password' => Hash::make($request->password)]);
 
         # $inputs = $this->getInputs($request->all());
@@ -112,13 +115,15 @@ class EtudiantController extends Controller
      */
     public function update(EtudiantRequest $request, Etudiant $etudiant)
     {
-        # dd($request);
+        # dd($request->all(), $request->has('photo'), $request->photo);
 
         $request->merge(['password' => Hash::make($request->password)]);
 
         $inputs = $this->getInputs($request);
 
-        if($request->has('photo')) {
+        if($request->has('photo') && $request->photo) {
+
+            # dd('condition');
             $this->deleteImages($etudiant);
         }
 
@@ -150,6 +155,8 @@ class EtudiantController extends Controller
     public function destroy(Etudiant $etudiant)
     {
         $etudiant->delete();
+
+        $this->deleteImages($etudiant);
 
         return response()->json();
     }
