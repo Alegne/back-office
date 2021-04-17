@@ -12,7 +12,8 @@
 @section('main')
     <form
             method="post"
-            action="{{ Route::currentRouteName() === 'evenement.edit' ? route('evenement.update', $evenement->id) : route('evenement.store') }}">
+            action="{{ Route::currentRouteName() === 'evenement.edit' ? route('evenement.update', $evenement->id) : route('evenement.store') }}"
+            enctype="multipart/form-data">
 
         @if(Route::currentRouteName() === 'evenement.edit')
             @method('PUT')

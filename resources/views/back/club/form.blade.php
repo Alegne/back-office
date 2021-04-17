@@ -12,7 +12,8 @@
 @section('main')
     <form
             method="post"
-            action="{{ Route::currentRouteName() === 'club.edit' ? route('club.update', $club->id) : route('club.store') }}">
+            action="{{ Route::currentRouteName() === 'club.edit' ? route('club.update', $club->id) : route('club.store') }}"
+            enctype="multipart/form-data">
 
         @if(Route::currentRouteName() === 'club.edit')
             @method('PUT')

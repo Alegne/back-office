@@ -123,7 +123,9 @@ class EnseignantController extends Controller
 
         # $inputs['active'] = $request->has('active');
 
-        if ($request->photo && $request->file('photo')) {
+        #dd($request->file('photo'), $request->photo);
+
+        if ($request->file('photo')) {
             $inputs['photo'] = $this->saveImages($request);
         }
 
