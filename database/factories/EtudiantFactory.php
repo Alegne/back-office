@@ -13,6 +13,7 @@ class EtudiantFactory extends Factory
      * @var string
      */
     protected $model = Etudiant::class;
+    protected static $i = 0;
 
     /**
      * Define the model's default state.
@@ -22,7 +23,7 @@ class EtudiantFactory extends Factory
     public function definition()
     {
         return [
-            'numero'            => 'ET' . ($this->faker->numberBetween(1, 999) * 10) . $this->faker->word,
+            'numero'            => 'ET' . ($this->faker->numberBetween(1, 999) * 10) . $this->faker->word.EtudiantFactory::$i++,
             'nom'               => $this->faker->lastName,
             'prenom'            => $this->faker->firstName,
             'email'             => $this->faker->unique()->safeEmail,
