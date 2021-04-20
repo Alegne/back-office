@@ -22,15 +22,12 @@ class EmploiTempsItem extends Model
      * @var array
      */
     protected $fillable = [
-        'matiere',
+        'matiere_id',
         'jour',
         'heure_debut',
         'heure_fin',
         'specification',
-        'niveau_id',
-        'parcours_id',
-        'emploi_du_temps_id',
-        'enseignant_id'
+        'emploi_du_temps_id'
     ];
 
     /**
@@ -39,33 +36,15 @@ class EmploiTempsItem extends Model
     public function parent()
     {
         # related, foreignKey, ownerKey, relation
-        return $this->belongsTo(Club::class, 'club_id', 'id');
+        return $this->belongsTo(EmploiTemps::class, 'emploi_du_temps_id', 'id');
     }
 
     /**
-     * Get the niveau that owns the items.
+     * Get the matiere that owns the items.
      */
-    public function niveau()
+    public function matiere()
     {
         # related, foreignKey, ownerKey, relation
-        return $this->belongsTo(Niveau::class, 'niveau_id', 'id');
-    }
-
-    /**
-     * Get the parcours that owns the items.
-     */
-    public function parcours()
-    {
-        # related, foreignKey, ownerKey, relation
-        return $this->belongsTo(Parcours::class, 'parcours_id', 'id');
-    }
-
-    /**
-     * Get the enseignant that owns the items.
-     */
-    public function enseignant()
-    {
-        # related, foreignKey, ownerKey, relation
-        return $this->belongsTo(Club::class, 'enseignant_id', 'id');
+        return $this->belongsTo(Matiere::class, 'matiere_id', 'id');
     }
 }

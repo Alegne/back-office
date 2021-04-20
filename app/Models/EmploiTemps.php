@@ -24,6 +24,8 @@ class EmploiTemps extends Model
     protected $fillable = [
         'date_debut',
         'date_fin',
+        'niveau_id',
+        'annee_id'
     ];
 
     /**
@@ -33,7 +35,8 @@ class EmploiTemps extends Model
      */
     protected $dates = [
         'date_debut',
-        'date_fin'
+        'date_fin',
+        # 'parcours_id',
     ];
 
     /**
@@ -48,11 +51,53 @@ class EmploiTemps extends Model
     ];
 
     /**
+     * Timestamps disable
+     *
+     * @var bool
+     */
+    public $timestamps = false;
+
+    /**
      * Get the items for the emploi du temps.
      */
     public function items()
     {
         # foreignKey
         return $this->hasMany(EmploiTempsItem::class, 'emploi_du_temps_id');
+    }
+
+    /**
+     * Get the niveau that owns the items.
+     */
+    public function niveau()
+    {
+        # related, foreignKey, ownerKey, relation
+        return $this->belongsTo(Niveau::class, 'niveau_id', 'id');
+    }
+
+    /**
+     * Get the parcours that owns the items.
+     */
+    public function parcours()
+    {
+        # related, foreignKey, ownerKey, relation
+        # return $this->belongsTo(Parcours::class, 'parcours_id', 'id');
+        return $this->belongsToMany(
+            Parcours::class,
+            'cactus_emploi_du_temps_parcours', # Pivot
+            'emploi_du_temps_id',
+            'parcours_id')
+            # ->withPivot('id')
+            # ->orderBy('cactus_annee_universitaires.id', 'desc')
+            ;
+    }
+
+    /**
+     * Get the annee that owns the items.
+     */
+    public function annee()
+    {
+        # related, foreignKey, ownerKey, relation
+        return $this->belongsTo(AnneeUniversitaireLibelle::class, 'annee_id', 'id');
     }
 }

@@ -71,6 +71,21 @@ if (!function_exists('formatDate')) {
     }
 }
 
+
+if (!function_exists('formatDateEmploiTemps')) {
+    function formatDateEmploiTemps($date)
+    {
+        # 2002-09-20  | yyyy-MM-dd
+        # return $date->formatLocalized('%Y-%m-%d');
+
+        # return utf8_encode ($date->format('d-m-Y'));
+        return utf8_encode ($date->format('d-m-Y'))
+            ;
+
+        #return date("dd-mm-YYYY", strtotime($date));
+    }
+}
+
 # Formatage date  | 20/02/2002
 # 'date_format' => 'm/d/Y',
 # 'date_format_javascript' => 'MM/DD/YYYY',
