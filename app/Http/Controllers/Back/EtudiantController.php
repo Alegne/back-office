@@ -154,6 +154,7 @@ class EtudiantController extends Controller
      */
     public function destroy(Etudiant $etudiant)
     {
+        # Supprimer Annee Universitaire
         $etudiant->delete();
 
         $this->deleteImages($etudiant);

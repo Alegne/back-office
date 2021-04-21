@@ -104,6 +104,8 @@ class ClubController extends Controller
      */
     public function destroy(Club $club)
     {
+        # supprimer staff
+
         $club->delete();
         $this->deleteImages($club);
 
@@ -192,4 +194,5 @@ class ClubController extends Controller
             public_path('/storage/images/thumbs/') . $club->image,
         ]);
     }
+
 }

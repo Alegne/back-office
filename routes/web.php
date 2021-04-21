@@ -3,11 +3,13 @@
 use App\Http\Controllers\Back\AnnonceController;
 use App\Http\Controllers\Back\ArticleController;
 use App\Http\Controllers\Back\ClubController;
+use App\Http\Controllers\Back\EmploiDuTempsController;
 use App\Http\Controllers\Back\EnseignantController;
 use App\Http\Controllers\Back\EspaceNumeriqueController;
 use App\Http\Controllers\Back\EtudiantController;
 use App\Http\Controllers\Back\EvenementController;
 use App\Http\Controllers\Back\FormationController;
+use App\Http\Controllers\Back\MatiereController;
 use App\Http\Controllers\Back\MessageController;
 use App\Http\Controllers\Back\NewsletterController;
 use App\Http\Controllers\Back\NiveauController;
@@ -106,6 +108,19 @@ Route::get('/configuration/update', [ConfigurationController::class, 'edit'])->n
 Route::resource('espace-numerique-travail', EspaceNumeriqueController::class)
     ->parameters(['espace-numerique-travail' => 'espaceNumerique']);
 
+# Emploi du Temps
+Route::resource('emploi-du-temps', EmploiDuTempsController::class)
+    ->parameters(['emploi-du-temps' => 'emploiDuTemps']);
+Route::get('/emploi-du-temps/calendar/{id}/{niveau}/{parcours}/{start?}/{end?}', [EmploiDuTempsController::class, 'showCalendar'])
+    ->name('emploi-du-temps.calendar.show');
+Route::post('/emploi-du-temps/calendar', [EmploiDuTempsController::class, 'calendar'])
+    ->name('emploi-du-temps.calendar');
+Route::get('/emploi-du-temps/calendar/seed', [EmploiDuTempsController::class, 'seed'])
+    ->name('emploi-du-temps.calendar.seed');
+
+
+# Matiere
+Route::resource('matiere', MatiereController::class);
 
 # File Manager
 Route::group(['prefix' => 'laravel-filemanager-webcup', 'middleware' => ['web', 'auth']], function (){

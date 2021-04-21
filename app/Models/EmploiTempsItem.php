@@ -22,16 +22,40 @@ class EmploiTempsItem extends Model
      * @var array
      */
     protected $fillable = [
-        'matiere',
+        'matiere_id',
         'jour',
         'heure_debut',
         'heure_fin',
         'specification',
-        'niveau_id',
-        'parcours_id',
-        'emploi_du_temps_id',
-        'enseignant_id'
+        'emploi_du_temps_id'
     ];
+
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = [
+        # 'heure_debut',
+        # 'heure_fin',
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        # 'heure_debut' => 'datetime',
+        # 'heure_fin' => 'datetime',
+    ];
+
+    /**
+     * Timestamps disable
+     *
+     * @var bool
+     */
+    public $timestamps = false;
 
     /**
      * Get the parent that owns the items.
@@ -39,33 +63,15 @@ class EmploiTempsItem extends Model
     public function parent()
     {
         # related, foreignKey, ownerKey, relation
-        return $this->belongsTo(Club::class, 'club_id', 'id');
+        return $this->belongsTo(EmploiTemps::class, 'emploi_du_temps_id', 'id');
     }
 
     /**
-     * Get the niveau that owns the items.
+     * Get the matiere that owns the items.
      */
-    public function niveau()
+    public function matiere()
     {
         # related, foreignKey, ownerKey, relation
-        return $this->belongsTo(Niveau::class, 'niveau_id', 'id');
-    }
-
-    /**
-     * Get the parcours that owns the items.
-     */
-    public function parcours()
-    {
-        # related, foreignKey, ownerKey, relation
-        return $this->belongsTo(Parcours::class, 'parcours_id', 'id');
-    }
-
-    /**
-     * Get the enseignant that owns the items.
-     */
-    public function enseignant()
-    {
-        # related, foreignKey, ownerKey, relation
-        return $this->belongsTo(Club::class, 'enseignant_id', 'id');
+        return $this->belongsTo(Matiere::class, 'matiere_id', 'id');
     }
 }

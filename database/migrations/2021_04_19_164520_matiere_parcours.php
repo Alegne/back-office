@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEmploiTempsTable extends Migration
+class MatiereParcours extends Migration
 {
     /**
      * Run the migrations.
@@ -13,25 +13,25 @@ class CreateEmploiTempsTable extends Migration
      */
     public function up()
     {
-        Schema::create('cactus_emploi_du_temps', function (Blueprint $table) {
+        # Pivot Matiere-Parcours
+        Schema::create('cactus_matiere_parcours', function (Blueprint $table) {
             $table->id();
-            $table->dateTime('date_debut');
-            $table->dateTime('date_fin');
+
+            # $table->string('libelle');
+            $table->timestamps();
 
             # Key
-            $table->foreignId('niveau_id')
+            $table->foreignId('parcours_id')
                 ->nullable()
-                ->constrained('cactus_niveaux')
+                ->constrained('cactus_parcours')
                 ->onDelete('restrict')
                 ->onUpdate('restrict');
 
-            $table->foreignId('annee_id')
+            $table->foreignId('matiere_id')
                 ->nullable()
-                ->constrained('cactus_annee_universitaire_libelles')
+                ->constrained('cactus_matieres')
                 ->onDelete('restrict')
                 ->onUpdate('restrict');
-
-            # $table->timestamps();
         });
     }
 
@@ -42,6 +42,6 @@ class CreateEmploiTempsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cactus_emploi_du_temps');
+        Schema::dropIfExists('cactus_matiere_parcours');
     }
 }

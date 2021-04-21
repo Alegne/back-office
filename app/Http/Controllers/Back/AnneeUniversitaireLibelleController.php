@@ -92,6 +92,7 @@ class AnneeUniversitaireLibelleController extends Controller
      */
     public function destroy(AnneeUniversitaireLibelle $annee)
     {
+        # Supprimer Annee Universitaire
         $annee->delete();
 
         return response()->json();

@@ -23,7 +23,7 @@ class EtudiantFactory extends Factory
     public function definition()
     {
         return [
-            'numero'            => 'ET' . ($this->faker->numberBetween(1, 999) * 10) . $this->faker->word.EtudiantFactory::$i++,
+            'numero'            => 'ET' . ($this->faker->numberBetween(1, 999) * 10) . EtudiantFactory::$i++,
             'nom'               => $this->faker->lastName,
             'prenom'            => $this->faker->firstName,
             'email'             => $this->faker->unique()->safeEmail,

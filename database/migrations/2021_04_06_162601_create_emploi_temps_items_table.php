@@ -15,36 +15,30 @@ class CreateEmploiTempsItemsTable extends Migration
     {
         Schema::create('cactus_emploi_du_temps_items', function (Blueprint $table) {
             $table->id();
-            $table->string('matiere');
-            $table->string('jour'); # jour de la semaine
-            $table->time('heure_debut');
-            $table->time('heure_fin');
+            # $table->string('matiere');
+            # $table->string('jour'); # jour de la semaine
+            $table->dateTime('heure_debut');
+            $table->dateTime('heure_fin');
             $table->string('specification');
 
             # Key
             $table->foreignId('emploi_du_temps_id')
-                # ->nullable()
+                ->nullable()
                 ->constrained('cactus_emploi_du_temps')
                 ->onDelete('restrict')
                 ->onUpdate('restrict');
 
-            $table->foreignId('niveau_id')
-                # ->nullable()
-                ->constrained('cactus_niveaux')
+            $table->foreignId('matiere_id')
+                ->nullable()
+                ->constrained('cactus_matieres')
                 ->onDelete('restrict')
                 ->onUpdate('restrict');
 
-            $table->foreignId('parcours_id')
-                # ->nullable()
-                ->constrained('cactus_parcours')
-                ->onDelete('restrict')
-                ->onUpdate('restrict');
-
-            $table->foreignId('enseignant_id')
-                # ->nullable()
-                ->constrained('cactus_enseignants')
-                ->onDelete('restrict')
-                ->onUpdate('restrict');
+            # $table->foreignId('enseignant_id')
+            #     ->nullable()
+            #     ->constrained('cactus_enseignants')
+            #     ->onDelete('restrict')
+            #     ->onUpdate('restrict');
 
             # $table->timestamps();
         });

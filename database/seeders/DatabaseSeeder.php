@@ -55,7 +55,8 @@ class DatabaseSeeder extends Seeder
             ArticleSeeder::class,
             AnnonceSeeder::class,
             EvenementSeeder::class,
-            EnseignantSeeder::class
+            EnseignantSeeder::class,
+            MatiereSeeder::class
         ]);
     }
 }

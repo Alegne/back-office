@@ -6,6 +6,8 @@
  * Time: 18:46
  */
 
+use Illuminate\Support\Carbon;
+
 /**
  *  Helper use to Admin
  */
@@ -68,6 +70,34 @@ if (!function_exists('formatDate')) {
     function formatDate($date)
     {
         return ucfirst(utf8_encode ($date->formatLocalized('%d %B %Y')));
+    }
+}
+if (!function_exists('formatDateItem')) {
+    function formatDateItem($date)
+    {
+        # dd(gettype($date));
+
+        # $date = date($date);
+        # return $date->format('d/m/Y');
+
+        return Carbon::parse($date)->format('d/m/Y');
+
+        #return date("dd-mm-YYYY", strtotime($date));
+    }
+}
+
+
+if (!function_exists('formatDateEmploiTemps')) {
+    function formatDateEmploiTemps($date)
+    {
+        # 2002-09-20  | yyyy-MM-dd
+        # return $date->formatLocalized('%Y-%m-%d');
+
+        # return utf8_encode ($date->format('d-m-Y'));
+        return utf8_encode ($date->format('d-m-Y'))
+            ;
+
+        #return date("dd-mm-YYYY", strtotime($date));
     }
 }
 

@@ -80,6 +80,22 @@ return [
             ]
         ],
     ],
+    'Matieres' => [
+        'icon' => 'book',
+        'role'   => 'pedagogique',
+        'children' => [
+            [
+                'name'  => 'All ',
+                'role'  => 'pedagogique',
+                'route' => 'matiere.index',
+            ],
+            [
+                'name'  => 'Add',
+                'role'  => 'pedagogique',
+                'route' => 'matiere.create',
+            ]
+        ],
+    ],
     'Comptes' => [
         'icon' => 'user',
         'role'   => 'admin',
@@ -160,9 +176,20 @@ return [
         ],
     ],
     'Emploi du temps' => [
-        'role'   => 'administratif',
-        'route'  => '', #'admin',
+        'role'   => 'pedadogique',
         'icon'   => 'calendar-alt',
+        'children' => [
+            [
+                'name'  => 'All',
+                'role'  => 'pedadogique',
+                'route' => 'emploi-du-temps.index',
+            ],
+            [
+                'name'  => 'Add',
+                'role'  => 'pedadogique',
+                'route' => 'emploi-du-temps.create',
+            ],
+        ],
     ],
     'Evenements' => [
         'icon' => 'newspaper',
@@ -171,12 +198,12 @@ return [
             [
                 'name'  => 'All Evenements',
                 'role'  => 'annonceur',
-                'route' => 'evenement.index',
+                'route' => 'emploi-du-temps.index',
             ],
             [
                 'name'  => 'Add Evenements',
                 'role'  => 'annonceur',
-                'route' => 'evenement.create',
+                'route' => 'emploi-du-temps.create',
             ],
         ],
     ],

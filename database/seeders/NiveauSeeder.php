@@ -31,7 +31,7 @@ class NiveauSeeder extends Seeder
             ],
             [
                 'libelle'       => 'Licence 3',
-                'tag'           => 'IG',
+                'tag'           => 'L3',
                 'formation_id'  => $formation_licence->id
             ],
             [
