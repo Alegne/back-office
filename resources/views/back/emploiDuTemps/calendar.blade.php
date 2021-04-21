@@ -13,6 +13,11 @@
     <input type="hidden" id="end" value="{{ $end }}">
 
     <input type="hidden" id="calendar-route" value="{{ route('emploi-du-temps.calendar') }}">
+    <input type="hidden" id="calendar-route-redirect" value="{{ route('emploi-du-temps.create') }}">
+
+    <div class="row justify-content-start mb-2 mx-1">
+        <a href="#" id="btn-validation-calendar" class="btn btn-outline-primary">Valider</a>
+    </div>
 
     <div class="row">
         <div class="col-md-3">
@@ -110,6 +115,40 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal Confirmation -->
+    <div class="modal fade" id="modal-confirmation" tabindex="-1" aria-labelledby="label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" style="width: 600px !important;">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="label">Confirmation</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row justify-content-center">
+                        <h3> Emploi du temps du {{ formatDateItem($emploiDuTemps->date_debut) }} - {{ formatDateItem($emploiDuTemps->date_fin) }}</h3>
+                        <dl class="row">
+                            <dt class="col-sm-6">Niveau</dt>
+                            <dd class="col-sm-6">{{ $emploiDuTemps->niveau->tag }}</dd>
+                            <dt class="col-sm-6">Parcours</dt>
+                            <dd class="col-sm-6">
+                                @foreach($emploiDuTemps->parcours as $parcours)
+                                    <strong>{{ $parcours->tag }} </strong>
+                                @endforeach</dd>
+                            <dt class="col-sm-6">Annee Universitaire</dt>
+                            <dd class="col-sm-6">{{ $emploiDuTemps->annee->libelle }}</dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                    <button type="button" id="btn-calendar-validation" class="btn btn-primary">Valider</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('js')
@@ -130,6 +169,19 @@
 
             let route                = $('#calendar-route').val()
             const formatDateCalendar = "YYYY-MM-DD HH:mm:ss"
+            const formatDateCalendar_2 = "YYYY-MM-DD"
+
+            let limit_date_start = moment($('#start').val()).format(formatDateCalendar_2)
+            let limit_date_end   = moment($('#end').val()).format(formatDateCalendar_2)
+
+            /*console.log('Range date ', limit_date_start, limit_date_end)
+            console.log('Range Date ', (new Date(limit_date_start)).toISOString(), new Date(limit_date_end))
+            console.log('Range Date ', moment(limit_date_start).format(formatDateCalendar_2),
+                moment(limit_date_end).format(formatDateCalendar_2))*/
+
+            limit_date_start = (new Date(limit_date_start)).toISOString()
+            limit_date_end = (new Date(limit_date_end)).toISOString()
+
 
             // Variable Global
             let request = {}
@@ -204,6 +256,14 @@
             });
 
             let calendar = new Calendar(calendarEl, {
+                visibleRange: {
+                    start : limit_date_start,
+                    end   : limit_date_end
+                },
+                validRange: {
+                    start: limit_date_start,
+                    end: limit_date_end
+                },
                 nowIndicator: false,
                 height: '100%',
                 allDaySlot: false,
@@ -402,9 +462,9 @@
                         emploi_du_temps_id  : $('#parent').val(),
                         matiere_id          : info.event.extendedProps.matiere,
                         specification       : info.event.extendedProps.specification,
-                        heure_debut         : moment(info.event.end.toISOString()).format(formatDateCalendar),
-                        heure_fin           : moment(info.event.start.toISOString()).format(formatDateCalendar),
-                        type                : 'update'
+                        heure_debut         : moment(info.event.start.toISOString()).format(formatDateCalendar),
+                        heure_fin           : moment(info.event.end.toISOString()).format(formatDateCalendar),
+                        type                : 'update-resize'
                     }
 
                     console.log('eventResize', JSON.stringify(requete))
@@ -425,15 +485,65 @@
                     // alert(info.event.title + " was dropped on " + info.event.start.toISOString())
                     console.log('eventDrop', info.event.title + " was dropped on ", info.event.start.toISOString())
 
-                    if (!confirm("Are you sure about this change?")) {
+                    let end = info.event.start.toISOString()
+
+                    if (info.event.end) {
+                        console.log('eventDrop', info.event.title + " was dropped on ", info.event.end.toISOString())
+
+                        end = info.event.end.toISOString()
+                    } else {
+                        console.log('eventDrop', info.event.title + " was dropped NOT END")
+                    }
+
+                    if (!confirm("Etes-vous sure de le changer?")) {
                         info.revert();
                     }
+
+                    let requete = {
+                        id                  : info.event.id,
+                        emploi_du_temps_id  : $('#parent').val(),
+                        matiere_id          : info.event.extendedProps.matiere,
+                        specification       : info.event.extendedProps.specification,
+                        heure_debut         : moment(info.event.start.toISOString()).format(formatDateCalendar),
+                        heure_fin           : moment(end).format(formatDateCalendar),
+                        type                : 'update-resize'
+                    }
+
+                    console.log('eventDrop', JSON.stringify(requete))
+
+                    $.ajax({
+                        url    : route,
+                        type   : "POST",
+                        data   : requete,
+                        success :function(response)
+                        {
+                            calendar.removeAllEvents()
+                            calendar.refetchEvents()
+                            displayMessage("Event updated Successfully")
+                        }
+                    })
                 },
 
                 // Delete Event
                 eventClick: function (info) {
                     // alert(info.event.title + " was eventClick on " )
-                    console.log('eventClick', info.event.title, " was eventClick on " )
+                    console.log('eventClick', info.event.title, " was eventClick on ", info.event.id)
+
+                    if(confirm("Etes vous sure de le supprimer \n " +  info.event.title))
+                    {
+                        $.ajax({
+                            url      : route,
+                            type     : "POST",
+                            data     : { id   : info.event.id, type : "delete" },
+                            success  : function(response) {
+                                console.log('Supprimer ' + response)
+
+                                calendar.removeAllEvents()
+                                calendar.refetchEvents()
+                                displayMessage("Event removed Successfully")
+                            }
+                        })
+                    }
 
                 }
             });
@@ -447,6 +557,21 @@
                 updateMatiere($('#modal-matiere-id').val())
 
                 $('#modal-add-evenement').modal('hide')
+            })
+
+            $('#btn-validation-calendar').click(function (e) {
+                e.preventDefault()
+                $('#modal-confirmation').modal('show')
+            })
+
+            $('#btn-calendar-validation').click(function () {
+                console.log('btn modal click confirmation')
+
+                toastr.success("Validation success", 'Emploi du Temps')
+
+                $('#modal-confirmation').modal('hide')
+
+                window.location.href = $('#calendar-route-redirect').val()
             })
 
             function updateMatiere(id) {
@@ -482,24 +607,10 @@
             }
 
 
+
+
             function displayMessage(message) {
-                toastr.success(message, 'Matiere');
-            }
-
-            // fonction asynchrone
-            function addMatiere(start, end) {
-
-                request.emploi_du_temps_id  = $('#parent').val()
-                request.matiere_id          = $('#modal-matiere').val()
-                request.specification       = $('#modal-specification').val()
-                request.heure_debut         = moment(start).format(formatDateCalendar)
-                request.heure_fin           = moment(end).format(formatDateCalendar)
-                request.type                = 'add'
-
-                console.log('addMatiere', request)
-
-                return $('#modal-matiere').val() != 0;
-
+                toastr.success(message, 'Matiere')
             }
 
         })

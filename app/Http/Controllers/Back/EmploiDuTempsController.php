@@ -62,14 +62,16 @@ class EmploiDuTempsController extends Controller
 
         # dd($request->parcours_id, json_encode($request->parcours_id));
 
+        # dd($emploiDuTemps->date_debut, gettype($emploiDuTemps->date_debut));
+
         # redirection
         return redirect()->route('emploi-du-temps.calendar.show', [
             'id'        => $emploiDuTemps->id,
             'niveau'    => $emploiDuTemps->niveau_id,
             #'parcours' => json_encode($request->parcours_id)
             'parcours'  => implode('-', $request->parcours_id),
-            'start'     => formatDateChiffre($emploiDuTemps->date_debut),
-            'end'       => formatDateChiffre($emploiDuTemps->date_fin)
+            'start'     => $emploiDuTemps->date_debut, # formatDateChiffre(
+            'end'       => $emploiDuTemps->date_fin
         ]);
     }
 
@@ -245,14 +247,16 @@ class EmploiDuTempsController extends Controller
                 return response()->json($item);
             }
 
-            if($request->type == 'update')
+            if($request->type == 'update' || $request->type == 'update-resize')
             {
                 $item = EmploiTempsItem::find($request->id)->update([
                     'heure_debut'		 =>	$request->heure_debut,
                     'heure_fin'		     =>	$request->heure_fin,
                     'emploi_du_temps_id' =>	$request->emploi_du_temps_id,
                     'matiere_id'		 =>	$request->matiere_id,
-                    'specification'		 =>	json_encode($request->specification)
+                    'specification'		 =>	$request->type == 'update' ?
+                                                json_encode($request->specification) :
+                                                $request->specification
                 ]);
 
                 return response()->json($item);

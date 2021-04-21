@@ -24,10 +24,10 @@ class EmploiDuTempsDataTable extends DataTable
         return datatables()
             ->eloquent($query)
             ->editColumn('date_debut', function ($emploiTemps) {
-                return formatDateEmploiTemps($emploiTemps->date_debut);
+                return formatDateItem($emploiTemps->date_debut);
             })
             ->editColumn('date_fin', function ($emploiTemps) {
-                return formatDateEmploiTemps($emploiTemps->date_fin);
+                return formatDateItem($emploiTemps->date_fin);
             })
             ->editColumn('niveau', function ($emploiTemps) {
                 return $emploiTemps->niveau->tag;
