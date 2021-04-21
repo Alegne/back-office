@@ -107,14 +107,12 @@ Route::resource('espace-numerique-travail', EspaceNumeriqueController::class)
 # Emploi du Temps
 Route::resource('emploi-du-temps', EmploiDuTempsController::class)
     ->parameters(['emploi-du-temps' => 'emploiDuTemps']);
-Route::get('/emploi-du-temps/calendar/{id}/{niveau}/{parcours}', [EmploiDuTempsController::class, 'showCalendar'])
+Route::get('/emploi-du-temps/calendar/{id}/{niveau}/{parcours}/{start?}/{end?}', [EmploiDuTempsController::class, 'showCalendar'])
     ->name('emploi-du-temps.calendar.show');
-Route::post('/emploi-du-temps/calendar/{id}', [EmploiDuTempsController::class, 'storeCalendar'])
-    ->name('emploi-du-temps.calendar.store');
-Route::put('/emploi-du-temps/calendar/{id}', [EmploiDuTempsController::class, 'updateCalendar'])
-    ->name('emploi-du-temps.calendar.update');
-Route::delete('/emploi-du-temps/calendar/{id}', [EmploiDuTempsController::class, 'deleteCalendar'])
-    ->name('emploi-du-temps.calendar.delete');
+Route::post('/emploi-du-temps/calendar', [EmploiDuTempsController::class, 'calendar'])
+    ->name('emploi-du-temps.calendar');
+Route::get('/emploi-du-temps/calendar/seed', [EmploiDuTempsController::class, 'seed'])
+    ->name('emploi-du-temps.calendar.seed');
 
 
 # Matiere

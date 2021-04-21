@@ -15,8 +15,8 @@ class CreateEmploiTempsTable extends Migration
     {
         Schema::create('cactus_emploi_du_temps', function (Blueprint $table) {
             $table->id();
-            $table->date('date_debut');
-            $table->date('date_fin');
+            $table->dateTime('date_debut');
+            $table->dateTime('date_fin');
 
             # Key
             $table->foreignId('niveau_id')

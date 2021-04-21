@@ -31,6 +31,33 @@ class EmploiTempsItem extends Model
     ];
 
     /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = [
+        # 'heure_debut',
+        # 'heure_fin',
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        # 'heure_debut' => 'datetime',
+        # 'heure_fin' => 'datetime',
+    ];
+
+    /**
+     * Timestamps disable
+     *
+     * @var bool
+     */
+    public $timestamps = false;
+
+    /**
      * Get the parent that owns the items.
      */
     public function parent()

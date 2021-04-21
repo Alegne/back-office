@@ -268,6 +268,7 @@
   <script>
     $(document).ready(function() {
       $('.select-multiple').select2();
+      $('#modal-specification').select2();
 
       // $('.select-single').select2();
 

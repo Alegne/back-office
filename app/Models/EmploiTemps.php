@@ -34,8 +34,8 @@ class EmploiTemps extends Model
      * @var array
      */
     protected $dates = [
-        'date_debut',
-        'date_fin',
+        # 'date_debut',
+        # 'date_fin',
         # 'parcours_id',
     ];
 
@@ -46,8 +46,8 @@ class EmploiTemps extends Model
      */
     protected $casts = [
         # 'is_admin' => 'boolean',
-        'date_debut' => 'datetime',
-        'date_fin' => 'datetime',
+        # 'date_debut' => 'datetime',
+        # 'date_fin' => 'datetime',
     ];
 
     /**

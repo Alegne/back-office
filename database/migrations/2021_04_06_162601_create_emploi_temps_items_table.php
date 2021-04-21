@@ -16,7 +16,7 @@ class CreateEmploiTempsItemsTable extends Migration
         Schema::create('cactus_emploi_du_temps_items', function (Blueprint $table) {
             $table->id();
             # $table->string('matiere');
-            $table->string('jour'); # jour de la semaine
+            # $table->string('jour'); # jour de la semaine
             $table->dateTime('heure_debut');
             $table->dateTime('heure_fin');
             $table->string('specification');
@@ -30,7 +30,7 @@ class CreateEmploiTempsItemsTable extends Migration
 
             $table->foreignId('matiere_id')
                 ->nullable()
-                ->constrained('cactus_matiere')
+                ->constrained('cactus_matieres')
                 ->onDelete('restrict')
                 ->onUpdate('restrict');
 

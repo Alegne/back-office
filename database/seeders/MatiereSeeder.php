@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\EmploiTemps;
+use App\Models\EmploiTempsItem;
 use App\Models\Enseignant;
 use App\Models\Matiere;
 use App\Models\Niveau;
@@ -27,8 +29,8 @@ class MatiereSeeder extends Seeder
             {
                 foreach ($niveaux as $niveau) # L1 | L2 | L3 | M1 | M2
                 {
-                    for ($i = 1; $i <= 5; $i++)
-                    {
+                    # for ($i = 1; $i <= 1; $i++)
+                    # {
                         $matiere = Matiere::factory()
                             # ->count(2)
                             ->create([
@@ -37,7 +39,16 @@ class MatiereSeeder extends Seeder
                             ]);
 
                         $matiere->parcours()->attach($parcour->id);
-                    }
+
+                    $item = EmploiTemps::factory()
+                        # ->count(2)
+                        ->create([
+                            'niveau_id'       => $niveau->id,
+                            'annee_id'        => 1,
+                        ]);
+
+                    $item->parcours()->attach($parcour->id);
+                    # }
 
                 }
             }

@@ -13,10 +13,10 @@ class Calendar
     public $end;
     public $backgroundColor;
     public $borderColor;
-    public $enseignant;
+    public $matiere;
     public $specification;
 
-    public function __construct($id, $title, $start, $end, $color, $enseignant, $specification)
+    public function __construct($id, $title, $start, $end, $color, $matiere, $specification)
     {
         $this->id              = $id;
         $this->title           = $title;
@@ -24,7 +24,7 @@ class Calendar
         $this->end             = $end;
         $this->backgroundColor = $color;
         $this->borderColor     = $color;
-        $this->enseignant      = $enseignant;
+        $this->matiere      = $matiere;
         $this->specification   = $specification;
     }
 
