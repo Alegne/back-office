@@ -100,24 +100,14 @@ return [
         'role'   => 'admin',
         'children' => [
             [
-                'name'  => 'All comptes',
+                'name'  => 'All',
                 'role'  => 'admin',
-                'route' => '', #'comptes.index',
-            ],
-            [
-                'name'  => 'New comptes',
-                'role'  => 'admin',
-                'route' => '', #'comptes.indexnew',
+                'route' => 'user.index',
             ],
             [
                 'name'  => 'Add',
                 'role'  => 'admin',
-                'route' => '', #'comptes.create',
-            ],
-            [
-                'name'  => 'fake',
-                'role'  => 'admin',
-                'route' => '', #'comptes.edit',
+                'route' => 'user.create',
             ],
         ],
     ],

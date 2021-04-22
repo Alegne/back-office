@@ -124,8 +124,8 @@ class EmploiDuTempsController extends Controller
             'niveau'     => $emploiDuTemps->niveau_id,
             # 'parcours' => $request->parcours_id,
             'parcours'   => implode('-', $request->parcours_id),
-            'start'      => formatDateChiffre($emploiDuTemps->date_debut),
-            'end'        => formatDateChiffre($emploiDuTemps->date_fin)
+            'start'      => $emploiDuTemps->date_debut,
+            'end'        => $emploiDuTemps->date_fin
         ]);
     }
 
@@ -181,8 +181,8 @@ class EmploiDuTempsController extends Controller
 
             if ($start AND $end){
                 $items = EmploiTempsItem::where('emploi_du_temps_id', $id)
-                    ->where('heure_debut', '>=', $from)
-                    ->where('heure_fin', '<=', $to)
+                    # ->where('heure_debut', '>=', $from)
+                    # ->where('heure_fin', '<=', $to)
                     # ->whereDate('start', '>=', $request->start)
                     # ->whereDate('end',   '<=', $request->end)
                     ->get()

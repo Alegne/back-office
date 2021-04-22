@@ -16,7 +16,24 @@ use App\Http\Controllers\Back\NiveauController;
 use App\Http\Controllers\Back\ParcoursController;
 use App\Http\Controllers\Back\AnneeUniversitaireLibelleController;
 use App\Http\Controllers\Back\ConfigurationController;
+use App\Http\Controllers\Back\UserController;
 use Illuminate\Support\Facades\Route;
+
+
+use App\Http\Controllers\API\ConfigurationController as APIConfigurationController;
+use App\Http\Controllers\API\FormationController as APIFormationController;
+use App\Http\Controllers\API\EtudiantController as APIEtudiantController;
+use App\Http\Controllers\API\EnseignantController as APIEnseignantController;
+use App\Http\Controllers\API\EspaceMembreController as APIEspaceMembreController;
+use App\Http\Controllers\API\TokenController as APITokenController;
+use App\Http\Controllers\API\EmploiTempsController as APIEmploiTempsController;
+use App\Http\Controllers\API\ClubController as APIClubController;
+use App\Http\Controllers\API\ArticleController as APIArticleController;
+use App\Http\Controllers\API\AnnonceController as APIAnnonceController;
+use App\Http\Controllers\API\EvenementController as APIEvenementController;
+use App\Http\Controllers\API\MessageController as APIMessageController;
+use App\Http\Controllers\API\NewsletterController as APINewsletterController;
+use App\Http\Controllers\API\EspaceNumeriqueController as APIEspaceNumeriqueController;
 
 /*
 |--------------------------------------------------------------------------
@@ -114,11 +131,73 @@ Route::post('/emploi-du-temps/calendar', [EmploiDuTempsController::class, 'calen
 Route::get('/emploi-du-temps/calendar/seed', [EmploiDuTempsController::class, 'seed'])
     ->name('emploi-du-temps.calendar.seed');
 
-
 # Matiere
 Route::resource('matiere', MatiereController::class);
+
+# User
+Route::resource('user', UserController::class);
 
 # File Manager
 Route::group(['prefix' => 'laravel-filemanager-webcup', 'middleware' => ['web', 'auth']], function (){
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });
+
+
+####### API Route
+
+# Token
+Route::get('/api/token', [APITokenController::class, 'getToken']);
+
+# Configuration
+Route::get('/api/configurations', [APIConfigurationController::class, 'get']);
+
+
+# Formation
+Route::get('/api/formations', [APIFormationController::class, 'all']);
+Route::get('/api/formations/{formation}', [APIFormationController::class, 'get']);
+
+# Etudiant
+Route::get('/api/etudiants/{etudiant}', [APIEtudiantController::class, 'info']);
+
+# Enseignant
+Route::get('/api/enseignants/{enseignant}', [APIEnseignantController::class, 'info']);
+
+### Espace Membre
+Route::post('/api/login', [APIEspaceMembreController::class, 'login']);
+
+
+### Emploi du Temps
+Route::get('/api/emploi-du-temps', [APIEmploiTempsController::class, 'all']);
+Route::get('/api/emploi-du-temps/{id}', [APIEmploiTempsController::class, 'get']);
+
+# Club
+Route::get('/api/clubs', [APIClubController::class, 'all']);
+Route::get('/api/clubs/{club}', [APIClubController::class, 'get']);
+
+# Article
+Route::get('/api/articles', [APIArticleController::class, 'all']);
+Route::get('/api/articles/top', [APIArticleController::class, 'top']);
+Route::get('/api/articles/{article}', [APIArticleController::class, 'get']);
+
+# Annonces
+Route::get('/api/annonces', [APIAnnonceController::class, 'all']);
+Route::get('/api/annonces/top', [APIAnnonceController::class, 'top']);
+Route::get('/api/annonces/{annonce}', [APIAnnonceController::class, 'get']);
+
+# Evenements
+Route::get('/api/evenements', [APIEvenementController::class, 'all']);
+Route::get('/api/evenements/top/nouvelle', [APIEvenementController::class, 'topNouvelle']);
+Route::get('/api/evenements/top/actualite', [APIEvenementController::class, 'topActualite']);
+Route::get('/api/evenements/{evenement}', [APIEvenementController::class, 'get']);
+
+# Messages
+Route::post('/api/messages', [APIMessageController::class, 'post']);
+
+# NewsLetter
+Route::post('/api/newsletter', [APINewsletterController::class, 'post']);
+
+# Espace Numeriques
+Route::post('/api/espace-numerique', [APIEspaceNumeriqueController::class, 'post']);
+Route::post('/api/espace-numerique/{espaceNumerique}', [APIEspaceNumeriqueController::class, 'postPiecesJointes']);
+Route::get('/api/espace-numerique', [APIEspaceNumeriqueController::class, 'all']);
+Route::get('/api/espace-numerique/{espaceNumerique}', [APIEspaceNumeriqueController::class, 'get']);
