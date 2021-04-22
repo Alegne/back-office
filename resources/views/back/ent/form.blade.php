@@ -37,6 +37,8 @@
             route('espace-numerique-travail.store') }}"
             enctype="multipart/form-data">
 
+        <input type="hidden" value="{{ route('espace-numerique-travail.create', ['etape' => 1]) }}">
+
         @if(Route::currentRouteName() === 'espace-numerique-travail.edit')
             @method('PUT')
         @endif
@@ -52,6 +54,16 @@
                             title="{!! session('ok') !!}">
                     </x-back.alert>
                 @endif
+
+
+
+                @if(isset($ok))
+                    <x-back.alert
+                            type='success'
+                            title="{!! $ok !!}">
+                    </x-back.alert>
+                @endif
+
             </div>
 
         <div class="row">
@@ -118,46 +130,49 @@
             </div>
         </div>
 
-            @if(count($espaceNumerique->pieces_jointes))
-            <div class="row">
+            {{--@if(isset($espaceNumerique))
+                @if(count($espaceNumerique->pieces_jointes))
+                    <div class="row">
 
-                <div class="col-12">
-                    <div class="card card-primary">
-                        <div class="card-header">
-                            <h4 class="card-title">Pieces Jointes</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-
-                                @foreach($espaceNumerique->pieces_jointes as $jointe)
-                                <div class="col-sm-2">
-                                        @if(in_array(explode('.', $jointe)[1], [
-                                                    'jpeg',
-                                                    'pjpeg',
-                                                    'png',
-                                                    'gif',
-                                                    'jpg'
-                                                ]))
-                                        <a href="{{ getImageSingle($jointe, true) }}" data-toggle="lightbox" data-title="sample 1 - white" data-gallery="gallery">
-
-                                            <img src="{{ getImageSingle($jointe, true) }}"
-                                                 class="img-fluid lightbox mb-2" alt="Images"/>
-                                        </a>
-                                        @else
-                                        <a href="{{ asset('storage/fichiers/fichier.png') }}" data-toggle="lightbox" data-title="sample 1 - white" data-gallery="gallery">
-
-                                            <img src="{{ asset('storage/fichiers/fichier.png') }}"
-                                                 class="img-fluid lightbox mb-2" alt="Fichier"/>
-                                        </a>
-                                        @endif
+                        <div class="col-12">
+                            <div class="card card-primary">
+                                <div class="card-header">
+                                    <h4 class="card-title">Pieces Jointes</h4>
                                 </div>
-                                @endforeach
+                                <div class="card-body">
+                                    <div class="row">
+
+                                        @foreach($espaceNumerique->pieces_jointes as $jointe)
+                                            <div class="col-sm-2">
+                                                @if(in_array(explode('.', $jointe)[1], [
+                                                            'jpeg',
+                                                            'pjpeg',
+                                                            'png',
+                                                            'gif',
+                                                            'jpg'
+                                                        ]))
+                                                    <a href="{{ getImageSingle($jointe, true) }}" data-toggle="lightbox" data-title="sample 1 - white" data-gallery="gallery">
+
+                                                        <img src="{{ getImageSingle($jointe, true) }}"
+                                                             class="img-fluid lightbox mb-2" alt="Images"/>
+                                                    </a>
+                                                @else
+                                                    <a href="{{ asset('storage/fichiers/fichier.png') }}" data-toggle="lightbox" data-title="sample 1 - white" data-gallery="gallery">
+
+                                                        <img src="{{ asset('storage/fichiers/fichier.png') }}"
+                                                             class="img-fluid lightbox mb-2" alt="Fichier"/>
+                                                    </a>
+                                                @endif
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                @endif
             @endif
+
 
             <div class="row justify-content-center">
                 <div class="col-lg-12">
@@ -184,7 +199,7 @@
                         <div class="custom-file-container__image-preview"></div>
                     </div>
                 </div>
-            </div>
+            </div>--}}
 
         <button type="submit" class="btn btn-primary mb-3">Valider</button>
     </form>
@@ -194,7 +209,8 @@
     {{--@include('back.shared.editorScript')--}}
     @include('back.shared.slugScript')
 
-    <script type="text/javascript" src="/admin/plugins/file-upload-with-preview/file-upload-with-preview.min.js"></script>
+
+    {{--<script type="text/javascript" src="/admin/plugins/file-upload-with-preview/file-upload-with-preview.min.js"></script>
 
     <script type="text/javascript">
         var upload = new FileUploadWithPreview("myUniqueUploadId");
@@ -213,5 +229,5 @@
                 });
             });
         })
-    </script>
+    </script>--}}
 @endsection

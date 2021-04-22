@@ -10,6 +10,8 @@ use App\Models\EspaceNumerique;
 use App\Models\Niveau;
 use App\Models\Parcours;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
 
 class EspaceNumeriqueController extends Controller
@@ -30,13 +32,20 @@ class EspaceNumeriqueController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         $espaceNumerique = null;
 
         $parcours    = Parcours::all()->pluck('tag', 'id');
         $niveaux     = Niveau::all()->pluck('tag', 'id');
         $enseignants = Enseignant::all()->pluck('nom', 'id');
+
+        if ($request->ok)
+        {
+            # dd($request->ok);
+            $ok = 'The post has been successfully created';
+            return view('back.ent.form', compact('espaceNumerique', 'parcours', 'niveaux', 'enseignants', 'ok'));
+        }
 
         return view('back.ent.form', compact('espaceNumerique', 'parcours', 'niveaux', 'enseignants'));
     }
@@ -59,7 +68,10 @@ class EspaceNumeriqueController extends Controller
 
         $espace->parcours()->attach($request->parcours_id);
 
-        return back()->with('ok', 'The post has been successfully created');
+
+        # return back()->with('ok', 'The post has been successfully created');
+        return redirect()->route('espace-numerique-travail.pieces.view', ['espaceNumerique' => $espace]);
+
     }
 
     /**
@@ -111,7 +123,8 @@ class EspaceNumeriqueController extends Controller
 
         $espaceNumerique->parcours()->sync($request->parcours_id);
 
-        return back()->with('ok', 'The post has been successfully updated');
+        # return back()->with('ok', 'The post has been successfully updated');
+        return redirect()->route('espace-numerique-travail.pieces.view', ['espaceNumerique' => $espaceNumerique]);
     }
 
     /**
@@ -126,6 +139,148 @@ class EspaceNumeriqueController extends Controller
         $espaceNumerique->delete();
 
         return response()->json();
+    }
+
+    public function piecesJointesView(EspaceNumerique $espaceNumerique)
+    {
+        return view('back.ent.pieces_jointes', compact('espaceNumerique'));
+    }
+
+    /**
+     * Upload Pieces Jointes
+     *
+     * @param Request $request
+     * @param EspaceNumerique $espaceNumerique
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function piecesJointes(Request $request, EspaceNumerique $espaceNumerique)
+    {
+        # dd($request->all(), $espaceNumerique);
+
+        $extensions_images = [
+            'jpeg',
+            'pjpeg',
+            'png',
+            'gif',
+            'jpg'
+        ];
+
+        # $data = [];
+        $data = collect();
+
+        # dd($espaceNumerique->pieces_jointes, gettype($espaceNumerique->pieces_jointes));
+
+       if (count($espaceNumerique->pieces_jointes) > 0)
+       {
+           # foreach ($espaceNumerique->pieces_jointes as $piece)
+           # {
+           #     array_push($data, $piece);
+           # }
+           $data = $data->merge($espaceNumerique->pieces_jointes);
+       }
+
+       # dd($data, $espaceNumerique->pieces_jointes);
+
+        /*if ($request->file('file')->extension())
+        {
+            $name  = time() . '.' . $request->file('file')->extension();
+        } else {
+            $name  = time() . '.' . $request->file('file')->getClientOriginalExtension();
+        }*/
+
+        $name = $request->file('file')->getClientOriginalName();
+
+        if (in_array($request->file('file')->extension(), $extensions_images))
+        {
+            $img   = Image::make($request->file('file')->path());
+            $img->widen(800)->encode()->save(public_path('/storage/images/') . $name);
+            $img->widen(400)->encode()->save(public_path('/storage/images/thumbs/') . $name);
+
+        }else{
+
+            # dd(public_path('/storage/fichiers/')); # D:\projet M1\WebCup\_projet\projet-back-office-webcup\public\/storage/fichiers/
+            # dd(public_path('storage\fichiers'));  # D:\projet M1\WebCup\_projet\projet-back-office-webcup\public\storage\fichiers
+
+
+            $request->file('file')->storeAs('public\fichiers', $name);
+            # $jointe->move(public_path('storage\fichiers'), $name);
+
+        }
+
+        # array_push($data, $name);
+        $data->push($name);
+
+        $espaceNumerique->pieces_jointes = json_encode($data->all());
+        $espaceNumerique->save();
+
+        return response()->json(['success' => $espaceNumerique]);
+    }
+
+    /**
+     * Get Pieces Jointes
+     *
+     * @param Request $request
+     * @param EspaceNumerique $espaceNumerique
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function fetchPiecesJointes(Request $request, EspaceNumerique $espaceNumerique)
+    {
+    }
+
+    /**
+     * Delete les pieces jointes
+     *
+     * @param Request $request
+     * @param EspaceNumerique $espaceNumerique
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function deletePiecesJointes(Request $request, EspaceNumerique $espaceNumerique)
+    {
+
+        $filename =  $request->get('filename');
+        $data = collect();
+
+        # dd($filename, explode('.', $filename));
+
+        $extension = explode('.', $filename)[1];
+
+        # dd($extension);
+
+        $extensions_images = [
+            'jpeg',
+            'pjpeg',
+            'png',
+            'gif',
+            'jpg'
+        ];
+
+        if (in_array($extension, $extensions_images)){
+            File::delete([
+                public_path('/storage/images/') . $filename,
+                public_path('/storage/images/thumbs/') . $filename,
+            ]);
+        }else{
+            File::delete([
+                public_path('/storage/fichiers/') . $filename,
+            ]);
+        }
+
+        if (count($espaceNumerique->pieces_jointes) > 0)
+        {
+            foreach ($espaceNumerique->pieces_jointes as $piece)
+            {
+                if ($piece != $filename)
+                {
+                    $data->push($piece);
+                }
+            }
+        }
+
+
+        $espaceNumerique->pieces_jointes = count($data) > 0 ? json_encode($data->all()) : null;
+        $espaceNumerique->save();
+
+        return response()->json(['success' => $espaceNumerique]);
     }
 
     protected function getInputs($request)

@@ -120,6 +120,13 @@ Route::get('/configuration/update', [ConfigurationController::class, 'edit'])->n
 # Espace Numerique
 Route::resource('espace-numerique-travail', EspaceNumeriqueController::class)
     ->parameters(['espace-numerique-travail' => 'espaceNumerique']);
+Route::get('/espace-numerique-travail/pieces-jointes/{espaceNumerique}', [EspaceNumeriqueController::class, 'piecesJointesView'])
+    ->name('espace-numerique-travail.pieces.view');
+Route::post('/espace-numerique-travail/pieces-jointes/upload/{espaceNumerique}', [EspaceNumeriqueController::class, 'piecesJointes'])
+    ->name('espace-numerique-travail.pieces.upload');
+Route::post('/espace-numerique-travail/pieces-jointes/delete/{espaceNumerique}', [EspaceNumeriqueController::class, 'deletePiecesJointes'])
+    ->name('espace-numerique-travail.pieces.delete');
+
 
 # Emploi du Temps
 Route::resource('emploi-du-temps', EmploiDuTempsController::class)
