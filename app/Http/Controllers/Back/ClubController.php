@@ -121,11 +121,34 @@ class ClubController extends Controller
      */
     public function addStaffView(Request $request, Club $club)
     {
-        $etudiants = Etudiant::all()->pluck('numero', 'id');
-        $types = [
+        $etudiants_id = collect();
+        $leader = false;
+
+        if (count($club->staffs))
+        {
+            foreach ($club->staffs as $staff)
+            {
+                $etudiants_id->push($staff->etudiant_id);
+
+                if ($staff->type == 'leader')
+                {
+                    $leader = true;
+                }
+            }
+
+        }
+
+        if (count($etudiants_id))
+        {
+            $etudiants = Etudiant::whereNotIn('id', $etudiants_id->all())->get()->pluck('numero', 'id');
+        } else {
+            $etudiants = Etudiant::all()->pluck('numero', 'id');
+        }
+
+        $types = !$leader ? [
             'leader' => 'Leader',
             'membre' => 'Membre'
-        ];
+        ] : ['membre' => 'Membre'];
 
         return view('back.club.add_staff', compact('club', 'etudiants', 'types'));
     }

@@ -4,6 +4,8 @@
 
     <link rel="stylesheet" href="/admin/plugins/dropzone/min/dropzone.min.css">
     <link rel="stylesheet" href="/admin/plugins/toastr/toastr.min.css">
+    <link rel="stylesheet" href="/admin/plugins/OwlCarousel2/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="/admin/plugins/OwlCarousel2/assets/owl.theme.default.min.css">
 
     <style>
 
@@ -71,16 +73,19 @@
                 type='primary'
                 title='Vos fichiers'>
 
-            <div class="row">
+
+            <div class="owl-carousel owl-theme">
             @foreach($espaceNumerique->pieces_jointes as $piece)
-                <div class="card col-3 m-1" >
-                    @if(in_array(explode('.', $piece)[1], ['jpeg','pjpeg','png','gif','jpg']))
-                        <img class="card-img-top" src="{{ getImageSingle($piece, true) }}" alt="Card image cap">
-                    @else
-                        <img class="card-img-top" src="/default.png" alt="Card image cap">
-                    @endif
-                    <div class="card-body">
-                        <button type="button" data-name="{{ $piece }}" class="btn btn-danger btn-supprimer-image">Supprimer</button>
+                <div class="item">
+                    <div class="card  justify-content-center mx-1" >
+                        @if(in_array(explode('.', $piece)[1], ['jpeg','pjpeg','png','gif','jpg']))
+                            <img class="card-img-top m-auto" src="{{ getImageSingle($piece, true) }}" alt="Card image cap">
+                        @else
+                            <img class="card-img-top m-auto" src="/default.png" alt="Card image cap">
+                        @endif
+                        <div class="card-body m-auto">
+                            <button type="button" data-name="{{ $piece }}" class="btn btn-danger btn-supprimer-image">Supprimer</button>
+                        </div>
                     </div>
                 </div>
             @endforeach
@@ -97,6 +102,7 @@
 
     <script type="text/javascript" src="/admin/plugins/dropzone/min/dropzone.min.js"></script>
     <script type="text/javascript" src="/admin/plugins/toastr/toastr.min.js"></script>
+    <script type="text/javascript" src="/admin/plugins/OwlCarousel2/owl.carousel.min.js"></script>
 
     <script type="text/javascript">
         Dropzone.options.dropzone = {
@@ -163,6 +169,8 @@
         }
 
         $(function () {
+            $(".owl-carousel").owlCarousel();
+
             $('.btn-supprimer-image').click(function () {
 
                 let name = $(this).data('name')
@@ -199,4 +207,5 @@
             })
         })
     </script>
+
 @endsection

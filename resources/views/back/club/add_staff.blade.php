@@ -1,6 +1,9 @@
 @extends('back.parent.layout')
 
 @section('css')
+    <link rel="stylesheet" href="/admin/plugins/OwlCarousel2/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="/admin/plugins/OwlCarousel2/assets/owl.theme.default.min.css">
+
     <style>
         #holder img {
             height: 100%;
@@ -25,11 +28,13 @@
                         title='Club'>
 
                     <div id="holder" class="text-center" style="margin-bottom:15px;">
-                        @isset($club)
+                        @if($club->image)
                             <img style="width:100%;"
-                                 {{--src="{{ getImage($club, true) }}" --}}
+                                 src="{{ getImageSingle($club->image, true) }}"
                                  alt="">
-                        @endisset
+                        @else
+                            <img class="card-img-top" src="/default.png" alt="Card image cap">
+                        @endif
                     </div>
 
                     <ul class="list-group list-group-flush">
@@ -46,11 +51,30 @@
 
                     <p>Membre</p>
                     @if(count($club->staffs) > 0)
-                        @foreach($club->staffs as $staff)
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">{{ $staff->etudiant->numero }} | {{ $staff->etudiant->nom }} | {{ $staff->type }}</li>
-                            </ul>
-                        @endforeach
+
+                       <div class="owl-carousel owl-theme">
+                       @foreach($club->staffs as $staff)
+                           <div class="item">
+                               <div class="card mx-1">
+                                   @if($staff->etudiant->photo)
+                                       <img class="card-img-top" src="{{ getImageSingle($staff->etudiant->photo, true) }}" alt="Card image cap">
+                                   @else
+                                       <img class="card-img-top" src="/default.png" alt="Card image cap">
+                                   @endif
+                                   <div class="card-body">
+                                       <h5 class="card-title">{{ $staff->etudiant->numero }}</h5>
+                                       <p class="card-text">{{ $staff->etudiant->nom }}</p>
+
+                                       @if($staff->type == 'leader')
+                                           <a href="#" class="btn btn-outline-info text-light">{{ $staff->type }}</a>
+                                       @else
+                                           <a href="#" class="btn btn-outline-primary text-light">{{ $staff->type }}</a>
+                                       @endif
+                                   </div>
+                               </div>
+                           </div>
+                       @endforeach
+                       </div>
                     @else
                         <p class="text-danger text-center">Aucun Membre</p>
                     @endif
@@ -101,4 +125,15 @@
 @section('js')
     {{--@include('back.shared.editorScript')--}}
     @include('back.shared.slugScript')
+
+    <script type="text/javascript" src="/admin/plugins/OwlCarousel2/owl.carousel.min.js"></script>
+
+    <script>
+        $(function () {
+
+            $(".owl-carousel").owlCarousel();
+
+        })
+
+    </script>
 @endsection
