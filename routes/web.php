@@ -69,9 +69,10 @@ require __DIR__ . '/auth.php';
  */
 
 # Tester l'intergaration
-Route::get('/layout', function () {
-    return view('back.parent.layout');
-});
+Route::get('/toor', function () {
+    #return view('back.parent.layout');
+    return view('back.index');
+})->name('dashboard.webcup');
 
 # Formation
 Route::resource('formation', FormationController::class);
@@ -95,7 +96,8 @@ ROute::name('etudiant.filter')->get('/etudiant/filter/avance', [EtudiantControll
 Route::resource('enseignant', EnseignantController::class);
 
 # Clubs
-Route::resource('club', ClubController::class);Route::view('/configuration/lien', 'back.configuration.lien')->name('configuration.lien');
+Route::resource('club', ClubController::class);
+Route::view('/configuration/lien', 'back.configuration.lien')->name('configuration.lien');
 Route::get('/club/{club}/staff', [ClubController::class, 'addStaffView'])->name('club.staff.view');
 Route::post('/club/staff/add', [ClubController::class, 'addStaffStore'])->name('club.staff.add');
 
@@ -153,7 +155,7 @@ Route::resource('matiere', MatiereController::class);
 Route::resource('user', UserController::class);
 
 # File Manager
-Route::group(['prefix' => 'laravel-filemanager-webcup', 'middleware' => ['web', 'auth']], function (){
+Route::group(['prefix' => 'laravel-filemanager-webcup', 'middleware' => ['web', 'auth']], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });
 

@@ -17,7 +17,7 @@
   <!-- overlayScrollbars -->
   <link rel="stylesheet" href="/admin/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="/admin/dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="/admin/dist/css/adminlte.css">
 
   <!-- Select 2 -->
   <link rel="stylesheet" href="/admin/plugins/select2/css/select2.min.css">
@@ -28,11 +28,25 @@
 
   <!-- Section Styles -->
   @yield('css')
+
+  <style>
+    .bg-navbar{
+      background-color:#044973 !important;
+    }
+
+    .bg-sidebar{
+      background-color: #044973!important;
+    }
+
+    .bg-body{
+      background-color: #E6DADE !important;
+    }
+  </style>
 </head>
 
-<body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed bg-body">
 
-  <!-- Wrapper Site|App -->
+  <!-- Wrapper Site|App     dark-mode -->
   <div class="wrapper">
 
     <!-- Preloader -->
@@ -41,7 +55,11 @@
     </div>
 
     <!-- Navbar -->
-    <nav class="main-header navbar navbar-expand navbar-dark">
+    <nav class="main-header navbar navbar-expand navbar-light bg-navbar">
+
+      <a class="navbar-brand" href="{{ route('dashboard.webcup') }}">
+        <h2 class="text-light">Ecole Nationale d'Infomatique</h2>
+      </a>
 
       <!-- Left navbar links -->
       <!-- include/left_navbar_links.html -->
@@ -58,7 +76,7 @@
         <!-- Notifications Dropdown Menu -->
         <li class="nav-item dropdown">
           <a class="nav-link" data-toggle="dropdown" href="#">
-            <i class="far fa-bell"></i>
+            <i class="far fa-bell" style="color: white"></i>
             <span class="badge badge-warning navbar-badge">15</span>
           </a>
           <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
@@ -86,14 +104,14 @@
         <!-- fullscreen -->
         <li class="nav-item">
           <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-            <i class="fas fa-expand-arrows-alt"></i>
+            <i class="fas fa-expand-arrows-alt" style="color: white"></i>
           </a>
         </li>
 
-        <!-- control-sidebar Paramaetrage -->
+        <!-- control-sidebar Paramatrage -->
         <li class="nav-item">
           <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
-            <i class="fas fa-th-large"></i>
+            <i class="fas fa-th-large" style="color: white"></i>
           </a>
         </li>
       </ul>
@@ -101,13 +119,13 @@
     <!-- /.navbar -->
 
     <!-- Main Sidebar Container -->
-    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <aside class="main-sidebar sidebar-dark-primary elevation-4 bg-sidebar">
       <!-- Brand Logo -->
-      <a href="index3.html" class="brand-link">
+      <a href="{{ route('dashboard.webcup') }}" class="brand-link bg-sidebar">
         <img src="/logo.png" alt="AdminLTE Logo"
              class="brand-image img-circle elevation-3"
              style="opacity: .8">
-        <span class="brand-text font-weight-light">Dashboard</span>
+        <span class="brand-text font-weight-light">Back Office</span>
       </a>
 
       <!-- Sidebar -->
@@ -194,12 +212,12 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1 class="m-0">Tableau de bord</h1>
+              <h1 class="m-0"></h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active">Tableau de bord</li>
+                <li class="breadcrumb-item"><a href="#"></a></li>
+                <li class="breadcrumb-item active"></li>
               </ol>
             </div><!-- /.col -->
           </div><!-- /.row -->
@@ -285,11 +303,23 @@
   </script>
 
 
+
+<script src="/admin/plugins/ckeditor/ckeditor.js"></script>
+
+<script>
+  ClassicEditor
+      .create( document.querySelector( 'textarea' ) )
+      .catch( error => {
+          console.error( error );
+      } );
+</script>
+
+
   <!-- Section Scripts -->
   @yield('js')
 
   <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-  {{--<script src="/admin/dist/js/pages/dashboard2.js" defer></script>--}}
+  <script src="/admin/dist/js/pages/dashboard2.js" defer></script>
 
 </body>
 </html>

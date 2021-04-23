@@ -19,7 +19,7 @@ return [
 
     'Dashboard' => [
         'role'   => 'user',
-        'route'  => '', #'admin',
+        'route'  => 'dashboard.webcup', #'admin',
         'icon'   => 'tachometer-alt',
     ],
     'Annee Universitaire' => [
