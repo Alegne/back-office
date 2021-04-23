@@ -16,7 +16,7 @@
     <input type="hidden" id="calendar-route-redirect" value="{{ route('emploi-du-temps.create') }}">
 
     <div class="row justify-content-start mb-2 mx-1">
-        <a href="#" id="btn-validation-calendar" class="btn btn-outline-primary">Valider</a>
+        <a href="#" id="btn-validation-calendar" class="btn btn-outline-primary text-light font-weight-bolder">Valider</a>
     </div>
 
     <div class="row">
@@ -179,8 +179,15 @@
             console.log('Range Date ', moment(limit_date_start).format(formatDateCalendar_2),
                 moment(limit_date_end).format(formatDateCalendar_2))*/
 
+
+            // let end_temp = new Date(limit_date_end)
+            // end_temp.setDate(end_temp.getDate() + 1)
+            // limit_date_end = end_temp.toISOString()
+
             limit_date_start = (new Date(limit_date_start)).toISOString()
             limit_date_end = (new Date(limit_date_end)).toISOString()
+
+            // console.log('END', end_temp, limit_date_end)
 
 
             // Variable Global
@@ -256,13 +263,13 @@
             });
 
             let calendar = new Calendar(calendarEl, {
-                visibleRange: {
+                /*visibleRange: {
                     start : limit_date_start,
                     end   : limit_date_end
-                },
+                },*/
                 validRange: {
-                    start: limit_date_start,
-                    end: limit_date_end
+                    start : limit_date_start,
+                    end   : limit_date_end
                 },
                 nowIndicator: false,
                 height: '100%',
@@ -390,6 +397,7 @@
                         data    : request,
                         success : function(data)
                         {
+                            console.log('Calendar ', calendar)
                             console.log("Event Created Successfully", data)
 
                             calendar.removeAllEvents()

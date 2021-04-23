@@ -180,8 +180,8 @@ class EmploiDuTempsController extends Controller
 
             if ($start and $end) {
                 $items = EmploiTempsItem::where('emploi_du_temps_id', $id)
-                    #->where('heure_debut', '>=', $from)
-                    #->where('heure_fin', '<=', $to)
+                    # ->where('heure_debut', '>=', $from)
+                    # ->where('heure_fin', '<=', $to)
                     # ->whereDate('start', '>=', $request->start)
                     # ->whereDate('end',   '<=', $request->end)
                     ->get();

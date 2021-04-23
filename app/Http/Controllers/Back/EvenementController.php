@@ -134,10 +134,19 @@ class EvenementController extends Controller
 
     protected function saveImages($request)
     {
-        # dd($request->file('image'));
-
         $image = $request->file('image');
-        $name  = time() . '.' . $image->extension();
+
+        # dd($image);
+
+        if ($image->extension())
+        {
+            $name  = time() . '.' . $image->extension();
+        } else {
+            $name  = time() . '.' . $image->getClientOriginalExtension();
+        }
+
+        # $name  = time() . '.' . $image->extension();
+
         $img   = Image::make($image->path());
 
         # $img->resize(width, height);

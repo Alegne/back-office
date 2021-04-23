@@ -25,6 +25,10 @@ class CreateEnseignantsTable extends Migration
             $table->string('telephone');
             $table->string('adresse');
             $table->string('photo')->nullable();
+
+            # $table->timestamp('email_verified_at')->nullable();
+            # $table->rememberToken();
+
             $table->timestamps();
         });
     }

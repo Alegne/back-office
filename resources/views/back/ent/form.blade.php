@@ -37,6 +37,8 @@
             route('espace-numerique-travail.store') }}"
             enctype="multipart/form-data">
 
+        <input type="hidden" value="{{ route('espace-numerique-travail.create', ['etape' => 1]) }}">
+
         @if(Route::currentRouteName() === 'espace-numerique-travail.edit')
             @method('PUT')
         @endif
@@ -52,6 +54,16 @@
                             title="{!! session('ok') !!}">
                     </x-back.alert>
                 @endif
+
+
+
+                @if(isset($ok))
+                    <x-back.alert
+                            type='success'
+                            title="{!! $ok !!}">
+                    </x-back.alert>
+                @endif
+
             </div>
 
         <div class="row">
@@ -118,12 +130,9 @@
             </div>
         </div>
 
-
-            @if(isset($espaceNumerique->pieces_jointes)) {{-- si $espaceNumerique->pieces_jointes == null TRUE --}}
-
+            {{--@if(isset($espaceNumerique))
                 @if(count($espaceNumerique->pieces_jointes))
                     <div class="row">
-
                         <div class="col-12">
                             <div class="card card-primary">
                                 <div class="card-header">
@@ -163,6 +172,7 @@
                 @endif
             @endif
 
+
             <div class="row justify-content-center">
                 <div class="col-lg-12">
                     <div class="custom-file-container" data-upload-id="myUniqueUploadId">
@@ -188,7 +198,7 @@
                         <div class="custom-file-container__image-preview"></div>
                     </div>
                 </div>
-            </div>
+            </div>--}}
 
         <button type="submit" class="btn btn-primary mb-3">Valider</button>
     </form>
@@ -198,7 +208,8 @@
     {{--@include('back.shared.editorScript')--}}
     @include('back.shared.slugScript')
 
-    <script type="text/javascript" src="/admin/plugins/file-upload-with-preview/file-upload-with-preview.min.js"></script>
+
+    {{--<script type="text/javascript" src="/admin/plugins/file-upload-with-preview/file-upload-with-preview.min.js"></script>
 
     <script type="text/javascript">
         var upload = new FileUploadWithPreview("myUniqueUploadId");
@@ -217,5 +228,5 @@
                 });
             });
         })
-    </script>
+    </script>--}}
 @endsection

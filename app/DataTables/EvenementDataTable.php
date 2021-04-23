@@ -23,6 +23,9 @@ class EvenementDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
+            ->editColumn('date_creation', function ($evenement) {
+                return formatDate($evenement->date_creation);
+            })
             ->editColumn('action', function ($evenement) {
                 return $this->button(
                         'evenement.edit',
