@@ -124,8 +124,8 @@ class EmploiDuTempsController extends Controller
             'niveau'     => $emploiDuTemps->niveau_id,
             # 'parcours' => $request->parcours_id,
             'parcours'   => implode('-', $request->parcours_id),
-            'start'      => formatDateChiffre($emploiDuTemps->date_debut),
-            'end'        => formatDateChiffre($emploiDuTemps->date_fin)
+            'start'      => $emploiDuTemps->date_debut,
+            'end'        => $emploiDuTemps->date_fin
         ]);
     }
 
@@ -162,39 +162,36 @@ class EmploiDuTempsController extends Controller
         #dd(explode('-', $parcours));
 
         $matiereParcours = MatiereParcours::whereIn('parcours_id', explode('-', $parcours))
-                                         ->select('matiere_id');
+            ->select('matiere_id');
 
         $matieres = Matiere::whereIn('id', $matiereParcours)
-                            ->where('niveau_id', $niveau)
-                            # ->whereIn('parcours_id', json_decode($parcours))
-                            ->get()
-        ;
+            ->where('niveau_id', $niveau)
+            # ->whereIn('parcours_id', json_decode($parcours))
+            ->get();
 
         # dd($matieres);
 
         $emploiDuTemps = EmploiTemps::find($id);
 
-        if ($request->ajax() OR $request->ajax == 1){
+        if ($request->ajax() or $request->ajax == 1) {
 
             $from = date($start);
             $to = date($end);
 
-            if ($start AND $end){
+            if ($start and $end) {
                 $items = EmploiTempsItem::where('emploi_du_temps_id', $id)
-                    ->where('heure_debut', '>=', $from)
-                    ->where('heure_fin', '<=', $to)
+                    #->where('heure_debut', '>=', $from)
+                    #->where('heure_fin', '<=', $to)
                     # ->whereDate('start', '>=', $request->start)
                     # ->whereDate('end',   '<=', $request->end)
-                    ->get()
-                    ;
-            } else{
+                    ->get();
+            } else {
                 $items = EmploiTempsItem::where('emploi_du_temps_id', $id)
                     # ->where('heure_debut', '>=', $from)
                     # ->where('heure_fin', '<=', $to)
                     # ->whereDate('start', '>=', $request->start)
                     # ->whereDate('end',   '<=', $request->end)
-                    ->get()
-                    ;
+                    ->get();
             }
 
             # dd($items, $from, $to, gettype($from));
@@ -202,8 +199,7 @@ class EmploiDuTempsController extends Controller
 
             $tab = [];
 
-            foreach ($items as $item)
-            {
+            foreach ($items as $item) {
                 $enseignant = Enseignant::find($item->matiere->enseignant_id);
                 $matiere = Matiere::find($item->matiere_id);
 
@@ -214,7 +210,8 @@ class EmploiDuTempsController extends Controller
                     $item->heure_fin,
                     $item->matiere->couleur,
                     $item->matiere_id,
-                    json_encode($matiere->parcours->pluck('tag')));
+                    json_encode($matiere->parcours->pluck('tag'))
+                );
 
                 array_push($tab, $calendar);
             }
@@ -224,46 +221,48 @@ class EmploiDuTempsController extends Controller
         }
 
         return view('back.emploiDuTemps.calendar', compact(
-            'id', 'matieres', 'emploiDuTemps', 'niveau', 'start', 'end'));
+            'id',
+            'matieres',
+            'emploiDuTemps',
+            'niveau',
+            'start',
+            'end'
+        ));
     }
 
     public function calendar(Request $request)
     {
         # dd($request->ajax(), $request->type);
-        if($request->ajax())
-        {
-            if($request->type == 'add' || $request->type == 'add-drop')
-            {
+        if ($request->ajax()) {
+            if ($request->type == 'add' || $request->type == 'add-drop') {
                 $item = EmploiTempsItem::create([
-                    'heure_debut'		 =>	$request->heure_debut,
-                    'heure_fin'		     =>	$request->heure_fin,
-                    'emploi_du_temps_id' =>	$request->emploi_du_temps_id,
-                    'matiere_id'		 =>	$request->matiere_id,
-                    'specification'		 =>	$request->type == 'add' ?
-                                                    json_encode($request->specification) :
-                                                    $request->specification
+                    'heure_debut'         =>    $request->heure_debut,
+                    'heure_fin'             =>    $request->heure_fin,
+                    'emploi_du_temps_id' =>    $request->emploi_du_temps_id,
+                    'matiere_id'         =>    $request->matiere_id,
+                    'specification'         =>    $request->type == 'add' ?
+                        json_encode($request->specification) :
+                        $request->specification
                 ]);
 
                 return response()->json($item);
             }
 
-            if($request->type == 'update' || $request->type == 'update-resize')
-            {
+            if ($request->type == 'update' || $request->type == 'update-resize') {
                 $item = EmploiTempsItem::find($request->id)->update([
-                    'heure_debut'		 =>	$request->heure_debut,
-                    'heure_fin'		     =>	$request->heure_fin,
-                    'emploi_du_temps_id' =>	$request->emploi_du_temps_id,
-                    'matiere_id'		 =>	$request->matiere_id,
-                    'specification'		 =>	$request->type == 'update' ?
-                                                json_encode($request->specification) :
-                                                $request->specification
+                    'heure_debut'         =>    $request->heure_debut,
+                    'heure_fin'             =>    $request->heure_fin,
+                    'emploi_du_temps_id' =>    $request->emploi_du_temps_id,
+                    'matiere_id'         =>    $request->matiere_id,
+                    'specification'         =>    $request->type == 'update' ?
+                        json_encode($request->specification) :
+                        $request->specification
                 ]);
 
                 return response()->json($item);
             }
 
-            if($request->type == 'delete')
-            {
+            if ($request->type == 'delete') {
                 $item = EmploiTempsItem::find($request->id)->delete();
 
                 return response()->json($item);
@@ -276,14 +275,12 @@ class EmploiDuTempsController extends Controller
         $emploiTemps = EmploiTemps::all();
 
         # dd($emploiTemps);
-        foreach ($emploiTemps as $e)
-        {
+        foreach ($emploiTemps as $e) {
             # start: '2019-08-12T10:30:00'
             $start = $e->date_debut;
             # $now = Carbon::now();
 
-            for ($i = 0; $i < 5; $i++)
-            {
+            for ($i = 0; $i < 5; $i++) {
                 # dd($i);
                 # $user->premiumDate->addDays(5);
                 $date = Carbon::createFromFormat('Y-m-d H:i:s', $start);
@@ -301,18 +298,18 @@ class EmploiDuTempsController extends Controller
                 ;
 
                 #try {
-                    # dd($start, $heure_debut, $heure_fin, date('Y-m-d H:i:s'), gettype(date('Y-m-d H:i:s')));
+                # dd($start, $heure_debut, $heure_fin, date('Y-m-d H:i:s'), gettype(date('Y-m-d H:i:s')));
                 # dd($start, $heure_debut, $heure_fin, $string);
 
-                    $item = EmploiTempsItem::create([
-                        'heure_debut'        => $heure_debut, # date('Y-m-d H:i:s'),#
-                        'heure_fin'          => $heure_fin, # date('Y-m-d H:i:s'),#
-                        'emploi_du_temps_id' => $e->id,
-                        'matiere_id'         => random_int(1, 10),
-                        'specification'      =>  'SP'
-                    ]);
+                $item = EmploiTempsItem::create([
+                    'heure_debut'        => $heure_debut, # date('Y-m-d H:i:s'),#
+                    'heure_fin'          => $heure_fin, # date('Y-m-d H:i:s'),#
+                    'emploi_du_temps_id' => $e->id,
+                    'matiere_id'         => random_int(1, 10),
+                    'specification'      =>  'SP'
+                ]);
 
-                    # dd($item);
+                # dd($item);
                 # } catch (\Exception $e) {
                 #     echo "Exception";
                 # }

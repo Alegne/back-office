@@ -23,23 +23,22 @@ class MatiereSeeder extends Seeder
         $niveaux            = Niveau::get();
         $enseignants        = Enseignant::get();
 
-        foreach ($enseignants as $enseignant)
-        {
+        foreach ($enseignants as $enseignant) {
             foreach ($parcours as $parcour) # GB | SR | IG
             {
                 foreach ($niveaux as $niveau) # L1 | L2 | L3 | M1 | M2
                 {
                     # for ($i = 1; $i <= 1; $i++)
                     # {
-                        $matiere = Matiere::factory()
-                            # ->count(2)
-                            ->create([
-                                'niveau_id'            => $niveau->id,
-                                'enseignant_id'        => $enseignant->id,
-                            ]);
+                    $matiere = Matiere::factory()
+                        # ->count(2)
+                        ->create([
+                            'niveau_id'            => $niveau->id,
+                            'enseignant_id'        => $enseignant->id,
+                        ]);
 
-                        $matiere->parcours()->attach($parcour->id);
-
+                    $matiere->parcours()->attach($parcour->id);
+                    /*
                     $item = EmploiTemps::factory()
                         # ->count(2)
                         ->create([
@@ -48,11 +47,11 @@ class MatiereSeeder extends Seeder
                         ]);
 
                     $item->parcours()->attach($parcour->id);
+                    */
                     # }
 
                 }
             }
         }
-
     }
 }
