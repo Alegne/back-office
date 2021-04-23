@@ -35,6 +35,9 @@ use App\Http\Controllers\API\EvenementController as APIEvenementController;
 use App\Http\Controllers\API\MessageController as APIMessageController;
 use App\Http\Controllers\API\NewsletterController as APINewsletterController;
 use App\Http\Controllers\API\EspaceNumeriqueController as APIEspaceNumeriqueController;
+use App\Http\Controllers\API\ParcoursController as APIParcoursController;
+use App\Http\Controllers\API\NiveauController as APINiveauController;
+use App\Http\Controllers\API\AnneeUniversitaireController as APIAnneeUniversitaireController;
 
 /*
 |--------------------------------------------------------------------------
@@ -170,6 +173,8 @@ Route::get('/api/formations/{formation}', [APIFormationController::class, 'get']
 
 # Etudiant
 Route::get('/api/etudiants/{etudiant}', [APIEtudiantController::class, 'info']);
+Route::get('/api/etudiants/filter/vue', [APIEtudiantController::class, 'filter']);
+Route::get('/api/etudiants/filter/status', [APIEtudiantController::class, 'status']);
 
 # Enseignant
 Route::get('/api/enseignants/{enseignant}', [APIEnseignantController::class, 'info']);
@@ -213,3 +218,15 @@ Route::post('/api/espace-numerique', [APIEspaceNumeriqueController::class, 'post
 Route::post('/api/espace-numerique/{espaceNumerique}', [APIEspaceNumeriqueController::class, 'postPiecesJointes']);
 Route::get('/api/espace-numerique', [APIEspaceNumeriqueController::class, 'all']);
 Route::get('/api/espace-numerique/{espaceNumerique}', [APIEspaceNumeriqueController::class, 'get']);
+
+# Parcours
+Route::get('/api/parcours/etudiants', [APIParcoursController::class, 'filter']);
+
+# Niveaux
+Route::get('/api/niveaux/etudiants', [APINiveauController::class, 'filter']);
+
+# Annee Universitaire
+Route::get('/api/annee-universitaire/etudiants', [APIAnneeUniversitaireController::class, 'filter']);
+
+# Formation
+Route::get('/api/formations/etudiants/filter', [APIFormationController::class, 'filter']);

@@ -4,7 +4,7 @@ namespace App\Http\Resources\API;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ParcoursResource extends JsonResource
+class EtuditantStatusResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,11 +15,10 @@ class ParcoursResource extends JsonResource
     public function toArray($request)
     {
         # return parent::toArray($request);
+
         return [
-            'id'              => $this->id,
-            'libelle'         => $this->libelle,
-            'tag'             => $this->tag,
-            'etudiants_count' => $this->etudiants_count
+            'status'          => $this->status,
+            'etudiants_count' => $this->etudiants_count ? $this->etudiants_count : null
         ];
     }
 }

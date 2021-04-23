@@ -3947,6 +3947,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -3954,7 +3958,7 @@ __webpack_require__.r(__webpack_exports__);
       parcours: [],
       annees: [],
       formations: [],
-      type: [],
+      status: [],
       etudiants: [],
       loading: true,
       selected: {
@@ -3962,7 +3966,7 @@ __webpack_require__.r(__webpack_exports__);
         parcours: [],
         annees: [],
         formations: [],
-        type: []
+        status: []
       }
     };
   },
@@ -3971,7 +3975,7 @@ __webpack_require__.r(__webpack_exports__);
     this.loadParcours();
     this.loadAnnees();
     this.loadFormations();
-    this.loadTypes();
+    this.loadStatus();
     this.loadEtudiants();
   },
   watch: {
@@ -3981,19 +3985,90 @@ __webpack_require__.r(__webpack_exports__);
         this.loadParcours();
         this.loadAnnees();
         this.loadFormations();
-        this.loadTypes();
+        this.loadStatus();
         this.loadEtudiants();
       },
       deep: true
     }
   },
   methods: {
-    loadNiveaux: function loadNiveaux() {},
-    loadParcours: function loadParcours() {},
-    loadAnnees: function loadAnnees() {},
-    loadFormations: function loadFormations() {},
-    loadTypes: function loadTypes() {},
-    loadEtudiants: function loadEtudiants() {}
+    loadNiveaux: function loadNiveaux() {
+      var _this = this;
+
+      axios.get('/api/niveaux/etudiants', {
+        params: _.omit(this.selected, 'niveaux') // exclure categories
+
+      }).then(function (response) {
+        _this.niveaux = response.data.data;
+        console.log(_this.niveaux);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    loadParcours: function loadParcours() {
+      var _this2 = this;
+
+      axios.get('/api/parcours/etudiants', {
+        params: _.omit(this.selected, 'parcours') // exclure categories
+
+      }).then(function (response) {
+        _this2.parcours = response.data.data;
+        console.log(_this2.parcours);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    loadAnnees: function loadAnnees() {
+      var _this3 = this;
+
+      axios.get('/api/annee-universitaire/etudiants', {
+        params: _.omit(this.selected, 'annees') // exclure categories
+
+      }).then(function (response) {
+        _this3.annees = response.data.data;
+        console.log(_this3.annees);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    loadFormations: function loadFormations() {
+      var _this4 = this;
+
+      axios.get('/api/formations/etudiants/filter', {
+        params: _.omit(this.selected, 'formations') // exclure categories
+
+      }).then(function (response) {
+        _this4.formations = response.data.data;
+        console.log(_this4.formations);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    loadStatus: function loadStatus() {
+      var _this5 = this;
+
+      axios.get('/api/etudiants/filter/status', {
+        params: _.omit(this.selected, 'status') // exclure categories
+
+      }).then(function (response) {
+        _this5.status = response.data.data;
+        console.log(_this5.annees);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    loadEtudiants: function loadEtudiants() {
+      var _this6 = this;
+
+      axios.get('/api/etudiants/filter/vue', {
+        params: this.selected
+      }).then(function (response) {
+        _this6.etudiants = response.data.data;
+        _this6.loading = false;
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
   }
 });
 
@@ -4003,16 +4078,20 @@ __webpack_require__.r(__webpack_exports__);
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
   \*****************************/
-/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/alpine.js"); // VueJS
 
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
-Vue.component('etudiant-filter-page', __webpack_require__(/*! ./components/EtudiantFilter.vue */ "./resources/js/components/EtudiantFilter.vue").default);
-var app = new Vue({
+
+vue__WEBPACK_IMPORTED_MODULE_0__.default.component('etudiant-filter-page', __webpack_require__(/*! ./components/EtudiantFilter.vue */ "./resources/js/components/EtudiantFilter.vue").default);
+var app = new vue__WEBPACK_IMPORTED_MODULE_0__.default({
   el: '#etudiant-filter'
 });
 
@@ -21556,282 +21635,328 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "row" }, [
+    _c("div", { staticClass: "col-12" }, [
+      _c("div", { staticClass: "row mx-1" }, [
+        _c("div", { staticClass: "col-12" }, [
+          _c("div", { staticClass: "card card-outline card-info" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-body" }, [
+              _c("div", { staticClass: "row justify-content-center" }, [
+                _vm._m(1),
+                _vm._v(" "),
+                _c("div", { staticClass: "card col-md-2 ml-1" }, [
+                  _c("div", { staticClass: "card-header" }, [
+                    _vm._v("Niveaux")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "card-body" },
+                    _vm._l(_vm.niveaux, function(niveau, index) {
+                      return _c("div", { staticClass: "form-check" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.selected.niveaux,
+                              expression: "selected.niveaux"
+                            }
+                          ],
+                          staticClass: "form-check-input",
+                          attrs: { type: "checkbox", id: "niveau" + index },
+                          domProps: {
+                            value: niveau.id,
+                            checked: Array.isArray(_vm.selected.niveaux)
+                              ? _vm._i(_vm.selected.niveaux, niveau.id) > -1
+                              : _vm.selected.niveaux
+                          },
+                          on: {
+                            change: function($event) {
+                              var $$a = _vm.selected.niveaux,
+                                $$el = $event.target,
+                                $$c = $$el.checked ? true : false
+                              if (Array.isArray($$a)) {
+                                var $$v = niveau.id,
+                                  $$i = _vm._i($$a, $$v)
+                                if ($$el.checked) {
+                                  $$i < 0 &&
+                                    _vm.$set(
+                                      _vm.selected,
+                                      "niveaux",
+                                      $$a.concat([$$v])
+                                    )
+                                } else {
+                                  $$i > -1 &&
+                                    _vm.$set(
+                                      _vm.selected,
+                                      "niveaux",
+                                      $$a
+                                        .slice(0, $$i)
+                                        .concat($$a.slice($$i + 1))
+                                    )
+                                }
+                              } else {
+                                _vm.$set(_vm.selected, "niveaux", $$c)
+                              }
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("label", { staticClass: "form-check-label" }, [
+                          _vm._v(
+                            "\n                                            " +
+                              _vm._s(niveau.tag) +
+                              " (" +
+                              _vm._s(niveau.etudiants_count) +
+                              ")\n                                        "
+                          )
+                        ])
+                      ])
+                    }),
+                    0
+                  )
+                ]),
+                _vm._v(" "),
+                _vm._m(2),
+                _vm._v(" "),
+                _vm._m(3),
+                _vm._v(" "),
+                _vm._m(4)
+              ])
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _vm._m(5)
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("div", { staticClass: "row mx-1" }, [
-        _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "card-header justify-content-end ml-1" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-primary",
-                attrs: {
-                  type: "button",
-                  "data-toggle": "collapse",
-                  "data-target": "#collapseExample",
-                  "aria-expanded": "false",
-                  "aria-controls": "collapseExample"
-                }
-              },
-              [_vm._v("\n                    Toggle\n                ")]
-            )
-          ]),
+    return _c("div", { staticClass: "card-header" }, [
+      _c("h3", { staticClass: "card-title" }, [_vm._v("Criteres")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card-tools pull-right" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-tool",
+            attrs: { type: "button", "data-card-widget": "collapse" }
+          },
+          [_c("i", { staticClass: "fas fa-minus" })]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card col-md-2 ml-1" }, [
+      _c("div", { staticClass: "card-header" }, [_vm._v("Types")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card-body" }, [
+        _c("div", { staticClass: "form-check" }, [
+          _c("input", {
+            staticClass: "form-check-input",
+            attrs: { type: "checkbox" }
+          }),
           _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _c(
-              "div",
-              { staticClass: "collapse", attrs: { id: "collapseExample" } },
-              [
-                _c("div", { staticClass: "card card-body" }, [
-                  _c("div", { staticClass: "row" }, [
-                    _c("div", { staticClass: "card col-md-2 ml-1" }, [
-                      _c("div", { staticClass: "card-header" }, [
-                        _vm._v("Types")
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "card-body" }, [
-                        _c("div", { staticClass: "form-check" }, [
-                          _c("input", {
-                            staticClass: "form-check-input",
-                            attrs: { type: "checkbox" }
-                          }),
-                          _vm._v(" "),
-                          _c("label", { staticClass: "form-check-label" }, [
-                            _vm._v(
-                              "\n                                            Ancien\n                                        "
-                            )
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "form-check" }, [
-                          _c("input", {
-                            staticClass: "form-check-input",
-                            attrs: { type: "checkbox" }
-                          }),
-                          _vm._v(" "),
-                          _c("label", { staticClass: "form-check-label" }, [
-                            _vm._v(
-                              "\n                                            Actif\n                                        "
-                            )
-                          ])
-                        ])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "card col-md-2 ml-1" }, [
-                      _c("div", { staticClass: "card-header" }, [
-                        _vm._v("Niveaux")
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "card-body" }, [
-                        _c("div", { staticClass: "form-check" }, [
-                          _c("input", {
-                            staticClass: "form-check-input",
-                            attrs: { type: "checkbox" }
-                          }),
-                          _vm._v(" "),
-                          _c("label", { staticClass: "form-check-label" }, [
-                            _vm._v(
-                              "\n                                            L1\n                                        "
-                            )
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "form-check" }, [
-                          _c("input", {
-                            staticClass: "form-check-input",
-                            attrs: { type: "checkbox" }
-                          }),
-                          _vm._v(" "),
-                          _c("label", { staticClass: "form-check-label" }, [
-                            _vm._v(
-                              "\n                                            L2\n                                        "
-                            )
-                          ])
-                        ])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "card col-md-2 ml-1" }, [
-                      _c("div", { staticClass: "card-header" }, [
-                        _vm._v("Parcours")
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "card-body" }, [
-                        _c("div", { staticClass: "form-check" }, [
-                          _c("input", {
-                            staticClass: "form-check-input",
-                            attrs: { type: "checkbox" }
-                          }),
-                          _vm._v(" "),
-                          _c("label", { staticClass: "form-check-label" }, [
-                            _vm._v(
-                              "\n                                            GB\n                                        "
-                            )
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "form-check" }, [
-                          _c("input", {
-                            staticClass: "form-check-input",
-                            attrs: { type: "checkbox" }
-                          }),
-                          _vm._v(" "),
-                          _c("label", { staticClass: "form-check-label" }, [
-                            _vm._v(
-                              "\n                                            SR\n                                        "
-                            )
-                          ])
-                        ])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "card col-md-2 ml-1" }, [
-                      _c("div", { staticClass: "card-header" }, [
-                        _vm._v("Formations")
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "card-body" }, [
-                        _c("div", { staticClass: "form-check" }, [
-                          _c("input", {
-                            staticClass: "form-check-input",
-                            attrs: { type: "checkbox" }
-                          }),
-                          _vm._v(" "),
-                          _c("label", { staticClass: "form-check-label" }, [
-                            _vm._v(
-                              "\n                                            Master\n                                        "
-                            )
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "form-check" }, [
-                          _c("input", {
-                            staticClass: "form-check-input",
-                            attrs: { type: "checkbox" }
-                          }),
-                          _vm._v(" "),
-                          _c("label", { staticClass: "form-check-label" }, [
-                            _vm._v(
-                              "\n                                            Licence\n                                        "
-                            )
-                          ])
-                        ])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "card col-md-2 ml-1" }, [
-                      _c("div", { staticClass: "card-header" }, [
-                        _vm._v("Annee Univesitaire")
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "card-body" }, [
-                        _c("div", { staticClass: "form-check" }, [
-                          _c("input", {
-                            staticClass: "form-check-input",
-                            attrs: { type: "checkbox" }
-                          }),
-                          _vm._v(" "),
-                          _c("label", { staticClass: "form-check-label" }, [
-                            _vm._v(
-                              "\n                                            2020-2021\n                                        "
-                            )
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "form-check" }, [
-                          _c("input", {
-                            staticClass: "form-check-input",
-                            attrs: { type: "checkbox" }
-                          }),
-                          _vm._v(" "),
-                          _c("label", { staticClass: "form-check-label" }, [
-                            _vm._v(
-                              "\n                                            2019-2020\n                                        "
-                            )
-                          ])
-                        ])
-                      ])
-                    ])
-                  ])
-                ])
-              ]
+          _c("label", { staticClass: "form-check-label" }, [
+            _vm._v(
+              "\n                                            Ancien\n                                        "
             )
           ])
         ])
-      ]),
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card col-md-2 ml-1" }, [
+      _c("div", { staticClass: "card-header" }, [_vm._v("Parcours")]),
       _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "card col-md-3" }, [
-          _c("img", {
-            staticClass: "card-img-top",
-            attrs: { src: "/default.png", alt: "Card image cap" }
+      _c("div", { staticClass: "card-body" }, [
+        _c("div", { staticClass: "form-check" }, [
+          _c("input", {
+            staticClass: "form-check-input",
+            attrs: { type: "checkbox" }
           }),
           _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _c("h5", { staticClass: "card-title" }, [_vm._v("Card title")]),
-            _vm._v(" "),
-            _c("p", { staticClass: "card-text" }, [
-              _vm._v(
-                "Some quick example text to build on the card title and make up the bulk of the card's content."
-              )
-            ])
+          _c("label", { staticClass: "form-check-label" }, [
+            _vm._v(
+              "\n                                            GB\n                                        "
+            )
+          ])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card col-md-2 ml-1" }, [
+      _c("div", { staticClass: "card-header" }, [_vm._v("Formations")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card-body" }, [
+        _c("div", { staticClass: "form-check" }, [
+          _c("input", {
+            staticClass: "form-check-input",
+            attrs: { type: "checkbox" }
+          }),
+          _vm._v(" "),
+          _c("label", { staticClass: "form-check-label" }, [
+            _vm._v(
+              "\n                                            Master\n                                        "
+            )
+          ])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card col-md-2 ml-1" }, [
+      _c("div", { staticClass: "card-header" }, [_vm._v("Annee Univesitaire")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card-body" }, [
+        _c("div", { staticClass: "form-check" }, [
+          _c("input", {
+            staticClass: "form-check-input",
+            attrs: { type: "checkbox" }
+          }),
+          _vm._v(" "),
+          _c("label", { staticClass: "form-check-label" }, [
+            _vm._v(
+              "\n                                            2020-2021\n                                        "
+            )
           ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "card col-md-3" }, [
-          _c("img", {
-            staticClass: "card-img-top",
-            attrs: { src: "/default.png", alt: "Card image cap" }
+        _c("div", { staticClass: "form-check" }, [
+          _c("input", {
+            staticClass: "form-check-input",
+            attrs: { type: "checkbox" }
           }),
           _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _c("h5", { staticClass: "card-title" }, [_vm._v("Card title")]),
+          _c("label", { staticClass: "form-check-label" }, [
+            _vm._v(
+              "\n                                            2019-2020\n                                        "
+            )
+          ])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row mx-1" }, [
+      _c("div", { staticClass: "col-12" }, [
+        _c("div", { staticClass: "card card-info" }, [
+          _c("div", { staticClass: "card-header" }, [
+            _c("h3", { staticClass: "card-title" }, [_vm._v("Etudiants")]),
             _vm._v(" "),
-            _c("p", { staticClass: "card-text" }, [
-              _vm._v(
-                "Some quick example text to build on the card title and make up the bulk of the card's content."
+            _c("div", { staticClass: "card-tools pull-right" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-tool",
+                  attrs: { type: "button", "data-card-widget": "collapse" }
+                },
+                [_c("i", { staticClass: "fas fa-minus" })]
               )
             ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "card col-md-3" }, [
-          _c("img", {
-            staticClass: "card-img-top",
-            attrs: { src: "/default.png", alt: "Card image cap" }
-          }),
+          ]),
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
-            _c("h5", { staticClass: "card-title" }, [_vm._v("Card title")]),
-            _vm._v(" "),
-            _c("p", { staticClass: "card-text" }, [
-              _vm._v(
-                "Some quick example text to build on the card title and make up the bulk of the card's content."
-              )
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "card col-md-3" }, [
-          _c("img", {
-            staticClass: "card-img-top",
-            attrs: { src: "/default.png", alt: "Card image cap" }
-          }),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _c("h5", { staticClass: "card-title" }, [_vm._v("Card title")]),
-            _vm._v(" "),
-            _c("p", { staticClass: "card-text" }, [
-              _vm._v(
-                "Some quick example text to build on the card title and make up the bulk of the card's content."
-              )
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "card col-md-2 mx-1" }, [
+                _c("img", {
+                  staticClass: "card-img-top",
+                  attrs: { src: "/default.png", alt: "Card image cap" }
+                }),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-body" }, [
+                  _c("h5", { staticClass: "card-title" }, [
+                    _vm._v("Card title")
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "card-text" }, [
+                    _vm._v("nd make up the bulk of the card's content.")
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "card col-md-2 mx-1" }, [
+                _c("img", {
+                  staticClass: "card-img-top",
+                  attrs: { src: "/default.png", alt: "Card image cap" }
+                }),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-body" }, [
+                  _c("h5", { staticClass: "card-title" }, [
+                    _vm._v("Card title")
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "card-text" }, [
+                    _vm._v(
+                      "Some quick example text to build on the card title and make up the bulk of the card's content."
+                    )
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "card col-md-2 mx-1" }, [
+                _c("img", {
+                  staticClass: "card-img-top",
+                  attrs: { src: "/default.png", alt: "Card image cap" }
+                }),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-body" }, [
+                  _c("h5", { staticClass: "card-title" }, [
+                    _vm._v("Card title")
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "card-text" }, [
+                    _vm._v(
+                      "Some quick example text to build on the card title and make up the bulk of the card's content."
+                    )
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "card col-md-2 mx-1" }, [
+                _c("img", {
+                  staticClass: "card-img-top",
+                  attrs: { src: "/default.png", alt: "Card image cap" }
+                }),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-body" }, [
+                  _c("h5", { staticClass: "card-title" }, [
+                    _vm._v("Card title")
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "card-text" }, [
+                    _vm._v(
+                      "Some quick example text to build on the card title and make up the bulk of the card's content."
+                    )
+                  ])
+                ])
+              ])
             ])
           ])
         ])

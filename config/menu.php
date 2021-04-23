@@ -27,12 +27,12 @@ return [
         'role'   => 'administratif',
         'children' => [
             [
-                'name'  => 'All',
+                'name'  => 'Tous',
                 'role'  => 'administratif',
                 'route' => 'annee-universitaire.index',
             ],
             [
-                'name'  => 'Add',
+                'name'  => 'Ajout',
                 'role'  => 'administratif',
                 'route' => 'annee-universitaire.create',
             ],
@@ -43,7 +43,7 @@ return [
         'role'   => 'administratif',
         'children' => [
             [
-                'name'  => 'All Etudiants',
+                'name'  => 'Tous',
                 'role'  => 'administratif',
                 'route' => 'etudiant.index',
             ],
@@ -58,12 +58,12 @@ return [
                 'route' => 'etudiant.indexold',
             ],
             [
-                'name'  => 'Add',
+                'name'  => 'Ajout',
                 'role'  => 'administratif',
                 'route' => 'etudiant.create',
             ],
             [
-                'name'  => 'Filter',
+                'name'  => 'Filtre',
                 'role'  => 'administratif',
                 'route' => 'etudiant.filter',
             ]
@@ -74,12 +74,12 @@ return [
         'role'   => 'administratif',
         'children' => [
             [
-                'name'  => 'All ',
+                'name'  => 'Tous ',
                 'role'  => 'administratif',
                 'route' => 'enseignant.index',
             ],
             [
-                'name'  => 'Add',
+                'name'  => 'Ajout',
                 'role'  => 'administratif',
                 'route' => 'enseignant.create',
             ]
@@ -90,12 +90,12 @@ return [
         'role'   => 'pedagogique',
         'children' => [
             [
-                'name'  => 'All ',
+                'name'  => 'Tous ',
                 'role'  => 'pedagogique',
                 'route' => 'matiere.index',
             ],
             [
-                'name'  => 'Add',
+                'name'  => 'Ajout',
                 'role'  => 'pedagogique',
                 'route' => 'matiere.create',
             ]
@@ -106,12 +106,12 @@ return [
         'role'   => 'admin',
         'children' => [
             [
-                'name'  => 'All',
+                'name'  => 'Tous',
                 'role'  => 'admin',
                 'route' => 'user.index',
             ],
             [
-                'name'  => 'Add',
+                'name'  => 'Ajout',
                 'role'  => 'admin',
                 'route' => 'user.create',
             ],
@@ -122,12 +122,12 @@ return [
         'role'   => 'admin',
         'children' => [
             [
-                'name'  => 'All Formations',
+                'name'  => 'Tous',
                 'role'  => 'admin',
                 'route' => 'formation.index', #'formations.index',
             ],
             [
-                'name'  => 'Add Formations',
+                'name'  => 'Ajout',
                 'role'  => 'admin',
                 'route' => 'formation.create', #'formations.indexnew',
             ],
@@ -143,7 +143,7 @@ return [
         'role'   => 'administratif',
         'children' => [
             [
-                'name'  => 'All Niveaux',
+                'name'  => 'Tous',
                 'role'  => 'administratif',
                 'route' => 'niveau.index',
             ],
@@ -159,12 +159,12 @@ return [
         'role'   => 'administratif',
         'children' => [
             [
-                'name'  => 'All Parcours',
+                'name'  => 'Tous',
                 'role'  => 'administratif',
                 'route' => 'parcours.index',
             ],
             [
-                'name'  => 'Add Parcours',
+                'name'  => 'Ajout',
                 'role'  => 'administratif',
                 'route' => 'parcours.create',
             ]
@@ -175,12 +175,12 @@ return [
         'icon'   => 'calendar-alt',
         'children' => [
             [
-                'name'  => 'All',
+                'name'  => 'Tous',
                 'role'  => 'pedadogique',
                 'route' => 'emploi-du-temps.index',
             ],
             [
-                'name'  => 'Add',
+                'name'  => 'Ajout',
                 'role'  => 'pedadogique',
                 'route' => 'emploi-du-temps.create',
             ],
@@ -191,12 +191,12 @@ return [
         'role'   => 'annonceur',
         'children' => [
             [
-                'name'  => 'All Evenements',
+                'name'  => 'Tous',
                 'role'  => 'annonceur',
                 'route' => 'evenement.index',
             ],
             [
-                'name'  => 'Add Evenements',
+                'name'  => 'Ajout',
                 'role'  => 'annonceur',
                 'route' => 'evenement.create',
             ],
@@ -207,12 +207,12 @@ return [
         'role'   => 'annonceur',
         'children' => [
             [
-                'name'  => 'All Annonces',
+                'name'  => 'Tous',
                 'role'  => 'annonceur',
                 'route' => 'annonce.index',
             ],
             [
-                'name'  => 'Add Annonces',
+                'name'  => 'Ajout',
                 'role'  => 'annonceur',
                 'route' => 'annonce.create',
             ],
@@ -259,12 +259,12 @@ return [
         'role'   => 'redacteur',
         'children' => [
             [
-                'name'  => 'All Club',
+                'name'  => 'Tous',
                 'role'  => 'redacteur',
                 'route' => 'club.index',
             ],
             [
-                'name'  => 'Add Club',
+                'name'  => 'Ajout',
                 'role'  => 'redacteur',
                 'route' => 'club.create',
             ],
@@ -280,12 +280,12 @@ return [
         'role'   => 'redacteur',
         'children' => [
             [
-                'name'  => 'All Article',
+                'name'  => 'Tous',
                 'role'  => 'redacteur',
                 'route' => 'article.index',
             ],
             [
-                'name'  => 'Add Article',
+                'name'  => 'Ajout',
                 'role'  => 'redacteur',
                 'route' => 'article.create',
             ]
@@ -306,12 +306,12 @@ return [
         'role'   => 'admin',
         'children' => [
             [
-                'name'  => 'All Album',
+                'name'  => 'Tous',
                 'role'  => 'admin',
                 'route' => '', #'niveaux.index',
             ],
             [
-                'name'  => 'Add Album',
+                'name'  => 'Ajout',
                 'role'  => 'admin',
                 'route' => '', #'niveaux.index',
             ],
@@ -327,12 +327,12 @@ return [
         'icon'   => 'folder',
         'children' => [
             [
-                'name'  => 'All',
+                'name'  => 'Tous',
                 'role'  => 'admin',
                 'route' => 'espace-numerique-travail.index',
             ],
             [
-                'name'  => 'Add',
+                'name'  => 'Ajout',
                 'role'  => 'admin',
                 'route' => 'espace-numerique-travail.create',
             ],
