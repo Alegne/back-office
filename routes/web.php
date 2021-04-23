@@ -85,6 +85,7 @@ Route::resource('niveau', NiveauController::class);
 Route::resource('etudiant', EtudiantController::class);
 Route::name('etudiant.indexactif')->get('/etudiant-actif', [EtudiantController::class, 'index']);
 Route::name('etudiant.indexold')->get('/etudiant-ancien', [EtudiantController::class, 'index']);
+ROute::name('etudiant.filter')->get('/etudiant/filter/avance', [EtudiantController::class, 'filter']);
 
 # Enseignants
 Route::resource('enseignant', EnseignantController::class);

@@ -9,5 +9,9 @@
         $('.libelle').keyup(function () {
             $('.slug').val(getSlug($(this).val()))
         })
+
+        $('.titre ').keyup(function () {
+            $('.slug').val(getSlug($(this).val()))
+        })
     })
 </script>

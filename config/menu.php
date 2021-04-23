@@ -60,6 +60,11 @@ return [
                 'name'  => 'Add',
                 'role'  => 'administratif',
                 'route' => 'etudiant.create',
+            ],
+            [
+                'name'  => 'Filter',
+                'role'  => 'administratif',
+                'route' => 'etudiant.filter',
             ]
         ],
     ],
@@ -187,12 +192,12 @@ return [
             [
                 'name'  => 'All Evenements',
                 'role'  => 'annonceur',
-                'route' => 'emploi-du-temps.index',
+                'route' => 'evenement.index',
             ],
             [
                 'name'  => 'Add Evenements',
                 'role'  => 'annonceur',
-                'route' => 'emploi-du-temps.create',
+                'route' => 'evenement.create',
             ],
         ],
     ],

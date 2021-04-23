@@ -12,7 +12,10 @@
 @section('main')
     <form
             method="post"
-            action="{{ Route::currentRouteName() === 'article.edit' ? route('article.update', $article->id) : route('article.store') }}">
+            action="{{ Route::currentRouteName() === 'article.edit' ?
+            route('article.update', $article->id) : route('article.store') }}"
+            enctype="multipart/form-data"
+    >
 
         @if(Route::currentRouteName() === 'article.edit')
             @method('PUT')
@@ -83,40 +86,6 @@
             </div>
 
             <div class="col-md-4">
-                {{-- File Manager --}}
-                <x-back.card
-                        type='primary'
-                        :outline="false"
-                        title='image'>
-
-                    <div id="holder" class="text-center" style="margin-bottom:15px;">
-                        @isset($article)
-                            <img style="width:100%;"
-                                 {{--src="{{ getImage($article, true) }}" --}}
-                                 alt="">
-                        @endisset
-                    </div>
-
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <a id="lfm" data-input="image" data-preview="holder"
-                               class="btn btn-primary text-white btn-outline-secondary"
-                               type="button">Bouton</a>
-                        </div>
-
-                        <input id="image" class="form-control {{ $errors->has('image') ? 'is-invalid' : '' }}"
-                               type="text" name="image"
-                                {{--value="{{ old('image', isset($article) ? getImage($article) : '') }}"--}}
-                        >
-                        @if ($errors->has('image'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('image') }}
-                            </div>
-                        @endif
-                    </div>
-
-
-                </x-back.card>
 
                 {{-- Upload --}}
                 <x-back.card

@@ -13,7 +13,9 @@
 @section('main')
     <form
             method="post"
-            action="{{ Route::currentRouteName() === 'annee-universitaire.edit' ? route('annee-universitaire.update', $annee->id) : route('annee-universitaire.store') }}">
+            action="{{ Route::currentRouteName() === 'annee-universitaire.edit' ?
+            route('annee-universitaire.update', $annee->id) :
+            route('annee-universitaire.store') }}">
 
         @if(Route::currentRouteName() === 'annee-universitaire.edit')
             @method('PUT')

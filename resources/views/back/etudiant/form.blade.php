@@ -181,41 +181,6 @@
 
             <div class="col-md-4">
 
-                {{-- File Manager --}}
-                <x-back.card
-                        type='primary'
-                        :outline="false"
-                        title='Photo'>
-
-                    <div id="holder" class="text-center" style="margin-bottom:15px;">
-                        @isset($etudiant)
-                            <img style="width:100%;"
-                                 {{--src="{{ getImage($etudiant, true) }}" --}}
-                                 alt="">
-                        @endisset
-                    </div>
-
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <a id="lfm" data-input="photo" data-preview="holder"
-                               class="btn btn-primary text-white btn-outline-secondary"
-                               type="button">Bouton</a>
-                        </div>
-
-                        <input id="photo" class="form-control {{ $errors->has('photo') ? 'is-invalid' : '' }}"
-                               type="text" name="photo"
-                                {{--value="{{ old('photo', isset($etudiant) ? getImage($etudiant) : '') }}"--}}
-                        >
-                        @if ($errors->has('photo'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('photo') }}
-                            </div>
-                        @endif
-                    </div>
-
-
-                </x-back.card>
-
                 @if(Route::currentRouteName() === 'etudiant.edit')
                 <x-back.card
                         type='success'

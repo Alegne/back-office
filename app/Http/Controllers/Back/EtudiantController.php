@@ -202,4 +202,11 @@ class EtudiantController extends Controller
             public_path('/storage/images/thumbs/') . $formation->photo,
         ]);
     }
+
+    public function filter()
+    {
+        # dd('filter');
+
+        return view('back.etudiant.filter');
+    }
 }
