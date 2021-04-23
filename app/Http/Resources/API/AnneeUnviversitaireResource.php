@@ -14,6 +14,11 @@ class AnneeUnviversitaireResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        # return parent::toArray($request);
+        return [
+            'id'              => $this->id,
+            'libelle'         => $this->libelle,
+            'etudiants_count' => $this->etudiants_count
+        ];
     }
 }

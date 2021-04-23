@@ -4,10 +4,7 @@
     <link rel="stylesheet" href="/admin/dist/css/loading.css">
 
     <style>
-        .card-img-top {
-            width: 100px !important;
-            height: 100px !important;
-        }
+
     </style>
 @endsection
 

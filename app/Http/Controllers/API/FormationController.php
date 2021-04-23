@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 
 class FormationController extends Controller
 {
+    use FilterTrait;
+
     public function all()
     {
 
@@ -19,5 +21,23 @@ class FormationController extends Controller
     {
         # return new FormationResource(Formation::findOrFail($id));
         return new FormationResource($formation);
+    }
+
+    public function filter(Request $request)
+    {
+        $formations = Formation::withCount(['etudiants' => function ($query) use ($request) {
+
+            $query = $this->contraintes($request, $query, false);
+
+            # $query->withFilters(
+            #     request()->input('prices', []),
+            #     request()->input('categories', []),
+            #     request()->input('manufacturers', [])
+            # );
+        }])
+        ;
+        # dd($formations->toSql());
+
+        return FormationResource::collection($formations->get());
     }
 }
