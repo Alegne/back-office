@@ -70,6 +70,30 @@ class ConfigurationSeeder extends Seeder
                 'cle' => 'adresse',
                 'valeur' => 'tanambao',
             ],
+            [
+                'cle' => 'apropos_informations',
+                'valeur' => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book",
+            ],
+            [
+                'cle' => 'apropos_historiques',
+                'valeur' => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book",
+            ],
+            [
+                'cle' => 'apropos_missions',
+                'valeur' => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book",
+            ],
+            [
+                'cle' => 'apropos_specifications',
+                'valeur' => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book",
+            ],
+            [
+                'cle' => 'apropos_reference',
+                'valeur' => "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+            ],
+            [
+                'cle' => 'apropos_albums',
+                'valeur' => "",
+            ],
 
         ]);
     }

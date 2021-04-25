@@ -27,4 +27,36 @@ class Annonce extends Model
         'image',
         'galerie',
     ];
+
+    /**
+     * Get the niveau that owns the annonces.
+     */
+    public function niveau()
+    {
+        # related, foreignKey, ownerKey, relation
+        return $this->belongsToMany(
+            Niveau::class,
+            'cactus_annonces_niveaux', # Pivot
+            'annonce_id',
+            'niveau_id')
+            ->withPivot('id')
+            ->orderBy('cactus_annonces_niveaux.updated_at', 'desc')
+            ;
+    }
+
+    /**
+     * Get the niveau that owns the annonces.
+     */
+    public function parcours()
+    {
+        # related, foreignKey, ownerKey, relation
+        return $this->belongsToMany(
+            Parcours::class,
+            'cactus_annonces_parcours', # Pivot
+            'annonce_id',
+            'parcours_id')
+            ->withPivot('id')
+            ->orderBy('cactus_annonces_parcours.updated_at', 'desc')
+            ;
+    }
 }

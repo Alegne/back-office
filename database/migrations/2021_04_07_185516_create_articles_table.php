@@ -25,7 +25,7 @@ class CreateArticlesTable extends Migration
 
 
             $table->foreignId('club_id')
-                # ->nullable()
+                ->nullable()
                 ->constrained('cactus_clubs')
                 ->onDelete('restrict')
                 ->onUpdate('restrict');

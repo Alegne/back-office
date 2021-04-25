@@ -38,7 +38,7 @@ class CreateEtudiantsTable extends Migration
             #     ->onUpdate('restrict');
 
             $table->foreignId('parcours_id')
-                # ->nullable()
+                ->nullable()
                 ->constrained('cactus_parcours')
                 ->onDelete('restrict')
                 ->onUpdate('restrict');

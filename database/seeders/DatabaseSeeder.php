@@ -53,10 +53,10 @@ class DatabaseSeeder extends Seeder
             NewsletterSeeder::class,
             ClubSeeder::class,
             ArticleSeeder::class,
-            AnnonceSeeder::class,
             EvenementSeeder::class,
             EnseignantSeeder::class,
-            MatiereSeeder::class
+            MatiereSeeder::class,
+            AnnonceSeeder::class,
         ]);
     }
 }

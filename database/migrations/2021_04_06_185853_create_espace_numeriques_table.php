@@ -22,19 +22,19 @@ class CreateEspaceNumeriquesTable extends Migration
 
             # Key
             $table->foreignId('niveau_id')
-                # ->nullable()
+                ->nullable()
                 ->constrained('cactus_niveaux')
                 ->onDelete('restrict')
                 ->onUpdate('restrict');
 
             # $table->foreignId('parcours_id')
-            #     # ->nullable()
+            #     ->nullable()
             #     ->constrained('cactus_parcours')
             #     ->onDelete('restrict')
             #     ->onUpdate('restrict');
 
             $table->foreignId('enseignant_id')
-                # ->nullable()
+                ->nullable()
                 ->constrained('cactus_enseignants')
                 ->onDelete('restrict')
                 ->onUpdate('restrict');

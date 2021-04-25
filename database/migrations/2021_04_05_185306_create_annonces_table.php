@@ -17,6 +17,8 @@ class CreateAnnoncesTable extends Migration
             $table->id();
             $table->string('titre');
             $table->longText('description');
+            $table->enum('type', array('public', 'private'))
+                ->default('public');
             $table->string('image')->nullable();
             $table->string('galerie')->nullable();
             $table->timestamps();

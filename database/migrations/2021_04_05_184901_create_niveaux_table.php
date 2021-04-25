@@ -22,7 +22,7 @@ class CreateNiveauxTable extends Migration
 
             # Key
             $table->foreignId('formation_id')
-                # ->nullable()
+                ->nullable()
                 ->constrained('cactus_formations')
                 ->onDelete('restrict')
                 ->onUpdate('restrict');
