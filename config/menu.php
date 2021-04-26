@@ -226,7 +226,8 @@ return [
     'Pages' => [
         'icon' => 'book',
         'role'   => 'admin',
-        'children' => [
+        'route'  => 'configuration.index',
+        /*'children' => [
             [
                 'name'  => 'Contenu',
                 'role'  => 'admin',
@@ -252,7 +253,7 @@ return [
                 'role'  => 'admin',
                 'route' => 'configuration.contact',
             ],
-        ],
+        ],*/
     ],
     'Club' => [
         'icon' => 'kaaba',

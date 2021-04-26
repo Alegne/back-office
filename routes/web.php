@@ -151,6 +151,7 @@ Route::resource('newsletter', NewsletterController::class);
 Route::view('/configuration/contenu', 'back.configuration.contenu')->name('configuration.contenu');
 Route::view('/configuration/contact', 'back.configuration.contact')->name('configuration.contact');
 Route::view('/configuration/lien', 'back.configuration.lien')->name('configuration.lien');
+Route::view('/configuration/index', 'back.configuration.index')->name('configuration.index');
 
 Route::put('/configuration/update', [ConfigurationController::class, 'update'])->name('configuration.update');
 Route::get('/configuration/update', [ConfigurationController::class, 'edit'])->name('configuration.edit');

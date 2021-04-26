@@ -47,14 +47,25 @@ class ConfigurationController extends Controller
         # dd(getConfiguration('image_directeur'));
 
         if ($request->has('mot_directeur'))
-            return redirect()->route('configuration.contenu')
-                ->with('ok', 'The post has been successfully updated');
+            return back()
+                #->route('configuration.contenu')
+                ->with('ok', 'The post has been successfully updated')
+                ->with('active_contenu', 'Active');
         elseif ($request->has('lien_facebook'))
-            return redirect()->route('configuration.lien')
-                ->with('ok', 'The post has been successfully updated');
+            return back()
+                #->route('configuration.lien')
+                ->with('ok', 'The post has been successfully updated')
+                ->with('active_lien', 'Active');
         elseif ($request->has('email'))
-            return redirect()->route('configuration.contact')
-                ->with('ok', 'The post has been successfully updated');
+            return back()
+                #->route('configuration.contact')
+                ->with('ok', 'The post has been successfully updated')
+                ->with('active_contact', 'Active');
+        elseif ($request->has('apropos_informations'))
+            return back()
+                #->route('configuration.contact')
+                ->with('ok', 'The post has been successfully updated')
+                ->with('active_apropos', 'Active');
 
         return back()->with('ok', 'The post has been successfully updated');
     }
