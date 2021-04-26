@@ -53,7 +53,7 @@ class UserController extends Controller
 
         User::create($inputs);
 
-        return back()->with('ok', 'The user has been successfully created');
+        return back()->with('ok', 'L\'utilisateur a été ajouté avec succès');
     }
 
     /**
@@ -96,13 +96,13 @@ class UserController extends Controller
     {
         $inputs = $this->getInputs($request);
 
-        if($request->has('photo') && $request->file('photo')) {
+        if ($request->has('photo') && $request->file('photo')) {
             $this->deleteImages($user);
         }
 
         $user->update($inputs);
 
-        return back()->with('ok', 'The user has been successfully updated');
+        return back()->with('ok', 'L\'utilisateur a été mis à jour avec succès');
     }
 
     /**
@@ -129,7 +129,7 @@ class UserController extends Controller
 
         # $inputs['active'] = $request->has('active');
 
-        if($request->has('photo') && $request->file('photo')) {
+        if ($request->has('photo') && $request->file('photo')) {
             $inputs['photo'] = $this->saveImages($request);
         }
 

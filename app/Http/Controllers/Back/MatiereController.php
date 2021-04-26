@@ -57,7 +57,7 @@ class MatiereController extends Controller
 
 
 
-        return back()->with('ok', 'The post has been successfully created');
+        return back()->with('ok', 'Enregistrement succès');
     }
 
     /**
@@ -99,7 +99,7 @@ class MatiereController extends Controller
 
         $matiere->parcours()->sync($request->parcours_id);
 
-        return back()->with('ok', 'The post has been successfully updated');
+        return back()->with('ok', 'Mise à jour a été un  succès');
     }
 
     /**

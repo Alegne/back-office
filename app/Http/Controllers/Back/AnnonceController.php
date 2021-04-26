@@ -83,13 +83,13 @@ class AnnonceController extends Controller
     {
         $inputs = $this->getInputs($request);
 
-        if($request->has('image') && $request->image) {
+        if ($request->has('image') && $request->image) {
             $this->deleteImages($annonce);
         }
 
         $annonce->update($inputs);
 
-        return back()->with('ok', 'The post has been successfully updated');
+        return back()->with('ok', 'Mise à jour a été un  succès');
     }
 
     /**
@@ -118,7 +118,7 @@ class AnnonceController extends Controller
 
         # $inputs['active'] = $request->has('active');
 
-        if($request->image) {
+        if ($request->image) {
             $inputs['image'] = $this->saveImages($request);
         }
 

@@ -87,13 +87,13 @@ class ArticleController extends Controller
     {
         $inputs = $this->getInputs($request);
 
-        if($request->has('image') && $request->image) {
+        if ($request->has('image') && $request->image) {
             $this->deleteImages($article);
         }
 
         $article->update($inputs);
 
-        return back()->with('ok', 'The post has been successfully updated');
+        return back()->with('ok', 'Mise à jour a été un  succès');
     }
 
     /**
@@ -120,7 +120,7 @@ class ArticleController extends Controller
 
         # $inputs['active'] = $request->has('active');
 
-        if($request->image) {
+        if ($request->image) {
             $inputs['image'] = $this->saveImages($request);
         }
 

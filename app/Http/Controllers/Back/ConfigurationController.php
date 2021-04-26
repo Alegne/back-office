@@ -26,7 +26,7 @@ class ConfigurationController extends Controller
 
         # dd($keys);
 
-        if($request->has('image_directeur') && $request->image_directeur) {
+        if ($request->has('image_directeur') && $request->image_directeur) {
 
             # dd('condition');
             $this->deleteImages(getConfiguration('image_directeur'));
@@ -39,8 +39,7 @@ class ConfigurationController extends Controller
 
         # dd($keys, 'condition after');
 
-        foreach ($keys as $key => $value)
-        {
+        foreach ($keys as $key => $value) {
             Configuration::set($key, $value);
         }
 
@@ -48,15 +47,15 @@ class ConfigurationController extends Controller
 
         if ($request->has('mot_directeur'))
             return redirect()->route('configuration.contenu')
-                ->with('ok', 'The post has been successfully updated');
+                ->with('ok', 'Mise à jour a été un  succès');
         elseif ($request->has('lien_facebook'))
             return redirect()->route('configuration.lien')
-                ->with('ok', 'The post has been successfully updated');
+                ->with('ok', 'Mise à jour a été un  succès');
         elseif ($request->has('email'))
             return redirect()->route('configuration.contact')
-                ->with('ok', 'The post has been successfully updated');
+                ->with('ok', 'Mise à jour a été un  succès');
 
-        return back()->with('ok', 'The post has been successfully updated');
+        return back()->with('ok', 'Mise à jour a été un  succès');
     }
 
     protected function saveImages($request)

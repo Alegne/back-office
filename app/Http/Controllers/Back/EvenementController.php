@@ -52,7 +52,7 @@ class EvenementController extends Controller
 
         Evenement::create($inputs);
 
-        return back()->with('ok', 'The post has been successfully created');
+        return back()->with('ok', 'Enregistrement succès');
     }
 
     /**
@@ -90,13 +90,13 @@ class EvenementController extends Controller
     {
         $inputs = $this->getInputs($request);
 
-        if($request->has('image') && $request->image) {
+        if ($request->has('image') && $request->image) {
             $this->deleteImages($evenement);
         }
 
         $evenement->update($inputs);
 
-        return back()->with('ok', 'The post has been successfully updated');
+        return back()->with('ok', 'Mise à jour a été un  succès');
     }
 
     /**
@@ -123,7 +123,7 @@ class EvenementController extends Controller
 
         # $inputs['active'] = $request->has('active');
 
-        if($request->image) {
+        if ($request->image) {
             $inputs['image'] = $this->saveImages($request);
         }
 
@@ -138,8 +138,7 @@ class EvenementController extends Controller
 
         # dd($image);
 
-        if ($image->extension())
-        {
+        if ($image->extension()) {
             $name  = time() . '.' . $image->extension();
         } else {
             $name  = time() . '.' . $image->getClientOriginalExtension();

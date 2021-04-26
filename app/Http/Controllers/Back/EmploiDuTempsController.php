@@ -58,7 +58,7 @@ class EmploiDuTempsController extends Controller
 
         $emploiDuTemps->parcours()->sync($request->parcours_id);
 
-        # return back()->with('ok', 'The post has been successfully created');
+        # return back()->with('ok', 'Enregistrement succès');
 
         # dd($request->parcours_id, json_encode($request->parcours_id));
 
@@ -116,7 +116,7 @@ class EmploiDuTempsController extends Controller
 
         $emploiDuTemps->parcours()->sync($request->parcours_id);
 
-        # return back()->with('ok', 'The post has been successfully updated');
+        # return back()->with('ok', 'Mise à jour a été un  succès');
 
         # redirection
         return redirect()->route('emploi-du-temps.calendar.show', [

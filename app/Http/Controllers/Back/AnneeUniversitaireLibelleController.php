@@ -80,7 +80,7 @@ class AnneeUniversitaireLibelleController extends Controller
     {
         $annee->update($request->all());
 
-        return back()->with('ok', 'The post has been successfully updated');
+        return back()->with('ok', 'Mise à jour a été un  succès');
     }
 
     /**

@@ -76,7 +76,7 @@ class EtudiantController extends Controller
             ]);
         # $etudiant->niveau()->sync();
 
-        return back()->with('ok', 'The post has been successfully created');
+        return back()->with('ok', 'Enregistrement succès');
     }
 
     /**
@@ -121,7 +121,7 @@ class EtudiantController extends Controller
 
         $inputs = $this->getInputs($request);
 
-        if($request->has('photo') && $request->photo) {
+        if ($request->has('photo') && $request->photo) {
 
             # dd('condition');
             $this->deleteImages($etudiant);
@@ -142,7 +142,7 @@ class EtudiantController extends Controller
                 ]);
         }
 
-        return back()->with('ok', 'The post has been successfully updated');
+        return back()->with('ok', 'Mise à jour a été un  succès');
     }
 
     /**
@@ -170,7 +170,7 @@ class EtudiantController extends Controller
 
         # $inputs['active'] = $request->has('active');
 
-        if($request->photo) {
+        if ($request->photo) {
             $inputs['photo'] = $this->saveImages($request);
         }
 

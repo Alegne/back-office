@@ -86,13 +86,13 @@ class ClubController extends Controller
     {
         $inputs = $this->getInputs($request);
 
-        if($request->has('image') && $request->image) {
+        if ($request->has('image') && $request->image) {
             $this->deleteImages($club);
         }
 
         $club->update($inputs);
 
-        return back()->with('ok', 'The post has been successfully updated');
+        return back()->with('ok', 'Mise à jour a été un  succès');
     }
 
     /**
@@ -124,22 +124,17 @@ class ClubController extends Controller
         $etudiants_id = collect();
         $leader = false;
 
-        if (count($club->staffs))
-        {
-            foreach ($club->staffs as $staff)
-            {
+        if (count($club->staffs)) {
+            foreach ($club->staffs as $staff) {
                 $etudiants_id->push($staff->etudiant_id);
 
-                if ($staff->type == 'leader')
-                {
+                if ($staff->type == 'leader') {
                     $leader = true;
                 }
             }
-
         }
 
-        if (count($etudiants_id))
-        {
+        if (count($etudiants_id)) {
             $etudiants = Etudiant::whereNotIn('id', $etudiants_id->all())->get()->pluck('numero', 'id');
         } else {
             $etudiants = Etudiant::all()->pluck('numero', 'id');
@@ -167,11 +162,10 @@ class ClubController extends Controller
             'type'        => $request->type
         ]);
 
-        if (request()->ajax())
-        {
+        if (request()->ajax()) {
             return response()->json();
         }
-        return back()->with('ok', 'The post has been successfully updated');
+        return back()->with('ok', 'Mise à jour a été un  succès');
     }
 
 
@@ -185,7 +179,7 @@ class ClubController extends Controller
 
         # $inputs['active'] = $request->has('active');
 
-        if($request->file('image')) {
+        if ($request->file('image')) {
             $inputs['image'] = $this->saveImages($request);
         }
 
@@ -217,5 +211,4 @@ class ClubController extends Controller
             public_path('/storage/images/thumbs/') . $club->image,
         ]);
     }
-
 }

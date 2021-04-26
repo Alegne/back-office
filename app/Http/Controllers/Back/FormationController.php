@@ -52,7 +52,7 @@ class FormationController extends Controller
 
         Formation::create($inputs);
 
-        return back()->with('ok', 'The post has been successfully created');
+        return back()->with('ok', 'Enregistrement succès');
     }
 
     /**
@@ -88,13 +88,13 @@ class FormationController extends Controller
     {
         $inputs = $this->getInputs($request);
 
-        if($request->has('photo') && $request->photo) {
+        if ($request->has('photo') && $request->photo) {
             $this->deleteImages($formation);
         }
 
         $formation->update($inputs);
 
-        return back()->with('ok', 'The post has been successfully updated');
+        return back()->with('ok', 'Mise à jour a été un  succès');
     }
 
     /**
@@ -121,7 +121,7 @@ class FormationController extends Controller
 
         # $inputs['active'] = $request->has('active');
 
-        if($request->photo) {
+        if ($request->photo) {
             $inputs['photo'] = $this->saveImages($request);
         }
 

@@ -45,7 +45,7 @@ class ParcoursController extends Controller
 
         Parcours::create($request->all());
 
-        return back()->with('ok', 'The post has been successfully created');
+        return back()->with('ok', 'Enregistrement succès');
     }
 
     /**
@@ -81,7 +81,7 @@ class ParcoursController extends Controller
     {
         $parcours->update($request->all());
 
-        return back()->with('ok', 'The post has been successfully updated');
+        return back()->with('ok', 'Mise à jour a été un  succès');
     }
 
     /**

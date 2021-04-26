@@ -48,7 +48,7 @@ class NiveauController extends Controller
         $niveau = Niveau::create($request->all());
         # $niveau->formation()->sync($request->formation);
 
-        return back()->with('ok', 'The post has been successfully created');
+        return back()->with('ok', 'Enregistrement succès');
     }
 
     /**
@@ -88,7 +88,7 @@ class NiveauController extends Controller
         $niveau->update($request->all());
         # $niveau->formation()->sync($request->formation);
 
-        return back()->with('ok', 'The post has been successfully updated');
+        return back()->with('ok', 'Mise à jour a été un  succès');
     }
 
     /**

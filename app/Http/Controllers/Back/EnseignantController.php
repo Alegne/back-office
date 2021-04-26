@@ -51,7 +51,7 @@ class EnseignantController extends Controller
 
         Enseignant::create($inputs);
 
-        return back()->with('ok', 'The post has been successfully created');
+        return back()->with('ok', 'Enregistrement succès');
     }
 
     /**
@@ -96,7 +96,7 @@ class EnseignantController extends Controller
 
         $enseignant->update($inputs);
 
-        return back()->with('ok', 'The post has been successfully updated');
+        return back()->with('ok', 'Mise à jour a été un  succès');
     }
 
     /**

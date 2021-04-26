@@ -40,10 +40,9 @@ class EspaceNumeriqueController extends Controller
         $niveaux     = Niveau::all()->pluck('tag', 'id');
         $enseignants = Enseignant::all()->pluck('nom', 'id');
 
-        if ($request->ok)
-        {
+        if ($request->ok) {
             # dd($request->ok);
-            $ok = 'The post has been successfully created';
+            $ok = 'Enregistrement succès';
             return view('back.ent.form', compact('espaceNumerique', 'parcours', 'niveaux', 'enseignants', 'ok'));
         }
 
@@ -69,9 +68,8 @@ class EspaceNumeriqueController extends Controller
         $espace->parcours()->attach($request->parcours_id);
 
 
-        # return back()->with('ok', 'The post has been successfully created');
+        # return back()->with('ok', 'Enregistrement succès');
         return redirect()->route('espace-numerique-travail.pieces.view', ['espaceNumerique' => $espace]);
-
     }
 
     /**
@@ -115,7 +113,7 @@ class EspaceNumeriqueController extends Controller
     {
         $inputs = $this->getInputs($request);
 
-        if($request->has('pieces_jointes') && $request->pieces_jointes) {
+        if ($request->has('pieces_jointes') && $request->pieces_jointes) {
             # $this->deleteImages($enseignant);
         }
 
@@ -123,7 +121,7 @@ class EspaceNumeriqueController extends Controller
 
         $espaceNumerique->parcours()->sync($request->parcours_id);
 
-        # return back()->with('ok', 'The post has been successfully updated');
+        # return back()->with('ok', 'Mise à jour a été un  succès');
         return redirect()->route('espace-numerique-travail.pieces.view', ['espaceNumerique' => $espaceNumerique]);
     }
 
@@ -170,16 +168,15 @@ class EspaceNumeriqueController extends Controller
 
         # dd($espaceNumerique->pieces_jointes, gettype($espaceNumerique->pieces_jointes));
 
-       if (count($espaceNumerique->pieces_jointes) > 0)
-       {
-           # foreach ($espaceNumerique->pieces_jointes as $piece)
-           # {
-           #     array_push($data, $piece);
-           # }
-           $data = $data->merge($espaceNumerique->pieces_jointes);
-       }
+        if (count($espaceNumerique->pieces_jointes) > 0) {
+            # foreach ($espaceNumerique->pieces_jointes as $piece)
+            # {
+            #     array_push($data, $piece);
+            # }
+            $data = $data->merge($espaceNumerique->pieces_jointes);
+        }
 
-       # dd($data, $espaceNumerique->pieces_jointes);
+        # dd($data, $espaceNumerique->pieces_jointes);
 
         /*if ($request->file('file')->extension())
         {
@@ -190,13 +187,11 @@ class EspaceNumeriqueController extends Controller
 
         $name = $request->file('file')->getClientOriginalName();
 
-        if (in_array($request->file('file')->extension(), $extensions_images))
-        {
+        if (in_array($request->file('file')->extension(), $extensions_images)) {
             $img   = Image::make($request->file('file')->path());
             $img->widen(800)->encode()->save(public_path('/storage/images/') . $name);
             $img->widen(400)->encode()->save(public_path('/storage/images/thumbs/') . $name);
-
-        }else{
+        } else {
 
             # dd(public_path('/storage/fichiers/')); # D:\projet M1\WebCup\_projet\projet-back-office-webcup\public\/storage/fichiers/
             # dd(public_path('storage\fichiers'));  # D:\projet M1\WebCup\_projet\projet-back-office-webcup\public\storage\fichiers
@@ -254,23 +249,20 @@ class EspaceNumeriqueController extends Controller
             'jpg'
         ];
 
-        if (in_array($extension, $extensions_images)){
+        if (in_array($extension, $extensions_images)) {
             File::delete([
                 public_path('/storage/images/') . $filename,
                 public_path('/storage/images/thumbs/') . $filename,
             ]);
-        }else{
+        } else {
             File::delete([
                 public_path('/storage/fichiers/') . $filename,
             ]);
         }
 
-        if (count($espaceNumerique->pieces_jointes) > 0)
-        {
-            foreach ($espaceNumerique->pieces_jointes as $piece)
-            {
-                if ($piece != $filename)
-                {
+        if (count($espaceNumerique->pieces_jointes) > 0) {
+            foreach ($espaceNumerique->pieces_jointes as $piece) {
+                if ($piece != $filename) {
                     $data->push($piece);
                 }
             }
@@ -289,7 +281,7 @@ class EspaceNumeriqueController extends Controller
 
         # $inputs['active'] = $request->has('active');
 
-        if($request->pieces_jointes) {
+        if ($request->pieces_jointes) {
             $inputs['pieces_jointes'] = json_encode($this->saveFiles($request));
             # $inputs['pieces_jointes'] = $this->saveFiles($request);
 
@@ -315,10 +307,8 @@ class EspaceNumeriqueController extends Controller
 
         # dd($request->pieces_jointes);
 
-        foreach ($request->pieces_jointes as $jointe)
-        {
-            if ($jointe->extension())
-            {
+        foreach ($request->pieces_jointes as $jointe) {
+            if ($jointe->extension()) {
                 $name  = time() . '.' . $jointe->extension();
             } else {
                 $name  = time() . '.' . $jointe->getClientOriginalExtension();
@@ -333,14 +323,12 @@ class EspaceNumeriqueController extends Controller
 
             array_push($fichiers, $name);
 
-            if (in_array($jointe->extension(), $extensions_images))
-            {
+            if (in_array($jointe->extension(), $extensions_images)) {
 
                 $img   = Image::make($jointe->path());
                 $img->widen(800)->encode()->save(public_path('/storage/images/') . $name);
                 $img->widen(400)->encode()->save(public_path('/storage/images/thumbs/') . $name);
-
-            }else{
+            } else {
 
                 # dd(public_path('/storage/fichiers/')); # D:\projet M1\WebCup\_projet\projet-back-office-webcup\public\/storage/fichiers/
                 # dd(public_path('storage\fichiers'));  # D:\projet M1\WebCup\_projet\projet-back-office-webcup\public\storage\fichiers
