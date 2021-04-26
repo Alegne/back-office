@@ -57,11 +57,18 @@
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-light bg-navbar">
 
+      <!-- Left navbar links -->
+      <ul class="navbar-nav mr-auto">
+
+        <li class="nav-item">
+          <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
+        </li>
+
+      </ul>
+
       <a class="navbar-brand" href="{{ route('dashboard.webcup') }}">
         <h2 class="text-light">Ecole Nationale d'Infomatique</h2>
       </a>
-
-      <!-- Left navbar links -->
       <!-- include/left_navbar_links.html -->
 
       <!-- Right navbar links -->
@@ -165,7 +172,7 @@
                         {{-- <i class="fas fa-angle-left right"></i>--}}
                       </p>
                     </a>
-                    <ul class="nav nav-treeview">
+                    <ul class="nav nav-treeview" style="width: 200px !important; margin-left: 30px !important;">
 
                       {{-- Parcourir children --}}
                       @foreach($elements['children'] as $child)

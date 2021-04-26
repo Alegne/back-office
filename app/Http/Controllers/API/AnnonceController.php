@@ -21,32 +21,41 @@ class AnnonceController extends Controller
     # pagination
     public function all(Request $request)
     {
+        #dd('pagination', $request->has('niveau'));
+
         if ($request->has('niveau') && $request->niveau &&
             $request->has('parcours') && $request->parcours) {
             $niveaux = Niveau::where('tag', $request->niveau)->first();
             $parcours = Parcours::where('tag', $request->parcours)->first();
+
+            $annonces = Annonce::whereHas('parcours', function ($q) use ($parcours) {
+                $q->where('cactus_parcours.tag', $parcours->tag);
+            })
+                ->whereHas('niveau', function ($q) use ($niveaux) {
+                    $q->where('cactus_niveaux.tag', $niveaux->tag);
+                })
+                ->latest('id', 'updated_at')
+                #->get()
+            ;
+
+            $annonces = $request->pagination ?
+                $annonces->paginate(10) :
+                $annonces->get()
+            ;
+
+            return AnnonceResource::collection($annonces);
+        } else {
+            return response()->json([
+                'ok'    => false,
+                'message' => "NOT FOUND"
+            ]);
         }
-
-        $annonces = Annonce::whereHas('parcours', function ($q) use ($parcours) {
-                                $q->where('cactus_parcours.tag', $parcours->tag);
-                            })
-                            ->whereHas('niveau', function ($q) use ($niveaux) {
-                                $q->where('cactus_niveaux.tag', $niveaux->tag);
-                            })
-                            ->latest('id', 'updated_at')
-                            #->get()
-        ;
-
-        $annonces = $request->pagination ?
-            $annonces->paginate(10) :
-            $annonces->get()
-        ;
-
-        return AnnonceResource::collection($annonces);
     }
 
     public function get(Annonce $annonce)
     {
+        #dd($annonce);
+
         return new AnnonceResource($annonce);
     }
 }

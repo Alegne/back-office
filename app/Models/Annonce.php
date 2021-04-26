@@ -45,7 +45,7 @@ class Annonce extends Model
     }
 
     /**
-     * Get the niveau that owns the annonces.
+     * Get the parcours that owns the annonces.
      */
     public function parcours()
     {

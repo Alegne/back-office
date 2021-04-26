@@ -119,6 +119,19 @@ if (!function_exists('formatDateChiffre')) {
     }
 }
 
+if (!function_exists('parseRouteActive')) {
+    function parseRouteActive()
+    {
+        $route = Route::currentRouteName();
+
+        $arrayRoute = explode('.', $route);
+
+        $route = $arrayRoute[0] . '.' . 'create';
+
+        return $route;
+    }
+}
+
 if (!function_exists('getConfiguration')) {
     function getConfiguration($cle)
     {

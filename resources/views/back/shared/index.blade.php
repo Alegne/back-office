@@ -9,6 +9,10 @@
 
 @section('main')
 
+    <div class="row justify-content-start mx-1">
+        <a href="{{ route(parseRouteActive()) }}" class="btn btn-primary">Ajouter</a>
+    </div>
+
   {{ $dataTable->table(['class' => 'table table-bordered table-hover table-sm'], true) }}
 
 @endsection

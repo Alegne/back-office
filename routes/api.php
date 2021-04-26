@@ -72,7 +72,7 @@ Route::post('/logout', [APIEspaceMembreController::class, 'logout']);
 
 ### Emploi du Temps
 Route::get('/emploi-du-temps/{pagination?}', [APIEmploiTempsController::class, 'all']);
-Route::get('/emploi-du-temps/{id}', [APIEmploiTempsController::class, 'get']);
+Route::get('/emploi-du-temps/detail/{id}', [APIEmploiTempsController::class, 'get']);
 
 # Club
 Route::get('/clubs', [APIClubController::class, 'all']);
@@ -81,30 +81,28 @@ Route::get('/clubs/{club}', [APIClubController::class, 'get']);
 # Article
 Route::get('/articles/{pagination?}', [APIArticleController::class, 'all']);
 Route::get('/articles/top', [APIArticleController::class, 'top']);
-Route::get('/articles/{article}', [APIArticleController::class, 'get']);
+Route::get('/articles/detail/{article}', [APIArticleController::class, 'get']);
 
 # Annonces
 Route::get('/annonces/{pagination?}', [APIAnnonceController::class, 'all']);
 Route::get('/annonces/top', [APIAnnonceController::class, 'top']);
-Route::get('/annonces/{annonce}', [APIAnnonceController::class, 'get']);
+Route::get('/annonces/detail/{annonce}', [APIAnnonceController::class, 'get']);
 
 # Evenements
 Route::get('/evenements/{pagination?}', [APIEvenementController::class, 'all']);
 Route::get('/evenements/top/nouvelle', [APIEvenementController::class, 'topNouvelle']);
 Route::get('/evenements/top/actualite', [APIEvenementController::class, 'topActualite']);
-Route::get('/evenements/{evenement}', [APIEvenementController::class, 'get']);
+Route::get('/evenements/detail/{evenement}', [APIEvenementController::class, 'get']);
 
 # Messages
 Route::post('/api/messages', [APIMessageController::class, 'post']);
 
-# NewsLetter
-# Route::post('/api/newsletter', [APINewsletterController::class, 'post']);
 
 # Espace Numeriques
 Route::post('/espace-numerique', [APIEspaceNumeriqueController::class, 'post']);
 Route::post('/espace-numerique/{espaceNumerique}', [APIEspaceNumeriqueController::class, 'postPiecesJointes']);
 Route::get('/espace-numerique/{pagination?}', [APIEspaceNumeriqueController::class, 'all']);
-Route::get('/espace-numerique/{espaceNumerique}', [APIEspaceNumeriqueController::class, 'get']);
+Route::get('/espace-numerique/detail/{espaceNumerique}', [APIEspaceNumeriqueController::class, 'get']);
 
 # Parcours
 Route::get('/parcours/etudiants', [APIParcoursController::class, 'filter']);
