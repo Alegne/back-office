@@ -253,7 +253,8 @@ class AnnonceController extends Controller
             }
         }
 
-        $annonce->galerie = count($data) > 0 ? json_encode($data->all()) : null;
+        # $annonce->galerie = count($data) > 0 ? json_encode($data->all()) : null;
+        $annonce->galerie = count($data) > 0 ? $data->all() : null;
         $annonce->save();
 
         return response()->json(['success' => $annonce]);

@@ -238,7 +238,8 @@ class EvenementController extends Controller
             }
         }
 
-        $evenement->galerie = count($data) > 0 ? json_encode($data->all()) : null;
+        #$evenement->galerie = count($data) > 0 ? json_encode($data->all()) : null;
+        $evenement->galerie = count($data) > 0 ? $data->all() : null;
         $evenement->save();
 
         return response()->json(['success' => $evenement]);
