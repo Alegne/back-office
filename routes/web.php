@@ -160,7 +160,7 @@ Route::group(['prefix' => 'laravel-filemanager-webcup', 'middleware' => ['web', 
 });
 
 
-####### API Route
+/*####### API Route
 
 # Token
 Route::get('/api/token', [APITokenController::class, 'getToken']);
@@ -213,7 +213,7 @@ Route::get('/api/evenements/{evenement}', [APIEvenementController::class, 'get']
 Route::post('/api/messages', [APIMessageController::class, 'post']);
 
 # NewsLetter
-Route::post('/api/newsletter', [APINewsletterController::class, 'post']);
+# Route::post('/api/newsletter', [APINewsletterController::class, 'post']);
 
 # Espace Numeriques
 Route::post('/api/espace-numerique', [APIEspaceNumeriqueController::class, 'post']);
@@ -231,4 +231,4 @@ Route::get('/api/niveaux/etudiants', [APINiveauController::class, 'filter']);
 Route::get('/api/annee-universitaire/etudiants', [APIAnneeUniversitaireController::class, 'filter']);
 
 # Formation
-Route::get('/api/formations/etudiants/filter', [APIFormationController::class, 'filter']);
+Route::get('/api/formations/etudiants/filter', [APIFormationController::class, 'filter']);*/

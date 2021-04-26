@@ -24,9 +24,13 @@ class EvenementController extends Controller
         return EvenementResource::collection($articles);
     }
 
-    public function all()
+    public function all(Request $request)
     {
-        return EvenementResource::collection(Evenement::all());
+        $evenements = $request->pagination ?
+            Evenement::paginate(10) :
+            Evenement::all()
+        ;
+        return EvenementResource::collection($evenements);
     }
 
     public function get(Evenement $evenement)

@@ -17,6 +17,19 @@ class EnseignantRequest extends FormRequest
     }
 
     /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            # 'identifiant.unique' => 'Cet identifitant existe deja',
+            # 'email.unique'       => 'Cet email existant ',
+        ];
+    }
+
+    /**
      * Get the validation rules that apply to the request.
      *
      * @return array
@@ -24,11 +37,11 @@ class EnseignantRequest extends FormRequest
     public function rules()
     {
         return [
-            'identifiant'   => 'required',
+            'identifiant'   => 'required|unique:cactus_enseignants',
             'nom'           => 'required',
             'prenom'        => 'required',
-            'email'         => 'required',
-            'telephone'     => 'required',
+            'email'         => 'required|unique:cactus_enseignants',
+            'telephone'     => 'required|numeric',
             'adresse'       => 'required',
         ];
     }

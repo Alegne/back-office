@@ -24,7 +24,7 @@ class NewsletterRequest extends FormRequest
     public function rules()
     {
         return [
-            'email'     => 'required',
+            'email'     => 'required|unique:cactus_newsletters',
             //
         ];
     }

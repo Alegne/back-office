@@ -31,7 +31,12 @@ class EspaceNumeriqueController extends Controller
                     $q->where('cactus_parcours.tag', $parcours->tag);
                 })
                 ->latest('id', 'updated_at')
-                ->get()
+                #->get()
+            ;
+
+            $espaceNumerique = $request->pagination ?
+                                $espaceNumerique->paginate(10) :
+                                $espaceNumerique->get()
             ;
 
             return EspaceNumeriqueResource::collection($espaceNumerique);
