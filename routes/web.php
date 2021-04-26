@@ -106,12 +106,30 @@ Route::resource('langue', LangueController::class);
 
 # Articles
 Route::resource('article', ArticleController::class);
+Route::get('/article/galeries/{article}', [ArticleController::class, 'galeriesView'])
+    ->name('article.galeries.view');
+Route::post('/article/galeries/upload/{article}', [ArticleController::class, 'galeries'])
+    ->name('article.galeries.upload');
+Route::post('/article/galeries/delete/{article}', [ArticleController::class, 'deleteGaleries'])
+    ->name('article.galeries.delete');
 
 # Evenements
 Route::resource('evenement', EvenementController::class);
+Route::get('/evenement/galeries/{evenement}', [EvenementController::class, 'galeriesView'])
+    ->name('evenement.galeries.view');
+Route::post('/evenement/galeries/upload/{evenement}', [EvenementController::class, 'galeries'])
+    ->name('evenement.galeries.upload');
+Route::post('/evenement/galeries/delete/{evenement}', [EvenementController::class, 'deleteGaleries'])
+    ->name('evenement.galeries.delete');
 
 # Annonces
 Route::resource('annonce', AnnonceController::class);
+Route::get('/annonce/galeries/{annonce}', [AnnonceController::class, 'galeriesView'])
+    ->name('annonce.galeries.view');
+Route::post('/annonce/galeries/upload/{annonce}', [AnnonceController::class, 'galeries'])
+    ->name('annonce.galeries.upload');
+Route::post('/annonce/galeries/delete/{annonce}', [AnnonceController::class, 'deleteGaleries'])
+    ->name('annonce.galeries.delete');
 
 # Message
 Route::resource('message', MessageController::class);

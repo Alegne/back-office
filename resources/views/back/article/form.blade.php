@@ -37,6 +37,13 @@
                     </x-back.alert>
                 @endif
 
+                @if(isset($ok))
+                    <x-back.alert
+                            type='success'
+                            title="{!! $ok !!}">
+                    </x-back.alert>
+                @endif
+
                 <x-back.card
                         type='primary'
                         title='Article'>
@@ -80,7 +87,7 @@
                             :value="isset($article) ? $article->description : ''"
                             input='textarea'
                             rows=10
-                            :required="true">
+                            :required="false">
                     </x-back.input>
 
                     <button type="submit" class="btn btn-primary">Valider</button>
@@ -155,6 +162,7 @@
 @section('js')
     {{--@include('back.shared.editorScript')--}}
     @include('back.shared.slugScript')
+    @include('back.shared.ckeditor')
 
 
     <script>

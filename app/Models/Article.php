@@ -39,4 +39,26 @@ class Article extends Model
         # related, foreignKey, ownerKey, relation
         return $this->belongsTo(Club::class, 'club_id', 'id');
     }
+
+    /**
+     * Get Galerie.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getGalerieAttribute($value)
+    {
+        return  json_decode($value);
+    }
+
+    /**
+     * Set Galerie.
+     *
+     * @param  string  $value
+     * @return void
+     */
+    public function setGalerieAttribute($value)
+    {
+        $this->attributes['galerie'] = json_encode($value);
+    }
 }

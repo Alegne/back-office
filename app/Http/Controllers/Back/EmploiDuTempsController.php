@@ -56,7 +56,7 @@ class EmploiDuTempsController extends Controller
 
         $emploiDuTemps = EmploiTemps::create($request->all());
 
-        $emploiDuTemps->parcours()->sync($request->parcours_id);
+        $emploiDuTemps->parcours()->attach($request->parcours_id);
 
         # return back()->with('ok', 'The post has been successfully created');
 

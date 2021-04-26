@@ -26,4 +26,27 @@ class Album extends Model
         'description',
         'photos',
     ];
+
+
+    /**
+     * Get Photos.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getPhotosAttribute($value)
+    {
+        return  json_decode($value);
+    }
+
+    /**
+     * Set Photos.
+     *
+     * @param  string  $value
+     * @return void
+     */
+    public function setPhotosAttribute($value)
+    {
+        $this->attributes['photos'] = json_encode($value);
+    }
 }

@@ -27,13 +27,21 @@ class EvenementController extends Controller
     /**
      * Show the form for creating a new resource.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         $evenement = null;
 
         $types = ['actualite' => 'Actualite', 'nouvelle' => 'Nouvelle'];
+
+        if ($request->ok)
+        {
+            # dd($request->ok);
+            $ok = 'The post has been successfully created';
+            return view('back.evenement.form', compact('evenement', 'types', 'ok'));
+        }
 
         return view('back.evenement.form', compact('evenement', 'types'));
     }
@@ -50,9 +58,10 @@ class EvenementController extends Controller
 
         $inputs = $this->getInputs($merge);
 
-        Evenement::create($inputs);
+        $evenement = Evenement::create($inputs);
 
-        return back()->with('ok', 'The post has been successfully created');
+        # return back()->with('ok', 'The post has been successfully created');
+        return redirect()->route('evenement.galeries.view', ['evenement' => $evenement]);
     }
 
     /**
@@ -96,7 +105,8 @@ class EvenementController extends Controller
 
         $evenement->update($inputs);
 
-        return back()->with('ok', 'The post has been successfully updated');
+        # return back()->with('ok', 'The post has been successfully updated');
+        return redirect()->route('evenement.galeries.view', ['evenement' => $evenement]);
     }
 
     /**
@@ -113,6 +123,125 @@ class EvenementController extends Controller
         $this->deleteImages($evenement);
 
         return response()->json();
+    }
+
+    /**
+     * @param Evenement $evenement
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function galeriesView(Evenement $evenement)
+    {
+        return view('back.evenement.galerie', compact('evenement'));
+    }
+
+    /**
+     * Upload Galeries
+     *
+     * @param Request $request
+     * @param Evenement $evenement
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function galeries(Request $request, Evenement $evenement)
+    {
+        $extensions_images = [
+            'jpeg',
+            'pjpeg',
+            'png',
+            'gif',
+            'jpg',
+            'PNG'
+        ];
+
+        $data = collect();
+
+        if ($evenement->galerie)
+        {
+            if (count($evenement->galerie) > 0)
+            {
+                $data = $data->merge($evenement->galerie);
+            }
+        }
+
+        $name = $request->file('file')->getClientOriginalName();
+
+        if (in_array($request->file('file')->extension(), $extensions_images))
+        {
+            $img   = Image::make($request->file('file')->path());
+            $img->widen(800)->encode()->save(public_path('/storage/images/') . $name);
+            $img->widen(400)->encode()->save(public_path('/storage/images/thumbs/') . $name);
+
+        }else{
+
+            # dd(public_path('/storage/fichiers/')); # D:\projet M1\WebCup\_projet\projet-back-office-webcup\public\/storage/fichiers/
+            # dd(public_path('storage\fichiers'));  # D:\projet M1\WebCup\_projet\projet-back-office-webcup\public\storage\fichiers
+
+
+            $request->file('file')->storeAs('public\fichiers', $name);
+            # $jointe->move(public_path('storage\fichiers'), $name);
+
+        }
+
+        # array_push($data, $name);
+        $data->push($name);
+
+        $evenement->galerie = $data->all();
+
+        $evenement->save();
+
+        return response()->json(['success' => $evenement]);
+    }
+
+    /**
+     * Delete les pieces jointes
+     *
+     * @param Request $request
+     * @param Evenement $evenement
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function deleteGaleries(Request $request, Evenement $evenement)
+    {
+        $filename =  $request->get('filename');
+        $data = collect();
+
+        $extension = explode('.', $filename)[1];
+
+        $extensions_images = [
+            'jpeg',
+            'pjpeg',
+            'png',
+            'gif',
+            'jpg'
+        ];
+
+        if (in_array($extension, $extensions_images)){
+            File::delete([
+                public_path('/storage/images/') . $filename,
+                public_path('/storage/images/thumbs/') . $filename,
+            ]);
+        }else{
+            File::delete([
+                public_path('/storage/fichiers/') . $filename,
+            ]);
+        }
+
+        if ($evenement->galerie)
+        {
+            if (count($evenement->galerie) > 0)
+            {
+                foreach ($evenement->galerie as $piece)
+                {
+                    if ($piece != $filename)
+                    {
+                        $data->push($piece);
+                    }
+                }
+            }
+        }
+
+        $evenement->galerie = count($data) > 0 ? json_encode($data->all()) : null;
+        $evenement->save();
+
+        return response()->json(['success' => $evenement]);
     }
 
     ### Manage upload image

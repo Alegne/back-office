@@ -17,7 +17,7 @@ class CreateAnnoncesTable extends Migration
             $table->id();
             $table->string('titre');
             $table->longText('description');
-            # $table->boolean('approuve')->default(false);
+            $table->boolean('approuve')->default(false);
             $table->enum('type', array('public', 'private'))
                 ->default('public');
             $table->string('image')->nullable();
