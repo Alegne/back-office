@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Back\AlbumController;
 use App\Http\Controllers\Back\AnnonceController;
 use App\Http\Controllers\Back\ArticleController;
 use App\Http\Controllers\Back\ClubController;
@@ -103,6 +104,15 @@ Route::post('/club/staff/add', [ClubController::class, 'addStaffStore'])->name('
 
 # Langue
 Route::resource('langue', LangueController::class);
+
+# Album
+Route::resource('album', AlbumController::class);
+Route::get('/album/photos/{album}', [AlbumController::class, 'photosView'])
+    ->name('album.photos.view');
+Route::post('/album/photos/upload/{album}', [AlbumController::class, 'photos'])
+    ->name('album.photos.upload');
+Route::post('/album/photos/delete/{album}', [AlbumController::class, 'deletephotos'])
+    ->name('album.photos.delete');
 
 # Articles
 Route::resource('article', ArticleController::class);

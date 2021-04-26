@@ -25,6 +25,7 @@ class EvenementResource extends JsonResource
             'image'           => $this->image ? getImageSingle($this->image) : null,
             'type'            => $this->type,
             'date_mise_jour'  => $this->updated_at,
+            'galerie'         => getFileMultiple($this->galerie),
         ];
     }
 }

@@ -308,17 +308,12 @@ return [
             [
                 'name'  => 'Tous',
                 'role'  => 'admin',
-                'route' => '', #'niveaux.index',
+                'route' => 'album.index',
             ],
             [
                 'name'  => 'Ajout',
                 'role'  => 'admin',
-                'route' => '', #'niveaux.index',
-            ],
-            [
-                'name'  => 'Categories',
-                'role'  => 'admin',
-                'route' => '', #'comments.indexnew',
+                'route' => 'album.create',
             ]
         ],
     ],
