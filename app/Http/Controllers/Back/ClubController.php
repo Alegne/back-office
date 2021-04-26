@@ -50,7 +50,7 @@ class ClubController extends Controller
 
         Club::create($inputs);
 
-        return back()->with('ok', 'The post has been successfully created');
+        return back()->with('ok', 'Enregistrement succès');
     }
 
     /**

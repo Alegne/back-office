@@ -44,7 +44,7 @@ class AnneeUniversitaireLibelleController extends Controller
     {
         AnneeUniversitaireLibelle::create($request->all());
 
-        return back()->with('ok', 'The post has been successfully created');
+        return back()->with('ok', 'Enregistrement succès');
     }
 
     /**

@@ -42,7 +42,7 @@ class AnnonceController extends Controller
 
         if ($request->ok) {
             # dd($request->ok);
-            $ok = 'The post has been successfully created';
+            $ok = 'Enregistrement succès';
             return view('back.annonce.form', compact('annonce', 'parcours', 'niveaux', 'types', 'ok'));
         }
 
@@ -64,7 +64,7 @@ class AnnonceController extends Controller
         $annonce->niveau()->attach($request->niveau_id);
         $annonce->parcours()->attach($request->parcours_id);
 
-        # return back()->with('ok', 'The post has been successfully created');
+        # return back()->with('ok', 'Enregistrement succès');
         return redirect()->route('annonce.galeries.view', ['annonce' => $annonce]);
     }
 

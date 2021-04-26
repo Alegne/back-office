@@ -38,7 +38,7 @@ class EvenementController extends Controller
 
         if ($request->ok) {
             # dd($request->ok);
-            $ok = 'The post has been successfully created';
+            $ok = 'Enregistrement succès';
             return view('back.evenement.form', compact('evenement', 'types', 'ok'));
         }
 

@@ -38,7 +38,7 @@ class ArticleController extends Controller
 
         if ($request->ok) {
             # dd($request->ok);
-            $ok = 'The post has been successfully created';
+            $ok = 'Enregistrement succès';
             return view('back.article.form', compact('article', 'clubs', 'ok'));
         }
 
@@ -57,7 +57,7 @@ class ArticleController extends Controller
 
         $article = Article::create($inputs);
 
-        # return back()->with('ok', 'The post has been successfully created');
+        # return back()->with('ok', 'Enregistrement succès');
         return redirect()->route('article.galeries.view', ['article' => $article]);
     }
 
