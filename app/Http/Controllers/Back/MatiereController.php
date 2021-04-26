@@ -53,7 +53,7 @@ class MatiereController extends Controller
 
         $matiere = Matiere::create($request->all());
 
-        $matiere->parcours()->sync($request->parcours_id);
+        $matiere->parcours()->attach($request->parcours_id);
 
 
 

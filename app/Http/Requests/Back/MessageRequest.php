@@ -24,7 +24,7 @@ class MessageRequest extends FormRequest
     public function rules()
     {
         return [
-            'email'     => 'required',
+            'email'     => 'required|unique:cactus_messages',
             'objet'     => 'required',
             'message'   => 'required',
             'telephone' => 'required'

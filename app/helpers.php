@@ -119,6 +119,34 @@ if (!function_exists('formatDateChiffre')) {
     }
 }
 
+if (!function_exists('resumerDescription')) {
+    function resumerDescription($texte, $nombre = 10)
+    {
+        if (strlen($texte) > $nombre)
+        {
+            $texte = substr($texte, 0, $nombre);
+            $position_espace = strrpos($texte, " ");
+            $texte = substr($texte, 0, $position_espace);
+            $texte .= '...';
+            return $texte;
+        }
+        else return $texte;
+    }
+}
+
+if (!function_exists('parseRouteActive')) {
+    function parseRouteActive()
+    {
+        $route = Route::currentRouteName();
+
+        $arrayRoute = explode('.', $route);
+
+        $route = $arrayRoute[0] . '.' . 'create';
+
+        return $route;
+    }
+}
+
 if (!function_exists('getConfiguration')) {
     function getConfiguration($cle)
     {

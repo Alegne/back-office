@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 
 class EmploiTempsController extends Controller
 {
-    # Niveau | Parcours | Annee
+    # Niveau | Parcours | Annee | pagination
     public function all(Request $request)
     {
         if ($request->has('niveau') && $request->niveau &&
@@ -33,12 +33,34 @@ class EmploiTempsController extends Controller
                                     $q->where('cactus_parcours.tag', $parcours->tag);
                                 })
                                 ->latest('id')
-                                ->get()
+                                # ->paginate()
+                                # ->get()
+            ;
+
+            $emploiTemps = $request->pagination ?
+                            $emploiTemps->paginate(10) :
+                            $emploiTemps->get()
             ;
 
             return EmploiTempsResource::collection($emploiTemps);
 
-        } else {
+        } elseif ($request->has('enseignant') && $request->enseignant)
+        {
+            /*$enseignant   = Enseignant::where('id', $request->enseignant)->first();
+
+            $emploiTemps = EmploiTemps::where('enseignant_id', $enseignant->id)
+                            # ->where('annee_id', $annee->id)
+                            ->latest('id', 'updated_at')
+                            # ->get()
+            ;*/
+
+            $emploiTemps = $request->pagination ?
+                            EmploiTemps::paginate(10) :
+                            EmploiTemps::get()
+            ;
+
+            return EmploiTempsResource::collection($emploiTemps);
+        } else{
             return response()->json(['message' => 'NOT FOUND']);
         }
 

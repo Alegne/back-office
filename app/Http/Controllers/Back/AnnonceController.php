@@ -6,8 +6,11 @@ use App\DataTables\AnnonceDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Back\AnnonceRequest;
 use App\Models\Annonce;
+use App\Models\Niveau;
+use App\Models\Parcours;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 
 class AnnonceController extends Controller
@@ -26,13 +29,24 @@ class AnnonceController extends Controller
     /**
      * Show the form for creating a new resource.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         $annonce = null;
 
-        return view('back.annonce.form', compact('annonce'));
+        $parcours = Parcours::all()->pluck('tag', 'id');
+        $niveaux  = Niveau::all()->pluck('tag', 'id');
+        $types    = ['public' => 'Publique', 'private' => 'Prive'];
+
+        if ($request->ok) {
+            # dd($request->ok);
+            $ok = 'The post has been successfully created';
+            return view('back.annonce.form', compact('annonce', 'parcours', 'niveaux', 'types', 'ok'));
+        }
+
+        return view('back.annonce.form', compact('annonce', 'parcours', 'niveaux', 'types'));
     }
 
     /**
@@ -45,9 +59,13 @@ class AnnonceController extends Controller
     {
         $inputs = $this->getInputs($request);
 
-        Annonce::create($inputs);
+        $annonce = Annonce::create($inputs);
 
-        return back()->with('ok', 'The post has been successfully created');
+        $annonce->niveau()->attach($request->niveau_id);
+        $annonce->parcours()->attach($request->parcours_id);
+
+        # return back()->with('ok', 'The post has been successfully created');
+        return redirect()->route('annonce.galeries.view', ['annonce' => $annonce]);
     }
 
     /**
@@ -69,7 +87,12 @@ class AnnonceController extends Controller
      */
     public function edit(Annonce $annonce)
     {
-        return view('back.annonce.form', compact('annonce'));
+
+        $parcours = Parcours::all()->pluck('tag', 'id');
+        $niveaux  = Niveau::all()->pluck('tag', 'id');
+        $types    = ['public' => 'Publique', 'private' => 'Prive'];
+
+        return view('back.annonce.form', compact('annonce', 'parcours', 'niveaux', 'types'));
     }
 
     /**
@@ -81,6 +104,8 @@ class AnnonceController extends Controller
      */
     public function update(AnnonceRequest $request, Annonce $annonce)
     {
+        # dd($request->all());
+
         $inputs = $this->getInputs($request);
 
         if ($request->has('image') && $request->image) {
@@ -89,7 +114,12 @@ class AnnonceController extends Controller
 
         $annonce->update($inputs);
 
-        return back()->with('ok', 'Mise à jour a été un  succès');
+
+        $annonce->niveau()->sync($request->niveau_id);
+        $annonce->parcours()->sync($request->parcours_id);
+
+        # return back()->with('ok', 'The post has been successfully updated');
+        return redirect()->route('annonce.galeries.view', ['annonce' => $annonce]);
     }
 
     /**
@@ -108,15 +138,134 @@ class AnnonceController extends Controller
         return response()->json();
     }
 
+    /**
+     * @param Annonce $annonce
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function galeriesView(Annonce $annonce)
+    {
+        return view('back.annonce.galerie', compact('annonce'));
+    }
+
+    /**
+     * Upload Galeries
+     *
+     * @param Request $request
+     * @param Annonce $annonce
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function galeries(Request $request, Annonce $annonce)
+    {
+        $extensions_images = [
+            'jpeg',
+            'pjpeg',
+            'png',
+            'gif',
+            'jpg',
+            'PNG'
+        ];
+
+        $data = collect();
+
+        if ($annonce->galerie) {
+            if (count($annonce->galerie) > 0) {
+                $data = $data->merge($annonce->galerie);
+            }
+        }
+
+        $name = $request->file('file')->getClientOriginalName();
+
+        if (in_array($request->file('file')->extension(), $extensions_images)) {
+            $img   = Image::make($request->file('file')->path());
+            $img->widen(800)->encode()->save(public_path('/storage/images/') . $name);
+            $img->widen(400)->encode()->save(public_path('/storage/images/thumbs/') . $name);
+        } else {
+
+            # dd(public_path('/storage/fichiers/')); # D:\projet M1\WebCup\_projet\projet-back-office-webcup\public\/storage/fichiers/
+            # dd(public_path('storage\fichiers'));  # D:\projet M1\WebCup\_projet\projet-back-office-webcup\public\storage\fichiers
+
+
+            $request->file('file')->storeAs('public\fichiers', $name);
+            # $jointe->move(public_path('storage\fichiers'), $name);
+
+        }
+
+        # array_push($data, $name);
+        $data->push($name);
+
+        # $annonce->galerie = json_encode($data->all());
+        $annonce->galerie = $data->all();
+
+        $annonce->save();
+
+        return response()->json(['success' => $annonce]);
+    }
+
+    /**
+     * Delete les Galeries
+     *
+     * @param Request $request
+     * @param Annonce $annonce
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function deleteGaleries(Request $request, Annonce $annonce)
+    {
+
+        $filename =  $request->get('filename');
+        $data = collect();
+
+        $extension = explode('.', $filename)[1];
+
+        $extensions_images = [
+            'jpeg',
+            'pjpeg',
+            'png',
+            'gif',
+            'jpg'
+        ];
+
+        if (in_array($extension, $extensions_images)) {
+            File::delete([
+                public_path('/storage/images/') . $filename,
+                public_path('/storage/images/thumbs/') . $filename,
+            ]);
+        } else {
+            File::delete([
+                public_path('/storage/fichiers/') . $filename,
+            ]);
+        }
+
+        if ($annonce->galerie) {
+            if (count($annonce->galerie) > 0) {
+                foreach ($annonce->galerie as $piece) {
+                    if ($piece != $filename) {
+                        $data->push($piece);
+                    }
+                }
+            }
+        }
+
+        $annonce->galerie = count($data) > 0 ? json_encode($data->all()) : null;
+        $annonce->save();
+
+        return response()->json(['success' => $annonce]);
+    }
+
 
 
     ### Manage upload image
 
     protected function getInputs($request)
     {
-        $inputs = $request->except(['image']);
+        $approuve = $request->approuve;
 
-        # $inputs['active'] = $request->has('active');
+        $inputs = $request->except(['image', 'approuve']);
+
+        if (isset($request->approuve)) {
+            $inputs['approuve'] = $request->approuve == 'on' ? 1 : 0;
+        } else {
+            $inputs['approuve'] = 0;
+        }
 
         if ($request->image) {
             $inputs['image'] = $this->saveImages($request);

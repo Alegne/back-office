@@ -24,7 +24,9 @@ class EmploiDuTempsItemRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'heure_debut'     => 'required',
+            'heure_fin'       => 'required',
+            'matiere_id'      => 'required',
         ];
     }
 }

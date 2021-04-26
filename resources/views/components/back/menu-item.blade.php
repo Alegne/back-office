@@ -4,7 +4,7 @@
     <a  @if($route) href="{{ route($route) }}" @else href="#" @endif
        class="nav-link
         @if($route) {{ currentRouteActive($route) }}@endif
-            ">
+            "  style="width: 200px !important;">
         <i class="
 
         @isset($sub) far fa-circle @endisset

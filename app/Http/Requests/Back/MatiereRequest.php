@@ -24,7 +24,10 @@ class MatiereRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'libelle'        => 'required',
+            'couleur'        => 'required',
+            'enseignant_id'  => 'required',
+            'niveau_id'      => 'required',
         ];
     }
 }

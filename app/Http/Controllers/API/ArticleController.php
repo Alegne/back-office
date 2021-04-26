@@ -16,9 +16,13 @@ class ArticleController extends Controller
         return ArticleResource::collection($articles);
     }
 
-    public function all()
+    public function all(Request $request)
     {
-        return ArticleResource::collection(Article::all());
+        $articles = $request->pagination ?
+            Article::paginate(10) :
+            Article::all()
+        ;
+        return ArticleResource::collection($articles);
     }
 
     public function get(Article $article)

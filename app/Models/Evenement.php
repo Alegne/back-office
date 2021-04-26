@@ -50,4 +50,27 @@ class Evenement extends Model
         # 'is_admin' => 'boolean',
         'date_creation' => 'datetime',
     ];
+
+
+    /**
+     * Get Galerie.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getGalerieAttribute($value)
+    {
+        return  json_decode($value);
+    }
+
+    /**
+     * Set Galerie.
+     *
+     * @param  string  $value
+     * @return void
+     */
+    public function setGalerieAttribute($value)
+    {
+        $this->attributes['galerie'] = json_encode($value);
+    }
 }

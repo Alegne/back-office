@@ -26,6 +26,8 @@ class Annonce extends Model
         'description',
         'image',
         'galerie',
+        'type',
+        'approuve',
     ];
 
     /**
@@ -45,7 +47,7 @@ class Annonce extends Model
     }
 
     /**
-     * Get the niveau that owns the annonces.
+     * Get the parcours that owns the annonces.
      */
     public function parcours()
     {
@@ -59,4 +61,31 @@ class Annonce extends Model
             ->orderBy('cactus_annonces_parcours.updated_at', 'desc')
             ;
     }
+
+
+    /**
+     * Get Galerie.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getGalerieAttribute($value)
+    {
+        # dd('get');
+        return  json_decode($value);
+    }
+
+    /**
+     * Set Galerie.
+     *
+     * @param  string  $value
+     * @return void
+     */
+    public function setGalerieAttribute($value)
+    {
+        # dd('set');
+        $this->attributes['galerie'] = json_encode($value);
+    }
+
+
 }

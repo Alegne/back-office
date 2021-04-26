@@ -195,11 +195,11 @@ class EtudiantController extends Controller
         return $name;
     }
 
-    protected function deleteImages($formation)
+    protected function deleteImages($etudiant)
     {
         File::delete([
-            public_path('/storage/images/') . $formation->photo,
-            public_path('/storage/images/thumbs/') . $formation->photo,
+            public_path('/storage/images/') . $etudiant->photo,
+            public_path('/storage/images/thumbs/') . $etudiant->photo,
         ]);
     }
 

@@ -30,6 +30,7 @@ class EspaceNumeriqueController extends Controller
     /**
      * Show the form for creating a new resource.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
     public function create(Request $request)
@@ -165,25 +166,15 @@ class EspaceNumeriqueController extends Controller
 
         # $data = [];
         $data = collect();
-
+        # dd(count($data));
         # dd($espaceNumerique->pieces_jointes, gettype($espaceNumerique->pieces_jointes));
 
-        if (count($espaceNumerique->pieces_jointes) > 0) {
-            # foreach ($espaceNumerique->pieces_jointes as $piece)
-            # {
-            #     array_push($data, $piece);
-            # }
-            $data = $data->merge($espaceNumerique->pieces_jointes);
+
+        if ($espaceNumerique->pieces_jointes) {
+            if (count($espaceNumerique->pieces_jointes) > 0) {
+                $data = $data->merge($espaceNumerique->pieces_jointes);
+            }
         }
-
-        # dd($data, $espaceNumerique->pieces_jointes);
-
-        /*if ($request->file('file')->extension())
-        {
-            $name  = time() . '.' . $request->file('file')->extension();
-        } else {
-            $name  = time() . '.' . $request->file('file')->getClientOriginalExtension();
-        }*/
 
         $name = $request->file('file')->getClientOriginalName();
 
@@ -239,8 +230,6 @@ class EspaceNumeriqueController extends Controller
 
         $extension = explode('.', $filename)[1];
 
-        # dd($extension);
-
         $extensions_images = [
             'jpeg',
             'pjpeg',
@@ -260,14 +249,16 @@ class EspaceNumeriqueController extends Controller
             ]);
         }
 
-        if (count($espaceNumerique->pieces_jointes) > 0) {
-            foreach ($espaceNumerique->pieces_jointes as $piece) {
-                if ($piece != $filename) {
-                    $data->push($piece);
+
+        if ($espaceNumerique->pieces_jointes) {
+            if (count($espaceNumerique->pieces_jointes) > 0) {
+                foreach ($espaceNumerique->pieces_jointes as $piece) {
+                    if ($piece != $filename) {
+                        $data->push($piece);
+                    }
                 }
             }
         }
-
 
         $espaceNumerique->pieces_jointes = count($data) > 0 ? json_encode($data->all()) : null;
         $espaceNumerique->save();

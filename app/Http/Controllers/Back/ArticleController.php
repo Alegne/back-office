@@ -27,13 +27,20 @@ class ArticleController extends Controller
     /**
      * Show the form for creating a new resource.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         $article = null;
 
         $clubs = Club::all()->pluck('libelle', 'id');
+
+        if ($request->ok) {
+            # dd($request->ok);
+            $ok = 'The post has been successfully created';
+            return view('back.article.form', compact('article', 'clubs', 'ok'));
+        }
 
         return view('back.article.form', compact('article', 'clubs'));
     }
@@ -48,9 +55,10 @@ class ArticleController extends Controller
     {
         $inputs = $this->getInputs($request);
 
-        Article::create($inputs);
+        $article = Article::create($inputs);
 
-        return back()->with('ok', 'The post has been successfully created');
+        # return back()->with('ok', 'The post has been successfully created');
+        return redirect()->route('article.galeries.view', ['article' => $article]);
     }
 
     /**
@@ -93,7 +101,9 @@ class ArticleController extends Controller
 
         $article->update($inputs);
 
-        return back()->with('ok', 'Mise à jour a été un  succès');
+
+        # return back()->with('ok', 'The post has been successfully updated');
+        return redirect()->route('article.galeries.view', ['article' => $article]);
     }
 
     /**
@@ -109,6 +119,118 @@ class ArticleController extends Controller
         $this->deleteImages($article);
 
         return response()->json();
+    }
+
+    /**
+     * @param Article $article
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function galeriesView(Article $article)
+    {
+        return view('back.article.galerie', compact('article'));
+    }
+
+    /**
+     * Upload Galeries
+     *
+     * @param Request $request
+     * @param Article $article
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function galeries(Request $request, Article $article)
+    {
+        $extensions_images = [
+            'jpeg',
+            'pjpeg',
+            'png',
+            'gif',
+            'jpg',
+            'PNG'
+        ];
+
+        $data = collect();
+
+        if ($article->galerie) {
+            if (count($article->galerie) > 0) {
+                $data = $data->merge($article->galerie);
+            }
+        }
+
+        $name = $request->file('file')->getClientOriginalName();
+
+        if (in_array($request->file('file')->extension(), $extensions_images)) {
+            $img   = Image::make($request->file('file')->path());
+            $img->widen(800)->encode()->save(public_path('/storage/images/') . $name);
+            $img->widen(400)->encode()->save(public_path('/storage/images/thumbs/') . $name);
+        } else {
+
+            # dd(public_path('/storage/fichiers/')); # D:\projet M1\WebCup\_projet\projet-back-office-webcup\public\/storage/fichiers/
+            # dd(public_path('storage\fichiers'));  # D:\projet M1\WebCup\_projet\projet-back-office-webcup\public\storage\fichiers
+
+
+            $request->file('file')->storeAs('public\fichiers', $name);
+            # $jointe->move(public_path('storage\fichiers'), $name);
+
+        }
+
+        # array_push($data, $name);
+        $data->push($name);
+
+        $article->galerie = $data->all();
+
+        $article->save();
+
+        return response()->json(['success' => $article]);
+    }
+
+    /**
+     * Delete les pieces jointes
+     *
+     * @param Request $request
+     * @param Article $article
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function deleteGaleries(Request $request, Article $article)
+    {
+
+        $filename =  $request->get('filename');
+        $data = collect();
+
+        $extension = explode('.', $filename)[1];
+
+        $extensions_images = [
+            'jpeg',
+            'pjpeg',
+            'png',
+            'gif',
+            'jpg'
+        ];
+
+        if (in_array($extension, $extensions_images)) {
+            File::delete([
+                public_path('/storage/images/') . $filename,
+                public_path('/storage/images/thumbs/') . $filename,
+            ]);
+        } else {
+            File::delete([
+                public_path('/storage/fichiers/') . $filename,
+            ]);
+        }
+
+        if ($article->galerie) {
+            if (count($article->galerie) > 0) {
+                foreach ($article->galerie as $piece) {
+                    if ($piece != $filename) {
+                        $data->push($piece);
+                    }
+                }
+            }
+        }
+
+        $article->galerie = count($data) > 0 ? json_encode($data->all()) : null;
+        $article->save();
+
+        return response()->json(['success' => $article]);
     }
 
 

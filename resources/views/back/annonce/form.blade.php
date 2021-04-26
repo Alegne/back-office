@@ -35,6 +35,13 @@
                     </x-back.alert>
                 @endif
 
+                @if(isset($ok))
+                    <x-back.alert
+                            type='success'
+                            title="{!! $ok !!}">
+                    </x-back.alert>
+                @endif
+
                 <x-back.card
                         type='primary'
                         title='Annonce'>
@@ -53,7 +60,7 @@
                             :value="isset($annonce) ? $annonce->description : ''"
                             input='textarea'
                             rows=10
-                            :required="true">
+                            :required="false">
                     </x-back.input>
 
                     <button type="submit" class="btn btn-primary">Valider</button>
@@ -62,12 +69,60 @@
 
             <div class="col-md-4">
 
+                <x-back.card
+                        id="autre"
+                        type='primary'
+                        :outline="false"
+                        title='Specification'>
+                    <div class="row justify-content-center">
+                        <x-back.input
+                                col="col"
+                                name='niveau_id'
+                                title='Niveau'
+                                :values="isset($annonce) ? $annonce->niveau : collect()"
+                                input='selectMultiple'
+                                :options="$niveaux">
+                        </x-back.input>
+
+                        <x-back.input
+                                col="col"
+                                name='parcours_id'
+                                title='Parcours'
+                                :values="isset($annonce) ? $annonce->parcours : collect()"
+                                input='selectMultiple'
+                                :options="$parcours">
+                        </x-back.input>
+                    </div>
+
+                    <div class="row justify-content-center">
+
+                        <x-back.input
+                                col="col"
+                                name='type'
+                                title='Visibilite'
+                                :value="isset($annonce) ? $annonce->type : ''"
+                                input='select'
+                                :options="$types">
+                        </x-back.input>
+
+                        @if(Route::currentRouteName() === 'annonce.edit')
+                            <x-back.input
+                                    col="col"
+                                    name='approuve'
+                                    label='Approuve'
+                                    :value="isset($annonce) ? $annonce->approuve : ''"
+                                    input='checkbox'>
+                            </x-back.input>
+                        @endif
+                    </div>
+                </x-back.card>
+
                 {{-- Upload --}}
                 <x-back.card
                         id="photo_upload"
                         type='primary'
                         :outline="false"
-                        title='Photo Upload'>
+                        title='Image Principale'>
 
                     <div class="form-group{{ $errors->has('image') ? ' is-invalid' : '' }}">
                         <label for="changeImage">Image</label>
@@ -128,6 +183,7 @@
 @section('js')
     {{--@include('back.shared.editorScript')--}}
     @include('back.shared.slugScript')
+    @include('back.shared.ckeditor')
 
     <script>
         $(document).ready(() => {

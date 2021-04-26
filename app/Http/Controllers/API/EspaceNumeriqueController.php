@@ -11,6 +11,7 @@ use App\Models\EspaceNumerique;
 use App\Models\Niveau;
 use App\Models\Parcours;
 use Illuminate\Http\Request;
+use Intervention\Image\Facades\Image;
 
 class EspaceNumeriqueController extends Controller
 {
@@ -31,7 +32,12 @@ class EspaceNumeriqueController extends Controller
                     $q->where('cactus_parcours.tag', $parcours->tag);
                 })
                 ->latest('id', 'updated_at')
-                ->get()
+                #->get()
+            ;
+
+            $espaceNumerique = $request->pagination ?
+                                $espaceNumerique->paginate(10) :
+                                $espaceNumerique->get()
             ;
 
             return EspaceNumeriqueResource::collection($espaceNumerique);
@@ -79,6 +85,39 @@ class EspaceNumeriqueController extends Controller
     # Avec Pieces Jointes
     public function postPiecesJointes(EspaceNumeriqueRequest $request, EspaceNumerique $espaceNumerique)
     {
-        return new EspaceNumeriqueResource($espaceNumerique);
+        $extensions_images = [
+            'jpeg',
+            'pjpeg',
+            'png',
+            'gif',
+            'jpg'
+        ];
+
+        $data = collect();
+
+        if (count($espaceNumerique->pieces_jointes) > 0)
+        {
+            $data = $data->merge($espaceNumerique->pieces_jointes);
+        }
+
+        $name = $request->file('file')->getClientOriginalName();
+
+        if (in_array($request->file('file')->extension(), $extensions_images))
+        {
+            $img   = Image::make($request->file('file')->path());
+            $img->widen(800)->encode()->save(public_path('/storage/images/') . $name);
+            $img->widen(400)->encode()->save(public_path('/storage/images/thumbs/') . $name);
+
+        }else{
+            $request->file('file')->storeAs('public\fichiers', $name);
+
+        }
+
+        $data->push($name);
+
+        $espaceNumerique->pieces_jointes = json_encode($data->all());
+        $espaceNumerique->save();
+
+        return response()->json(['success' => $espaceNumerique]);
     }
 }

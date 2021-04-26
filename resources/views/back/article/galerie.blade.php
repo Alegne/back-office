@@ -29,76 +29,72 @@
 
 @section('main')
 
-<div class="row">
-    <div class="col-md-4">
-        <x-back.card
-                type='primary'
-                :outline="false"
-                title='Espace Numerique'>
-            <ul class="list-group">
-                <li class="list-group-item">Libelle    : <strong>{{ $espaceNumerique->libelle }}</strong> </li>
-                <li class="list-group-item">Niveau     : <strong>{{ $espaceNumerique->niveau->tag }}</strong></li>
-                <li class="list-group-item">Enseignant : <strong>{{ $espaceNumerique->enseignant->nom }}</strong></li>
-                <li class="list-group-item">Parcours   :
-                    @foreach($espaceNumerique->parcours as $parcours)
-                        <strong>{{ $parcours->tag }}</strong>
-                    @endforeach
-                </li>
-            </ul>
-        </x-back.card>
+    <div class="row">
+        <div class="col-md-4">
+            <x-back.card
+                    type='primary'
+                    :outline="false"
+                    title='Article'>
+                <ul class="list-group">
+                    <li class="list-group-item">Titre    : <strong>{{ $article->titre }}</strong> </li>
+                    <li class="list-group-item">Club : <strong>{{ $article->club->libelle }}</strong> </li>
 
-        <div class="row justify-content-start m-2">
-            <a href="{{ route('espace-numerique-travail.create', ['ok' => 1]) }}"
-               class="btn btn-primary">Valider</a>
+                </ul>
+            </x-back.card>
+
+            <div class="row justify-content-start m-2">
+                <a href="{{ route('article.create', ['ok' => 1]) }}"
+                   class="btn btn-primary">Valider</a>
+            </div>
         </div>
-    </div>
-    <div class="col-md-8">
-        <x-back.card
-                type='primary'
-                title='Pieces Jointes | Glisser ici vos fichiers'>
+        <div class="col-md-8">
+            <x-back.card
+                    type='primary'
+                    title='Galeries | Glisser ici vos fichiers'>
 
-            <form action="{{ route('espace-numerique-travail.pieces.upload', ['espaceNumerique' => $espaceNumerique->id]) }}"
-                  method="post"
-                  class="dropzone"
-                  data-delete="{{ route('espace-numerique-travail.pieces.delete', ['espaceNumerique' => $espaceNumerique->id]) }}"
-                  id="dropzone" enctype="multipart/form-data">
-                @csrf
-            </form>
+                <form action="{{ route('article.galeries.upload', ['article' => $article->id]) }}"
+                      method="post"
+                      class="dropzone"
+                      data-delete="{{ route('article.galeries.delete', ['article' => $article->id]) }}"
+                      id="dropzone" enctype="multipart/form-data">
+                    @csrf
+                </form>
 
-        </x-back.card>
-
-
-        @isset($espaceNumerique->pieces_jointes)
-            @if(count($espaceNumerique->pieces_jointes) > 0)
-                <x-back.card
-                        type='primary'
-                        title='Vos fichiers'>
+            </x-back.card>
 
 
-                    <div class="owl-carousel owl-theme">
-                        @foreach($espaceNumerique->pieces_jointes as $piece)
-                            <div class="item">
-                                <div class="card  justify-content-center mx-1" >
-                                    @if(in_array(explode('.', $piece)[1], ['jpeg','pjpeg','png','gif','jpg']))
-                                        <img class="card-img-top m-auto" src="{{ getImageSingle($piece, true) }}" alt="Card image cap">
-                                    @else
-                                        <img class="card-img-top m-auto" src="/default.png" alt="Card image cap">
-                                    @endif
-                                    <div class="card-body m-auto">
-                                        <button type="button" data-name="{{ $piece }}" class="btn btn-danger btn-supprimer-image">Supprimer</button>
+            @isset($article->galerie)
+
+                @if(count($article->galerie) > 0)
+                    <x-back.card
+                            type='primary'
+                            title='Vos fichiers'>
+
+
+                        <div class="owl-carousel owl-theme">
+                            @foreach($article->galerie as $galerie)
+                                <div class="item">
+                                    <div class="card  justify-content-center mx-1" >
+                                        @if(in_array(Str::lower(explode('.', $galerie)[1]), ['jpeg','pjpeg','png','gif','jpg']))
+                                            <img class="card-img-top m-auto" src="{{ getImageSingle($galerie, true) }}" alt="Card image cap">
+                                        @else
+                                            <img class="card-img-top m-auto" src="/default.png" alt="Card image cap">
+                                        @endif
+                                        <div class="card-body m-auto">
+                                            <button type="button" data-name="{{ $galerie }}" class="btn btn-danger btn-supprimer-image">Supprimer</button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        @endforeach
-                    </div>
+                            @endforeach
+                        </div>
 
-                </x-back.card>
-            @endif
-        @else
-            <p class="text-secondary">AUCUN Pieces Jointes</p>
-        @endisset
+                    </x-back.card>
+                @endif
+            @else
+                <p class="text-secondary">AUCUN Galeries</p>
+            @endisset
+        </div>
     </div>
-</div>
 
 @endsection
 
@@ -192,7 +188,7 @@
                 console.log('element 1', element)
                 //console.log('element 2', element_2)
 
-               $.ajax({
+                $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': token
                     },
