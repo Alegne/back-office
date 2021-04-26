@@ -153,6 +153,57 @@ class EspaceMembreController extends Controller
         }
     }
 
+    # GET Id|Token
+    public function verifyEspace(Request $request)
+    {
+        # dd($request->all());
+        if ($request->has('type') && $request->type == 'etudiant')
+        {
+            if ($request->has('id') && $request->id &&
+                $request->has('token') && $request->token) {
+
+                $etudiant = Etudiant::where('id', $request->id)
+                    ->where('remember_token', $request->token)
+                    ->update([
+                        'remember_token' => Str::random(100)
+                    ]);
+
+                if ($etudiant) {
+                    # return response()->json($etudiant);
+                    return new EtudiantResource(Etudiant::find($request->id));
+                } else{
+                    return response()->json(['message' => "Etudiant introuvable"]);
+                }
+
+            } else{
+                return response()->json(['message' => "Email obligatoire"]);
+            }
+
+        }elseif ($request->has('type') && $request->type == 'enseignant' &&
+            $request->has('token') && $request->token){
+
+            if ($request->has('id') && $request->id) {
+                $enseignant = Enseignant::where('id', $request->id)
+                    ->where('remember_token', $request->token)
+                    ->update([
+                        'remember_token' => Str::random(100)
+                    ]);
+
+                if ($enseignant) {
+                    return response()->json($enseignant);
+                    # View
+                } else{
+                    return response()->json(['message' => "Enseignant introuvable"]);
+                }
+
+            } else{
+                return response()->json(['message' => "Champ Email obligatoire"]);
+            }
+        }else{
+            return response()->json(['message' => "Erreur de Confirmation"]);
+        }
+    }
+
     # GET Email|Token
     public function verify(Request $request)
     {
@@ -162,11 +213,11 @@ class EspaceMembreController extends Controller
                 $request->has('remember_token') && $request->remember_token) {
 
                 $etudiant = Etudiant::where('email', $request->email)
-                                    ->where('remember_token', $request->remember_token)
-                                    ->update([
-                    'email_verified_at' => Carbon::now(),
-                    'remember_token' => Str::random(11)
-                ]);
+                    ->where('remember_token', $request->remember_token)
+                    ->update([
+                        'email_verified_at' => Carbon::now(),
+                        'remember_token' => Str::random(100)
+                    ]);
 
                 if ($etudiant) {
 
@@ -187,7 +238,7 @@ class EspaceMembreController extends Controller
                     ->where('remember_token', $request->remember_token)
                     ->update([
                         'email_verified_at' => Carbon::now(),
-                        'remember_token' => Carbon::now()
+                        'remember_token' => Str::random(100)
                     ]);
 
                 if ($enseignant) {

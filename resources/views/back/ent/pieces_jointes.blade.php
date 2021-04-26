@@ -32,7 +32,7 @@
 <div class="row">
     <div class="col-md-4">
         <x-back.card
-                type='danger'
+                type='primary'
                 :outline="false"
                 title='Espace Numerique'>
             <ul class="list-group">
@@ -68,31 +68,35 @@
         </x-back.card>
 
 
-        @if(count($espaceNumerique->pieces_jointes) > 0)
-        <x-back.card
-                type='primary'
-                title='Vos fichiers'>
+        @isset($espaceNumerique->pieces_jointes)
+            @if(count($espaceNumerique->pieces_jointes) > 0)
+                <x-back.card
+                        type='primary'
+                        title='Vos fichiers'>
 
 
-            <div class="owl-carousel owl-theme">
-            @foreach($espaceNumerique->pieces_jointes as $piece)
-                <div class="item">
-                    <div class="card  justify-content-center mx-1" >
-                        @if(in_array(explode('.', $piece)[1], ['jpeg','pjpeg','png','gif','jpg']))
-                            <img class="card-img-top m-auto" src="{{ getImageSingle($piece, true) }}" alt="Card image cap">
-                        @else
-                            <img class="card-img-top m-auto" src="/default.png" alt="Card image cap">
-                        @endif
-                        <div class="card-body m-auto">
-                            <button type="button" data-name="{{ $piece }}" class="btn btn-danger btn-supprimer-image">Supprimer</button>
-                        </div>
+                    <div class="owl-carousel owl-theme">
+                        @foreach($espaceNumerique->pieces_jointes as $piece)
+                            <div class="item">
+                                <div class="card  justify-content-center mx-1" >
+                                    @if(in_array(explode('.', $piece)[1], ['jpeg','pjpeg','png','gif','jpg']))
+                                        <img class="card-img-top m-auto" src="{{ getImageSingle($piece, true) }}" alt="Card image cap">
+                                    @else
+                                        <img class="card-img-top m-auto" src="/default.png" alt="Card image cap">
+                                    @endif
+                                    <div class="card-body m-auto">
+                                        <button type="button" data-name="{{ $piece }}" class="btn btn-danger btn-supprimer-image">Supprimer</button>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
-                </div>
-            @endforeach
-            </div>
 
-        </x-back.card>
-        @endif
+                </x-back.card>
+            @endif
+        @else
+            <p class="text-secondary">AUCUN Pieces Jointes</p>
+        @endisset
     </div>
 </div>
 

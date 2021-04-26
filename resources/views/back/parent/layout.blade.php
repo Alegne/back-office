@@ -311,22 +311,12 @@
 
 
 
-<script src="/admin/plugins/ckeditor/ckeditor.js"></script>
-
-<script>
-  ClassicEditor
-      .create( document.querySelector( 'textarea' ) )
-      .catch( error => {
-          console.error( error );
-      } );
-</script>
-
 
   <!-- Section Scripts -->
   @yield('js')
 
   <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-  <script src="/admin/dist/js/pages/dashboard2.js" defer></script>
+  {{--<script src="/admin/dist/js/pages/dashboard2.js" defer></script>--}}
 
 </body>
 </html>

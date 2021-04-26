@@ -68,6 +68,7 @@ Route::post('/enseignants/{enseignant}/upload', [APIEnseignantController::class,
 ### Espace Membre
 Route::post('/login', [APIEspaceMembreController::class, 'login']);
 Route::post('/logout', [APIEspaceMembreController::class, 'logout']);
+Route::post('/verify', [APIEspaceMembreController::class, 'verifyEspace']);
 
 
 ### Emploi du Temps

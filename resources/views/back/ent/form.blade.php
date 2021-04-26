@@ -87,7 +87,7 @@
                             :value="isset($espaceNumerique) ? $espaceNumerique->description : ''"
                             input='textarea'
                             rows=10
-                            :required="true">
+                            :required="false">
                     </x-back.input>
 
 
@@ -97,7 +97,7 @@
             <div class="col-md-4">
 
                 <x-back.card
-                        type='danger'
+                        type='primary'
                         :outline="false"
                         title='Specification'>
 
@@ -207,6 +207,7 @@
 @section('js')
     {{--@include('back.shared.editorScript')--}}
     @include('back.shared.slugScript')
+    @include('back.shared.ckeditor')
 
 
     {{--<script type="text/javascript" src="/admin/plugins/file-upload-with-preview/file-upload-with-preview.min.js"></script>
