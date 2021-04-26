@@ -141,6 +141,9 @@ Route::post('/annonce/galeries/upload/{annonce}', [AnnonceController::class, 'ga
 Route::post('/annonce/galeries/delete/{annonce}', [AnnonceController::class, 'deleteGaleries'])
     ->name('annonce.galeries.delete');
 
+Route::name('annonce.approuve.update')->put('/annonce/approuve/{annonce}', [AnnonceController::class, 'approuve']);
+Route::name('annonce.desapprouve.update')->put('/annonce/desapprouve/{annonce}', [AnnonceController::class, 'desapprouve']);
+
 # Message
 Route::resource('message', MessageController::class);
 

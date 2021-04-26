@@ -24,6 +24,29 @@ class AnnonceDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
+            ->editColumn('approuve', function($annonce) {
+
+                #dd($annonce->approuve);
+
+                if($annonce->approuve == 1) {
+                    return $this->button(
+                        'annonce.desapprouve.update',
+                        $annonce->id,
+                        'warning',
+                        'Desapprouve',
+                        'thumbs-down',
+                        'valid'
+                    );
+                }
+                return $this->button(
+                    'annonce.approuve.update',
+                    $annonce->id,
+                    'success',
+                    'Approuve',
+                    'thumbs-up',
+                    'valid'
+                );
+            })
             ->editColumn('action', function ($annonce) {
                 return $this->button(
                         'annonce.edit',
@@ -40,7 +63,7 @@ class AnnonceDataTable extends DataTable
                         __('Etes-vous sure de le supprimer ?')
                     );
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['approuve', 'action'])
             ;
     }
 
@@ -81,6 +104,7 @@ class AnnonceDataTable extends DataTable
         return [
             Column::make('id')->title('ID')->addClass('align-middle text-center'),
             Column::make('titre')->title('Titre')->addClass('align-middle text-center font-weight-bold'),
+            Column::computed('approuve')->title('Approbation')->addClass('align-middle text-center'),
 
             Column::computed('action')->title('Action')->addClass('align-middle text-center')
         ];

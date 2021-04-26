@@ -138,6 +138,20 @@ class AnnonceController extends Controller
         return response()->json();
     }
 
+    public function approuve(Annonce $annonce)
+    {
+        $annonce->approuve = 1;
+        $annonce->save();
+        return response()->json(['message' => 'suceess']);
+    }
+
+    public function desapprouve(Annonce $annonce)
+    {
+        $annonce->approuve = 0;
+        $annonce->save();
+        return response()->json(['message' => 'suceess']);
+    }
+
     /**
      * @param Annonce $annonce
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
