@@ -26,9 +26,11 @@ class EvenementController extends Controller
 
     public function all(Request $request)
     {
+        $evenements = Evenement::query()->latest('id', 'updated_at');
+
         $evenements = $request->pagination ?
-            Evenement::paginate(10) :
-            Evenement::all()
+            $evenements->paginate(10) :
+            $evenements->get()
         ;
         return EvenementResource::collection($evenements);
     }

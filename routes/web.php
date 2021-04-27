@@ -103,6 +103,7 @@ Route::group(['prefix' => 'toor', 'middleware' => ['auth']], function (){
     Route::view('/configuration/lien', 'back.configuration.lien')->name('configuration.lien');
     Route::get('/club/{club}/staff', [ClubController::class, 'addStaffView'])->name('club.staff.view');
     Route::post('/club/staff/add', [ClubController::class, 'addStaffStore'])->name('club.staff.add');
+    Route::get('/club/staff/pull/{staff}', [ClubController::class, 'deleteStaff'])->name('club.staff.add.pull');
 
 # Langue
     Route::resource('langue', LangueController::class);

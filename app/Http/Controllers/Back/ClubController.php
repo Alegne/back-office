@@ -221,4 +221,13 @@ class ClubController extends Controller
         ]);
     }
 
+    public function deleteStaff(Staff $staff)
+    {
+        # dd($staff);
+
+        $staff->delete();
+
+        return response()->json(['message' => 'success']);
+    }
+
 }
