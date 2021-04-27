@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Back\AdminController;
 use App\Http\Controllers\Back\AlbumController;
 use App\Http\Controllers\Back\AnnonceController;
 use App\Http\Controllers\Back\ArticleController;
@@ -52,12 +53,12 @@ use App\Http\Controllers\API\AnneeUniversitaireController as APIAnneeUniversitai
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('dashboard.webcup');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+# Route::get('/dashboard', function () {
+#     return view('dashboard');
+# })->middleware(['auth'])->name('dashboard');
 
 /**
  * Route Authentification
@@ -69,122 +70,123 @@ require __DIR__ . '/auth.php';
  * Route Back-office
  */
 
-# Tester l'intergaration
-Route::get('/toor', function () {
-    #return view('back.parent.layout');
-    return view('back.index');
-})->name('dashboard.webcup');
+Route::group(['prefix' => 'toor', 'middleware' => ['auth']], function (){
+
+    Route::get('/', [AdminController::class, 'index'])->name('dashboard.webcup');
 
 # Formation
-Route::resource('formation', FormationController::class);
+    Route::resource('formation', FormationController::class);
 
 # Parcours
-Route::resource('parcours', ParcoursController::class)->parameters(['parcours' => 'parcours']);
+    Route::resource('parcours', ParcoursController::class)->parameters(['parcours' => 'parcours']);
 
 # Annee Universitaire
-Route::resource('annee-universitaire', AnneeUniversitaireLibelleController::class)->parameters(['annee-universitaire' => 'annee']);
+    Route::resource('annee-universitaire', AnneeUniversitaireLibelleController::class)->parameters(['annee-universitaire' => 'annee']);
 
 # Niveau
-Route::resource('niveau', NiveauController::class);
+    Route::resource('niveau', NiveauController::class);
 
 # Etudiants
-Route::resource('etudiant', EtudiantController::class);
-Route::name('etudiant.indexactif')->get('/etudiant-actif', [EtudiantController::class, 'index']);
-Route::name('etudiant.indexold')->get('/etudiant-ancien', [EtudiantController::class, 'index']);
-ROute::name('etudiant.filter')->get('/etudiant/filter/avance', [EtudiantController::class, 'filter']);
+    Route::resource('etudiant', EtudiantController::class);
+    Route::name('etudiant.indexactif')->get('/etudiant-actif', [EtudiantController::class, 'index']);
+    Route::name('etudiant.indexold')->get('/etudiant-ancien', [EtudiantController::class, 'index']);
+    ROute::name('etudiant.filter')->get('/etudiant/filter/avance', [EtudiantController::class, 'filter']);
 
 # Enseignants
-Route::resource('enseignant', EnseignantController::class);
+    Route::resource('enseignant', EnseignantController::class);
 
 # Clubs
-Route::resource('club', ClubController::class);
-Route::view('/configuration/lien', 'back.configuration.lien')->name('configuration.lien');
-Route::get('/club/{club}/staff', [ClubController::class, 'addStaffView'])->name('club.staff.view');
-Route::post('/club/staff/add', [ClubController::class, 'addStaffStore'])->name('club.staff.add');
+    Route::resource('club', ClubController::class);
+    Route::view('/configuration/lien', 'back.configuration.lien')->name('configuration.lien');
+    Route::get('/club/{club}/staff', [ClubController::class, 'addStaffView'])->name('club.staff.view');
+    Route::post('/club/staff/add', [ClubController::class, 'addStaffStore'])->name('club.staff.add');
 
 # Langue
-Route::resource('langue', LangueController::class);
+    Route::resource('langue', LangueController::class);
 
 # Album
-Route::resource('album', AlbumController::class);
-Route::get('/album/photos/{album}', [AlbumController::class, 'photosView'])
-    ->name('album.photos.view');
-Route::post('/album/photos/upload/{album}', [AlbumController::class, 'photos'])
-    ->name('album.photos.upload');
-Route::post('/album/photos/delete/{album}', [AlbumController::class, 'deletephotos'])
-    ->name('album.photos.delete');
+    Route::resource('album', AlbumController::class);
+    Route::get('/album/photos/{album}', [AlbumController::class, 'photosView'])
+        ->name('album.photos.view');
+    Route::post('/album/photos/upload/{album}', [AlbumController::class, 'photos'])
+        ->name('album.photos.upload');
+    Route::post('/album/photos/delete/{album}', [AlbumController::class, 'deletephotos'])
+        ->name('album.photos.delete');
 
 # Articles
-Route::resource('article', ArticleController::class);
-Route::get('/article/galeries/{article}', [ArticleController::class, 'galeriesView'])
-    ->name('article.galeries.view');
-Route::post('/article/galeries/upload/{article}', [ArticleController::class, 'galeries'])
-    ->name('article.galeries.upload');
-Route::post('/article/galeries/delete/{article}', [ArticleController::class, 'deleteGaleries'])
-    ->name('article.galeries.delete');
+    Route::resource('article', ArticleController::class);
+    Route::get('/article/galeries/{article}', [ArticleController::class, 'galeriesView'])
+        ->name('article.galeries.view');
+    Route::post('/article/galeries/upload/{article}', [ArticleController::class, 'galeries'])
+        ->name('article.galeries.upload');
+    Route::post('/article/galeries/delete/{article}', [ArticleController::class, 'deleteGaleries'])
+        ->name('article.galeries.delete');
 
 # Evenements
-Route::resource('evenement', EvenementController::class);
-Route::get('/evenement/galeries/{evenement}', [EvenementController::class, 'galeriesView'])
-    ->name('evenement.galeries.view');
-Route::post('/evenement/galeries/upload/{evenement}', [EvenementController::class, 'galeries'])
-    ->name('evenement.galeries.upload');
-Route::post('/evenement/galeries/delete/{evenement}', [EvenementController::class, 'deleteGaleries'])
-    ->name('evenement.galeries.delete');
+    Route::resource('evenement', EvenementController::class);
+    Route::get('/evenement/galeries/{evenement}', [EvenementController::class, 'galeriesView'])
+        ->name('evenement.galeries.view');
+    Route::post('/evenement/galeries/upload/{evenement}', [EvenementController::class, 'galeries'])
+        ->name('evenement.galeries.upload');
+    Route::post('/evenement/galeries/delete/{evenement}', [EvenementController::class, 'deleteGaleries'])
+        ->name('evenement.galeries.delete');
 
 # Annonces
-Route::resource('annonce', AnnonceController::class);
-Route::get('/annonce/galeries/{annonce}', [AnnonceController::class, 'galeriesView'])
-    ->name('annonce.galeries.view');
-Route::post('/annonce/galeries/upload/{annonce}', [AnnonceController::class, 'galeries'])
-    ->name('annonce.galeries.upload');
-Route::post('/annonce/galeries/delete/{annonce}', [AnnonceController::class, 'deleteGaleries'])
-    ->name('annonce.galeries.delete');
+    Route::resource('annonce', AnnonceController::class);
+    Route::get('/annonce/galeries/{annonce}', [AnnonceController::class, 'galeriesView'])
+        ->name('annonce.galeries.view');
+    Route::post('/annonce/galeries/upload/{annonce}', [AnnonceController::class, 'galeries'])
+        ->name('annonce.galeries.upload');
+    Route::post('/annonce/galeries/delete/{annonce}', [AnnonceController::class, 'deleteGaleries'])
+        ->name('annonce.galeries.delete');
 
-Route::name('annonce.approuve.update')->put('/annonce/approuve/{annonce}', [AnnonceController::class, 'approuve']);
-Route::name('annonce.desapprouve.update')->put('/annonce/desapprouve/{annonce}', [AnnonceController::class, 'desapprouve']);
+    Route::name('annonce.approuve.update')->put('/annonce/approuve/{annonce}', [AnnonceController::class, 'approuve']);
+    Route::name('annonce.desapprouve.update')->put('/annonce/desapprouve/{annonce}', [AnnonceController::class, 'desapprouve']);
 
 # Message
-Route::resource('message', MessageController::class);
+    Route::resource('message', MessageController::class);
 
 # Newsletter
-Route::resource('newsletter', NewsletterController::class);
+    Route::resource('newsletter', NewsletterController::class);
 
 # Configuration
-Route::view('/configuration/contenu', 'back.configuration.contenu')->name('configuration.contenu');
-Route::view('/configuration/contact', 'back.configuration.contact')->name('configuration.contact');
-Route::view('/configuration/lien', 'back.configuration.lien')->name('configuration.lien');
-Route::view('/configuration/index', 'back.configuration.index')->name('configuration.index');
+    Route::view('/configuration/contenu', 'back.configuration.contenu')->name('configuration.contenu');
+    Route::view('/configuration/contact', 'back.configuration.contact')->name('configuration.contact');
+    Route::view('/configuration/lien', 'back.configuration.lien')->name('configuration.lien');
+    Route::view('/configuration/index', 'back.configuration.index')->name('configuration.index');
 
-Route::put('/configuration/update', [ConfigurationController::class, 'update'])->name('configuration.update');
-Route::get('/configuration/update', [ConfigurationController::class, 'edit'])->name('configuration.edit');
+    Route::put('/configuration/update', [ConfigurationController::class, 'update'])->name('configuration.update');
+    Route::get('/configuration/update', [ConfigurationController::class, 'edit'])->name('configuration.edit');
 
 # Espace Numerique
-Route::resource('espace-numerique-travail', EspaceNumeriqueController::class)
-    ->parameters(['espace-numerique-travail' => 'espaceNumerique']);
-Route::get('/espace-numerique-travail/pieces-jointes/{espaceNumerique}', [EspaceNumeriqueController::class, 'piecesJointesView'])
-    ->name('espace-numerique-travail.pieces.view');
-Route::post('/espace-numerique-travail/pieces-jointes/upload/{espaceNumerique}', [EspaceNumeriqueController::class, 'piecesJointes'])
-    ->name('espace-numerique-travail.pieces.upload');
-Route::post('/espace-numerique-travail/pieces-jointes/delete/{espaceNumerique}', [EspaceNumeriqueController::class, 'deletePiecesJointes'])
-    ->name('espace-numerique-travail.pieces.delete');
+    Route::resource('espace-numerique-travail', EspaceNumeriqueController::class)
+        ->parameters(['espace-numerique-travail' => 'espaceNumerique']);
+    Route::get('/espace-numerique-travail/pieces-jointes/{espaceNumerique}', [EspaceNumeriqueController::class, 'piecesJointesView'])
+        ->name('espace-numerique-travail.pieces.view');
+    Route::post('/espace-numerique-travail/pieces-jointes/upload/{espaceNumerique}', [EspaceNumeriqueController::class, 'piecesJointes'])
+        ->name('espace-numerique-travail.pieces.upload');
+    Route::post('/espace-numerique-travail/pieces-jointes/delete/{espaceNumerique}', [EspaceNumeriqueController::class, 'deletePiecesJointes'])
+        ->name('espace-numerique-travail.pieces.delete');
 
 
 # Emploi du Temps
-Route::resource('emploi-du-temps', EmploiDuTempsController::class)
-    ->parameters(['emploi-du-temps' => 'emploiDuTemps']);
-Route::get('/emploi-du-temps/calendar/{id}/{niveau}/{parcours}/{start?}/{end?}', [EmploiDuTempsController::class, 'showCalendar'])
-    ->name('emploi-du-temps.calendar.show');
-Route::post('/emploi-du-temps/calendar', [EmploiDuTempsController::class, 'calendar'])
-    ->name('emploi-du-temps.calendar');
-Route::get('/emploi-du-temps/calendar/seed', [EmploiDuTempsController::class, 'seed'])
-    ->name('emploi-du-temps.calendar.seed');
+    Route::resource('emploi-du-temps', EmploiDuTempsController::class)
+        ->parameters(['emploi-du-temps' => 'emploiDuTemps']);
+    Route::get('/emploi-du-temps/calendar/{id}/{niveau}/{parcours}/{start?}/{end?}', [EmploiDuTempsController::class, 'showCalendar'])
+        ->name('emploi-du-temps.calendar.show');
+    Route::post('/emploi-du-temps/calendar', [EmploiDuTempsController::class, 'calendar'])
+        ->name('emploi-du-temps.calendar');
+    Route::get('/emploi-du-temps/calendar/seed', [EmploiDuTempsController::class, 'seed'])
+        ->name('emploi-du-temps.calendar.seed');
 
 # Matiere
-Route::resource('matiere', MatiereController::class);
+    Route::resource('matiere', MatiereController::class);
 
 # User
-Route::resource('user', UserController::class);
+    Route::resource('user', UserController::class);
+});
+
+
 
 # File Manager
 Route::group(['prefix' => 'laravel-filemanager-webcup', 'middleware' => ['web', 'auth']], function () {

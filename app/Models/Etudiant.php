@@ -4,11 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 
 class Etudiant extends Model
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
 
     /**
      * The database table used by the model.

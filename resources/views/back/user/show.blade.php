@@ -23,7 +23,7 @@
 
                     <h3 class="profile-username text-center">{{ $user->identifiant }}</h3>
 
-                    <p class="text-muted text-center">{{ $user->role }}</p>
+                    <p class="text-muted text-center">{{ ucfirst($user->role) }}</p>
                 </div>
                 <!-- /.card-body -->
             </div>

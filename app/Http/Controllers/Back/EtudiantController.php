@@ -9,6 +9,7 @@ use App\Models\AnneeUniversitaireLibelle;
 use App\Models\Etudiant;
 use App\Models\Niveau;
 use App\Models\Parcours;
+use App\Notifications\NouveauCompte;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -75,6 +76,9 @@ class EtudiantController extends Controller
                 'annee_id' => $request->annee_id
             ]);
         # $etudiant->niveau()->sync();
+
+        ### Notification
+        $etudiant->notify(new NouveauCompte($etudiant->email, false, $etudiant->numero, null));
 
         return back()->with('ok', 'The post has been successfully created');
     }

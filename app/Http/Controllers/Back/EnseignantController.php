@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Back\EnseignantRequest;
 use App\Http\Requests\Back\EtudiantRequest;
 use App\Models\Enseignant;
+use App\Notifications\NouveauCompte;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
@@ -49,7 +50,10 @@ class EnseignantController extends Controller
 
         $inputs = $this->getInputs($request);
 
-        Enseignant::create($inputs);
+        $enseignant = Enseignant::create($inputs);
+
+        ### Notification
+        $enseignant->notify(new NouveauCompte($enseignant->email, false, null, $enseignant->identifiant));
 
         return back()->with('ok', 'The post has been successfully created');
     }

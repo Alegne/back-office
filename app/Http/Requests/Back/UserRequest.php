@@ -27,7 +27,7 @@ class UserRequest extends FormRequest
             'identifiant'  => 'required|unique:cactus_users',
             'email'        => 'required|unique:cactus_users',
             'role'         => 'required',
-            'password'     => 'required'
+            #'password'     => 'required'
         ];
     }
 }
