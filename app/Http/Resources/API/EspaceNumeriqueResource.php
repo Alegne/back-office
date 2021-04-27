@@ -14,6 +14,17 @@ class EspaceNumeriqueResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        # return parent::toArray($request);
+        return [
+            'id'                     => $this->id,
+            'libelle'                => $this->libelle,
+            'description'            => $this->description,
+            'enseignant'             => $this->enseignant->nom,
+            'niveau'                 => $this->niveau->tag,
+            'parcours'               => $this->parcours->pluck('tag'),
+            'date_creation'          => $this->created_at,
+            'date_mise_jour'         => $this->updated_at,
+            'pieces_jointes'         => getFileMultiple($this->pieces_jointes),
+        ];
     }
 }

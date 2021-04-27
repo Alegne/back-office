@@ -138,6 +138,20 @@ class AnnonceController extends Controller
         return response()->json();
     }
 
+    public function approuve(Annonce $annonce)
+    {
+        $annonce->approuve = 1;
+        $annonce->save();
+        return response()->json(['message' => 'suceess']);
+    }
+
+    public function desapprouve(Annonce $annonce)
+    {
+        $annonce->approuve = 0;
+        $annonce->save();
+        return response()->json(['message' => 'suceess']);
+    }
+
     /**
      * @param Annonce $annonce
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
@@ -245,7 +259,8 @@ class AnnonceController extends Controller
             }
         }
 
-        $annonce->galerie = count($data) > 0 ? json_encode($data->all()) : null;
+        # $annonce->galerie = count($data) > 0 ? json_encode($data->all()) : null;
+        $annonce->galerie = count($data) > 0 ? $data->all() : null;
         $annonce->save();
 
         return response()->json(['success' => $annonce]);

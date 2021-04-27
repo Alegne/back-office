@@ -134,10 +134,14 @@ class ClubController extends Controller
             }
         }
 
+
         if (count($etudiants_id)) {
-            $etudiants = Etudiant::whereNotIn('id', $etudiants_id->all())->get()->pluck('numero', 'id');
+            # NumeroName
+            # $etudiants = Etudiant::whereNotIn('id', $etudiants_id->all())->get()->pluck('numero', 'id');
+            $etudiants = Etudiant::whereNotIn('id', $etudiants_id->all())->get()->pluck('numero_name', 'id');
         } else {
-            $etudiants = Etudiant::all()->pluck('numero', 'id');
+            # $etudiants = Etudiant::all()->pluck('numero', 'id');
+            $etudiants = Etudiant::all()->pluck('numero_name', 'id');
         }
 
         $types = !$leader ? [

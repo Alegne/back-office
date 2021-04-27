@@ -203,17 +203,6 @@ class EspaceNumeriqueController extends Controller
     }
 
     /**
-     * Get Pieces Jointes
-     *
-     * @param Request $request
-     * @param EspaceNumerique $espaceNumerique
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function fetchPiecesJointes(Request $request, EspaceNumerique $espaceNumerique)
-    {
-    }
-
-    /**
      * Delete les pieces jointes
      *
      * @param Request $request

@@ -226,7 +226,8 @@ return [
     'Pages' => [
         'icon' => 'book',
         'role'   => 'admin',
-        'children' => [
+        'route'  => 'configuration.index',
+        /*'children' => [
             [
                 'name'  => 'Contenu',
                 'role'  => 'admin',
@@ -252,7 +253,7 @@ return [
                 'role'  => 'admin',
                 'route' => 'configuration.contact',
             ],
-        ],
+        ],*/
     ],
     'Club' => [
         'icon' => 'kaaba',
@@ -308,17 +309,12 @@ return [
             [
                 'name'  => 'Tous',
                 'role'  => 'admin',
-                'route' => '', #'niveaux.index',
+                'route' => 'album.index',
             ],
             [
                 'name'  => 'Ajout',
                 'role'  => 'admin',
-                'route' => '', #'niveaux.index',
-            ],
-            [
-                'name'  => 'Categories',
-                'role'  => 'admin',
-                'route' => '', #'comments.indexnew',
+                'route' => 'album.create',
             ]
         ],
     ],

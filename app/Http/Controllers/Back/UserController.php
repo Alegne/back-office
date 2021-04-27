@@ -6,8 +6,10 @@ use App\DataTables\UserDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Back\UserRequest;
 use App\Models\User;
+use App\Notifications\NouveauCompte;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
 
 class UserController extends Controller
@@ -15,6 +17,7 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param UserDataTable $dataTable
      * @return \Illuminate\Http\Response
      */
     public function index(UserDataTable $dataTable)
@@ -49,9 +52,14 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {
+        $request->merge(['password' => Hash::make('password')]);
+
         $inputs = $this->getInputs($request);
 
-        User::create($inputs);
+        $user = User::create($inputs);
+
+        ### Notification
+        $user->notify(new NouveauCompte($user->email, true, null, $user->identifiant));
 
         return back()->with('ok', 'L\'utilisateur a été ajouté avec succès');
     }
@@ -59,21 +67,24 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\User  $user
+     * @param Request $request
+     * @param  \App\Models\User $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(Request $request, User $user)
     {
-        return view('back.user.show', compact('user'));
+        $desactiver = $request->desactiver == 1 ? true : false;
+        return view('back.user.show', compact('user',  'desactiver'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\User  $user
+     * @param Request $request
+     * @param  \App\Models\User $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit(Request $request, User $user)
     {
         $roles = [
             'redacteur'   => 'Redacteur',

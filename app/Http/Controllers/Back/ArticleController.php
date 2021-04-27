@@ -227,7 +227,8 @@ class ArticleController extends Controller
             }
         }
 
-        $article->galerie = count($data) > 0 ? json_encode($data->all()) : null;
+        # $article->galerie = count($data) > 0 ? json_encode($data->all()) : null;
+        $article->galerie = count($data) > 0 ? $data->all() : null;
         $article->save();
 
         return response()->json(['success' => $article]);

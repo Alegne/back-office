@@ -24,7 +24,8 @@ class ArticleResource extends JsonResource
             'description'     => $this->description,
             'image'           => $this->image ? getImageSingle($this->image) : null,
             'date_creation'   => $this->created_at,
-            'date_mise_jour'  => $this->updated_at
+            'date_mise_jour'  => $this->updated_at,
+            'galerie'        => getFileMultiple($this->galerie),
         ];
     }
 }

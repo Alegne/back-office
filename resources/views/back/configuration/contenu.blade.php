@@ -47,7 +47,7 @@
                             :value="getConfiguration('mot_directeur')"
                             input='textarea'
                             rows=10
-                            :required="true">
+                            :required="false">
                     </x-back.input>
 
                     <button type="submit" class="btn btn-primary">Valider</button>

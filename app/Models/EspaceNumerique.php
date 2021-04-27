@@ -77,18 +77,21 @@ class EspaceNumerique extends Model
      */
     public function getPiecesJointesAttribute($value)
     {
-        # pieces_jointes
+        # dd('get');
         return  json_decode($value);
     }
 
     /**
      * Set Piece Jointes.
      *
+     * NOT Working
+     *
      * @param  string  $value
      * @return void
      */
     public function setPieceJointesAttribute($value)
     {
+        dd('set');
         $this->attributes['pieces_jointes'] = json_encode($value);
     }
 }

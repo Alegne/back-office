@@ -11,7 +11,8 @@
     'Values',
     'multiple' => false,
     'col' => '',
-    'maxlength' => 255
+    'maxlength' => 255,
+    'readonly' => false
 ])
 
 <div class="form-group {{ $col ? $col : '' }}">
@@ -46,6 +47,7 @@
       @elseif ($input === 'select')
         <select
             @if($required) required @endif
+            @if($readonly) readonly @endif
             class="form-control select-single {{ $errors->has($name) ? ' is-invalid' : '' }}"
             name="{{ $name }}"
             id="{{ $name }}">

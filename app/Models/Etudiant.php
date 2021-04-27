@@ -4,11 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 
 class Etudiant extends Model
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
 
     /**
      * The database table used by the model.
@@ -142,5 +143,13 @@ class Etudiant extends Model
     public function getFullNameAttribute()
     {
         return "{$this->nom} {$this->prenom}";
+    }
+
+    /**
+     * get FullName
+     */
+    public function getNumeroNameAttribute()
+    {
+        return "{$this->numero} - {$this->nom} {$this->prenom}";
     }
 }

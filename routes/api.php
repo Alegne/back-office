@@ -19,6 +19,7 @@ use App\Http\Controllers\API\EspaceNumeriqueController as APIEspaceNumeriqueCont
 use App\Http\Controllers\API\ParcoursController as APIParcoursController;
 use App\Http\Controllers\API\NiveauController as APINiveauController;
 use App\Http\Controllers\API\AnneeUniversitaireController as APIAnneeUniversitaireController;
+use App\Http\Controllers\API\AlbumController as APIAlbumController;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,6 +70,12 @@ Route::post('/enseignants/{enseignant}/upload', [APIEnseignantController::class,
 Route::post('/login', [APIEspaceMembreController::class, 'login']);
 Route::post('/logout', [APIEspaceMembreController::class, 'logout']);
 Route::post('/verify', [APIEspaceMembreController::class, 'verifyEspace']);
+
+
+### Album
+Route::get('/albums', [APIAlbumController::class, 'all']);
+Route::get('/albums/{pagination}', [APIAlbumController::class, 'paginate']);
+Route::get('/albums/detail/{album}', [APIAlbumController::class, 'get']);
 
 
 ### Emploi du Temps

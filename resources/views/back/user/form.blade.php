@@ -55,7 +55,7 @@
                         </x-back.input>
                     </div>
 
-                    <div class="form-row">
+                    {{--<div class="form-row">
                         <x-back.input
                                 col="col-md-6"
                                 name='password'
@@ -73,9 +73,10 @@
                                 input='text'
                                 :required="true">
                         </x-back.input>
-                    </div>
+                    </div>--}}
 
                     <div class="form-row justify-content-start">
+
 
                         <x-back.input
                                 col="col-md-6"

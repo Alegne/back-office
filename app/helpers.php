@@ -7,6 +7,7 @@
  */
 
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Str;
 
 /**
  *  Helper use to Admin
@@ -168,11 +169,27 @@ if (!function_exists('getImageSingle')) {
     }
 }
 
-if (!function_exists('getImageMultiple')) {
-    function getImageMultiple()
+if (!function_exists('getFileMultiple')) {
+    function getFileMultiple($files)
     {
+        $data = collect();
+        $url = '';
+        $path_image   = "storage/images";
+        $path_fichier = "storage/fichiers";
 
-        return null;
+        foreach ($files as $file)
+        {
+            if (in_array(Str::lower(explode('.', $file)[1]), ['jpeg','pjpeg','png','gif','jpg']))
+            {
+                $url = asset("{$path_image}/{$file}");
+            } else {
+                $url = asset("{$path_fichier}/{$file}");
+            }
+
+            $data->push($url);
+        }
+
+        return $data;
     }
 }
 

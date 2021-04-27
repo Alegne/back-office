@@ -121,7 +121,7 @@
                                         <tbody>
                                         <tr>
                                             <td style="width:100px;">
-                                                <img alt="" height="auto" src="ENI.jpg" style="border:none;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="100">
+                                                <img alt="" height="auto" src="{{asset('logo.png')}}" style="border:none;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="100">
                                             </td>
                                         </tr>
                                         </tbody>
@@ -301,7 +301,7 @@
                             </tr>
                             <tr>
                                 <td align="center" style="font-size:0px;padding:10px 25px;padding-top:10px;padding-right:25px;padding-bottom:20px;padding-left:25px;word-break:break-word;">
-                                    <div style="font-family:Helvetica;font-size:13px;line-height:1;text-align:center;color:#FFFFFF;">[[email]]</div>
+                                    <div style="font-family:Helvetica;font-size:13px;line-height:1;text-align:center;color:#FFFFFF;">{{ $email }}</div>
                                 </td>
                             </tr>
                             </tbody></table>
@@ -313,6 +313,8 @@
                             class="" style="vertical-align:top;width:200px;"
                     >
                     <![endif]-->
+
+                    @isset($numero)
                     <div class="mj-column-per-33-333333333333336 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
                         <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%">
                             <tbody><tr>
@@ -322,11 +324,29 @@
                             </tr>
                             <tr>
                                 <td align="center" style="font-size:0px;padding:10px 25px;padding-top:10px;padding-right:25px;padding-bottom:20px;padding-left:25px;word-break:break-word;">
-                                    <div style="font-family:Helvetica;font-size:13px;line-height:1;text-align:center;color:#FFFFFF;">[[Numero]]</div>
+                                    <div style="font-family:Helvetica;font-size:13px;line-height:1;text-align:center;color:#FFFFFF;">{{ $numero }}</div>
                                 </td>
                             </tr>
                             </tbody></table>
                     </div>
+                    @endisset
+
+                    @isset($identifiant)
+                    <div class="mj-column-per-33-333333333333336 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%">
+                            <tbody><tr>
+                                <td align="center" style="font-size:0px;padding:10px 25px;padding-right:25px;padding-bottom:0px;padding-left:25px;word-break:break-word;">
+                                    <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:15px;line-height:1;text-align:center;color:#FFFFFF;"><strong>Identifiant</strong></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" style="font-size:0px;padding:10px 25px;padding-top:10px;padding-right:25px;padding-bottom:20px;padding-left:25px;word-break:break-word;">
+                                    <div style="font-family:Helvetica;font-size:13px;line-height:1;text-align:center;color:#FFFFFF;">{{ $identifiant }}</div>
+                                </td>
+                            </tr>
+                            </tbody></table>
+                    </div>
+                    @endisset
                     <!--[if mso | IE]>
                     </td>
 
@@ -343,7 +363,7 @@
                             </tr>
                             <tr>
                                 <td align="center" style="font-size:0px;padding:10px 25px;padding-top:10px;padding-right:25px;padding-bottom:20px;padding-left:25px;word-break:break-word;">
-                                    <div style="font-family:Helvetica;font-size:13px;line-height:1;text-align:center;color:#FFFFFF;">[[Password]]</div>
+                                    <div style="font-family:Helvetica;font-size:13px;line-height:1;text-align:center;color:#FFFFFF;">password</div>
                                 </td>
                             </tr>
                             </tbody></table>
@@ -394,7 +414,7 @@
                                     <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:separate;line-height:100%;">
                                         <tbody><tr>
                                             <td align="center" bgcolor="#ffae00" role="presentation" style="border:none;border-radius:10px;cursor:auto;mso-padding-alt:10px 25px;background:#ffae00;" valign="middle">
-                                                <a href="https://mjml.io" style="display:inline-block;background:#ffae00;color:#FFFFFF;font-family:Helvetica;font-size:14px;font-weight:bold;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px;mso-padding-alt:0px;border-radius:10px;" target="_blank"> Cliquer </a>
+                                                <a href="{{ $url }}" style="display:inline-block;background:#ffae00;color:#FFFFFF;font-family:Helvetica;font-size:14px;font-weight:bold;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px;mso-padding-alt:0px;border-radius:10px;" target="_blank"> Cliquer </a>
                                             </td>
                                         </tr>
                                         </tbody></table>
@@ -468,7 +488,7 @@
                             <tr>
                                 <td align="center" style="font-size:0px;padding:10px 25px;padding-top:20px;padding-right:25px;padding-bottom:20px;padding-left:25px;word-break:break-word;">
                                     <div style="font-family:Helvetica;font-size:15px;line-height:1;text-align:center;color:#FFFFFF;">Cordialement, <br>
-                                        <span style="font-size:15px">Ecole Nationa d'Informatique, <br> Universite de Fianarantsoa</span>
+                                        <span style="font-size:15px">Ecole National d'Informatique, <br> Universite de Fianarantsoa</span>
                                     </div>
                                 </td>
                             </tr>
