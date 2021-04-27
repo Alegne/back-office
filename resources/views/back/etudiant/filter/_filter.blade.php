@@ -1,5 +1,7 @@
 <form action="{{ route('etudiant.filter.new.request') }}" method="get" id="form-critere">
 
+    {{--@dd($niveaux, $status)--}}
+
     <div class="col-12">
         <div class="card card-outline card-info">
             <div class="card-header">
@@ -21,32 +23,21 @@
                     <div class="card col-md-2 ml-1">
                         <div class="card-header">Status</div>
                         <div class="card-body">
-                            <div class="form-check" >
-                                <input class="form-check-input" name="status[]"
-                                       type="checkbox" value="ancien"
-                                       @isset($data['status'])
-                                           @foreach($data['status'] as $status)
-                                               {{ $status == 'ancien' ? 'checked' : '' }}
-                                           @endforeach
-                                       @endisset
-                                >
-                                <label class="form-check-label">
-                                    Ancien
-                                </label>
-                            </div>
-                            <div class="form-check" >
-                                <input class="form-check-input" name="status[]" type="checkbox"
-                                       value="actif"
-                                        @isset($data['status'])
-                                            @foreach($data['status'] as $status)
-                                                {{ $status == 'actif' ? 'checked' : '' }}
-                                            @endforeach
-                                        @endisset
-                                >
-                                <label class="form-check-label">
-                                    Actif
-                                </label>
-                            </div>
+                            @foreach($status as $key => $value)
+                                <div class="form-check" >
+                                    <input class="form-check-input" name="status[]"
+                                           type="checkbox" value="{{ $key }}"
+                                    @isset($data['status'])
+                                        @foreach($data['status'] as $data_item)
+                                            {{ $data_item == $key ? 'checked' : '' }}
+                                                @endforeach
+                                            @endisset
+                                    >
+                                    <label class="form-check-label">
+                                        {{ $value }}
+                                    </label>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
 
@@ -54,61 +45,19 @@
                     <div class="card col-md-2 ml-1">
                         <div class="card-header">Niveaux</div>
                         <div class="card-body">
-                            <div class="form-check">
-                                <input class="form-check-input" name="niveaux[]" type="checkbox"
-                                       value="L1"
-                                        @isset($data['niveaux'])
-                                            @foreach($data['niveaux'] as $niveaux)
-                                                {{ $niveaux == 'L1' ? 'checked' : '' }}
-                                            @endforeach
-                                        @endisset
-                                >
-                                <label class="form-check-label">L1</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" name="niveaux[]" type="checkbox"
-                                       value="L2"
-                                        @isset($data['niveaux'])
-                                            @foreach($data['niveaux'] as $niveaux)
-                                                {{ $niveaux == 'L2' ? 'checked' : '' }}
-                                            @endforeach
-                                        @endisset
-                                >
-                                <label class="form-check-label">L2</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" name="niveaux[]" type="checkbox"
-                                       value="L3"
-                                        @isset($data['niveaux'])
-                                            @foreach($data['niveaux'] as $niveaux)
-                                                {{ $niveaux == 'L3' ? 'checked' : '' }}
-                                            @endforeach
-                                        @endisset
-                                >
-                                <label class="form-check-label">L3</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" name="niveaux[]" type="checkbox"
-                                       value="M1"
-                                        @isset($data['niveaux'])
-                                            @foreach($data['niveaux'] as $niveaux)
-                                                {{ $niveaux == 'M1' ? 'checked' : '' }}
-                                            @endforeach
-                                        @endisset
-                                >
-                                <label class="form-check-label">M1</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" name="niveaux[]" type="checkbox"
-                                       value="M2"
-                                        @isset($data['niveaux'])
-                                            @foreach($data['niveaux'] as $niveaux)
-                                                {{ $niveaux == 'M2' ? 'checked' : '' }}
-                                            @endforeach
-                                        @endisset
-                                >
-                                <label class="form-check-label">M2</label>
-                            </div>
+                            @foreach($niveaux as $niveau)
+                                <div class="form-check">
+                                    <input class="form-check-input" name="niveaux[]" type="checkbox"
+                                           value="L1"
+                                    @isset($data['niveaux'])
+                                        @foreach($data['niveaux'] as $niveaux)
+                                            {{ $niveaux == $niveau ? 'checked' : '' }}
+                                                @endforeach
+                                            @endisset
+                                    >
+                                    <label class="form-check-label">{{ $niveau }}</label>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
 
@@ -116,41 +65,19 @@
                     <div class="card col-md-2 ml-1">
                         <div class="card-header">Parcours</div>
                         <div class="card-body">
+                            @foreach($parcours as $parcours_item)
                             <div class="form-check">
                                 <input class="form-check-input" name="parcours[]" type="checkbox"
                                        value="GB"
                                         @isset($data['parcours'])
                                             @foreach($data['parcours'] as $niveaux)
-                                                {{ $niveaux == 'GB' ? 'checked' : '' }}
+                                                {{ $niveaux == $parcours_item ? 'checked' : '' }}
                                             @endforeach
                                         @endisset
                                 >
-                                <label class="form-check-label"> GB </label>
+                                <label class="form-check-label">{{ $parcours_item }} </label>
                             </div>
-                            <div class="form-check">
-                                <input class="form-check-input" name="parcours[]" type="checkbox"
-                                       value="SR"
-                                        @isset($data['parcours'])
-                                            @foreach($data['parcours'] as $niveaux)
-                                                {{ $niveaux == 'SR' ? 'checked' : '' }}
-                                            @endforeach
-                                        @endisset
-                                >
-                                <label class="form-check-label"> SR </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" name="parcours[]" type="checkbox"
-                                       value="IG"
-                                        @isset($data['parcours'])
-                                            @foreach($data['parcours'] as $niveaux)
-                                                {{ $niveaux == 'IG' ? 'checked' : '' }}
-                                            @endforeach
-                                        @endisset
-                                >
-                                <label class="form-check-label">
-                                    IG
-                                </label>
-                            </div>
+                                @endforeach
                         </div>
                     </div>
 
@@ -158,28 +85,19 @@
                     <div class="card col-md-2 ml-1">
                         <div class="card-header">Formations</div>
                         <div class="card-body">
-                            <div class="form-check">
-                                <input class="form-check-input" name="formations[]" type="checkbox"
-                                       value="Licence"
-                                        @isset($data['formations'])
-                                            @foreach($data['formations'] as $niveaux)
-                                                {{ $niveaux == 'Licence' ? 'checked' : '' }}
-                                            @endforeach
-                                        @endisset
-                                >
-                                <label class="form-check-label">Licence</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" name="formations[]" type="checkbox"
-                                       value="Master"
-                                        @isset($data['formations'])
-                                            @foreach($data['formations'] as $niveaux)
-                                                {{ $niveaux == 'Master' ? 'checked' : '' }}
-                                            @endforeach
-                                        @endisset
-                                >
-                                <label class="form-check-label">Master</label>
-                            </div>
+                            @foreach($formations as $formation)
+                                <div class="form-check">
+                                    <input class="form-check-input" name="formations[]" type="checkbox"
+                                           value="Licence"
+                                    @isset($data['formations'])
+                                        @foreach($data['formations'] as $niveaux)
+                                            {{ $niveaux == $formation ? 'checked' : '' }}
+                                                @endforeach
+                                            @endisset
+                                    >
+                                    <label class="form-check-label">{{ $formation }}</label>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
 
@@ -187,30 +105,19 @@
                     <div class="card col-md-2 ml-1">
                         <div class="card-header">Annee Univesitaire</div>
                         <div class="card-body">
-                            <div class="form-check">
-                                <input class="form-check-input" name="annees[]" type="checkbox"
-                                       value="2020-2021"
-                                        @isset($data['annees'])
-                                            @foreach($data['annees'] as $niveaux)
-                                                {{ $niveaux == '2020-2021' ? 'checked' : '' }}
-                                            @endforeach
-                                        @endisset
-                                >
-                                <label class="form-check-label">
-                                    2020-2021
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" name="annees[]" type="checkbox"
-                                       value="2019-2020"
-                                        @isset($data['annees'])
-                                            @foreach($data['annees'] as $niveaux)
-                                                {{ $niveaux == '2019-2020' ? 'checked' : '' }}
-                                            @endforeach
-                                        @endisset
-                                >
-                                <label class="form-check-label">2019-2020</label>
-                            </div>
+                            @foreach($annees as $annee)
+                                <div class="form-check">
+                                    <input class="form-check-input" name="annees[]" type="checkbox"
+                                           value="2020-2021"
+                                    @isset($data['annees'])
+                                        @foreach($data['annees'] as $niveaux)
+                                            {{ $niveaux == $annee ? 'checked' : '' }}
+                                                @endforeach
+                                            @endisset
+                                    >
+                                    <label class="form-check-label">{{ $annee }}</label>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
 
