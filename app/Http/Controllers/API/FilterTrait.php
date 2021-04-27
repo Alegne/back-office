@@ -20,6 +20,21 @@ trait FilterTrait
             $query->whereIn('status', $request->status);
         }
 
+        if ($request->has('numero') && $request->numero)
+        {
+            $query->where('numero', 'like', '%' . $request->numero . '%');
+        }
+
+        if ($request->has('nom') && $request->nom)
+        {
+            $query->where('nom', 'like', '%' . $request->nom . '%');
+        }
+
+        if ($request->has('prenom') && $request->prenom)
+        {
+            $query->where('nom', 'like', '%' . $request->prenom . '%');
+        }
+
         if ($request->has('parcours') && $request->parcours)
         {
             $query->whereIn('parcours_id', $request->parcours);

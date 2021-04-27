@@ -176,7 +176,7 @@ class EspaceMembreController extends Controller
                 }
 
             } else{
-                return response()->json(['message' => "Email obligatoire"]);
+                return response()->json(['message' => "ID obligatoire"]);
             }
 
         }elseif ($request->has('type') && $request->type == 'enseignant' &&
@@ -197,7 +197,7 @@ class EspaceMembreController extends Controller
                 }
 
             } else{
-                return response()->json(['message' => "Champ Email obligatoire"]);
+                return response()->json(['message' => "Champ ID obligatoire"]);
             }
         }else{
             return response()->json(['message' => "Erreur de Confirmation"]);
