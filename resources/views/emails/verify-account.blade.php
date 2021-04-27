@@ -185,7 +185,7 @@
                             <tbody><tr>
                                 <td align="center" style="font-size:0px;padding:10px 25px;padding-top:28px;padding-right:25px;padding-bottom:18px;padding-left:25px;word-break:break-word;">
                                     <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:center;color:#ABCDEA;">
-                                        Bonjour <p style="font-size:16px; color:white">[[FirstName]]</p>
+                                        Bonjour <p style="font-size:16px; color:white">{{ $nom }}</p>
                                     </div>
                                 </td>
                             </tr>

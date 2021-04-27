@@ -17,7 +17,7 @@ class MessageController extends Controller
                 'email'     => 'required|unique:cactus_messages',
                 'objet'     => 'required',
                 'message'   => 'required',
-                'telephone' => 'required'
+                # 'telephone' => 'required'
             ]);
 
             $message = Message::create($request->all());

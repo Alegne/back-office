@@ -35,9 +35,11 @@ class AnnonceController extends Controller
                 ->whereHas('niveau', function ($q) use ($niveaux) {
                     $q->where('cactus_niveaux.tag', $niveaux->tag);
                 })
-                ->latest('id', 'updated_at')#->get()
+                #->get()
             ;
         }
+
+        $annonces = $annonces->latest('id', 'updated_at');
 
         $annonces = $request->pagination ?
             $annonces->paginate(10) :

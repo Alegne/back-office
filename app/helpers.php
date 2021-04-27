@@ -177,17 +177,22 @@ if (!function_exists('getFileMultiple')) {
         $path_image   = "storage/images";
         $path_fichier = "storage/fichiers";
 
-        foreach ($files as $file)
+        # dd($files);
+        if (isset($files))
         {
-            if (in_array(Str::lower(explode('.', $file)[1]), ['jpeg','pjpeg','png','gif','jpg']))
+            foreach ($files as $file)
             {
-                $url = asset("{$path_image}/{$file}");
-            } else {
-                $url = asset("{$path_fichier}/{$file}");
-            }
+                if (in_array(Str::lower(explode('.', $file)[1]), ['jpeg','pjpeg','png','gif','jpg']))
+                {
+                    $url = asset("{$path_image}/{$file}");
+                } else {
+                    $url = asset("{$path_fichier}/{$file}");
+                }
 
-            $data->push($url);
+                $data->push($url);
+            }
         }
+
 
         return $data;
     }

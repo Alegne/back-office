@@ -47,10 +47,10 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param UserRequest $request
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UserRequest $request)
+    public function store(Request $request)
     {
         $request->merge(['password' => Hash::make('password')]);
 
@@ -59,7 +59,7 @@ class UserController extends Controller
         $user = User::create($inputs);
 
         ### Notification
-        $user->notify(new NouveauCompte($user->email, true, null, $user->identifiant));
+        $user->notify(new NouveauCompte($user->email, true, null, $user->identifiant, null));
 
         return back()->with('ok', 'L\'utilisateur a été ajouté avec succès');
     }
@@ -136,11 +136,16 @@ class UserController extends Controller
 
     protected function getInputs($request)
     {
+        # dd($request->all());
+        # dd($request->file('photo'));
+
         $inputs = $request->except(['photo']);
 
         # $inputs['active'] = $request->has('active');
 
-        if ($request->has('photo') && $request->file('photo')) {
+        if ($request->has('photo')) {
+
+
             $inputs['photo'] = $this->saveImages($request);
         }
 

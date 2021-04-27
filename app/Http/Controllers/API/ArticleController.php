@@ -18,10 +18,15 @@ class ArticleController extends Controller
 
     public function all(Request $request)
     {
+        $articles = Article::query()->latest('id', 'updated_at');
+
         $articles = $request->pagination ?
-            Article::paginate(10) :
-            Article::all()
+            $articles->paginate(10) :
+            $articles->get()
         ;
+
+        # dd($articles);
+
         return ArticleResource::collection($articles);
     }
 

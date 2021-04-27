@@ -1,7 +1,7 @@
-
 @isset($etudiants)
     @if(count($etudiants))
         @foreach($etudiants as $etudiant)
+            {{ $etudiant->id }}
             @include('back.etudiant.filter._card', ['etudiant' => $etudiant])
         @endforeach
     @else

@@ -27,6 +27,10 @@ class NouveauCompte extends Notification
      * @var bool
      */
     public $back;
+    /**
+     * @var null
+     */
+    public $nom;
 
     /**
      * Create a new notification instance.
@@ -35,8 +39,9 @@ class NouveauCompte extends Notification
      * @param bool $back
      * @param string $numero
      * @param string $identifiant
+     * @param null $nom
      */
-    public function __construct($email, $back = false, $numero = null, $identifiant = null)
+    public function __construct($email, $back = false, $numero = null, $identifiant = null, $nom = null)
     {
         //
         $this->email       = $email;
@@ -44,6 +49,7 @@ class NouveauCompte extends Notification
         $this->identifiant = $identifiant;
         $this->back        = $back;
         $this->HOME        = $back ? route('dashboard.webcup') : 'http://127.0.0.1:4200';
+        $this->nom         = $nom;
     }
 
     /**
@@ -78,7 +84,8 @@ class NouveauCompte extends Notification
                 'email'       => $this->email,
                 'numero'      => $this->numero,
                 'identifiant' => $this->identifiant,
-                'url'         => $this->HOME
+                'url'         => $this->HOME,
+                'nom'         => $this->nom
             ]
         );
     }

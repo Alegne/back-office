@@ -57,9 +57,11 @@
                            <div class="item">
                                <div class="card mx-1">
                                    @if($staff->etudiant->photo)
-                                       <img class="card-img-top" src="{{ getImageSingle($staff->etudiant->photo, true) }}" alt="Card image cap">
+                                       <img class="card-img-top" src="{{ getImageSingle($staff->etudiant->photo, true) }}"
+                                            alt="Card image cap" style="width: 215px !important; height: 150px !important;">
                                    @else
-                                       <img class="card-img-top" src="/default.png" alt="Card image cap">
+                                       <img class="card-img-top" src="/default.png"
+                                            alt="Card image cap" style="width: 215px !important; height: 150px !important;">
                                    @endif
                                    <div class="card-body">
                                        <h5 class="card-title">{{ $staff->etudiant->numero }}</h5>
@@ -70,6 +72,14 @@
                                        @else
                                            <a href="#" class="btn btn-primary text-light">{{ $staff->type }}</a>
                                        @endif
+
+                                   </div>
+
+                                   <div class="card-footer">
+                                       <button type="button" class="btn btn-danger delete-staff"
+                                               id="btn-delete-staff{{ $staff->id }}"
+                                               data-route="{{ route('club.staff.add.pull', ['staff' => $staff->id]) }}">
+                                           Retirer</button>
                                    </div>
                                </div>
                            </div>
@@ -133,6 +143,24 @@
 
             $(".owl-carousel").owlCarousel();
 
+            $('.delete-staff').click(function () {
+                let id = $(this).attr('id')
+
+                let route = $(this).data('route')
+
+                console.log('delete', id, route)
+
+                $.ajax({
+                    url: route,
+                    type: "GET",
+                    success: function (data) {
+                        console.log('AJAX', data)
+
+                        window.location.reload()
+
+                    }
+                })
+            })
         })
 
     </script>

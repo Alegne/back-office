@@ -215,4 +215,13 @@ class ClubController extends Controller
             public_path('/storage/images/thumbs/') . $club->image,
         ]);
     }
+
+    public function deleteStaff(Staff $staff)
+    {
+        # dd($staff);
+
+        $staff->delete();
+
+        return response()->json(['message' => 'success']);
+    }
 }

@@ -16,9 +16,9 @@
           <span class="info-box-icon bg-info elevation-1"><i class="fas fa-user"></i></span>
 
           <div class="info-box-content">
-            <span class="info-box-text">Visite</span>
-            <span class="info-box-number">
-              10
+            <span class="info-box-text">Comptes</span>
+            <span class="info-box-number" id="compte">
+              {{ $users }}
             </span>
           </div>
           <!-- /.info-box-content -->
@@ -32,8 +32,8 @@
           <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-chalkboard-teacher"></i></span>
 
           <div class="info-box-content">
-            <span class="info-box-text">Professeur</span>
-            <span class="info-box-number">41,410</span>
+            <span class="info-box-text">Enseignants</span>
+            <span class="info-box-number" id="enseignant">{{ $enseignants }}</span>
           </div>
           <!-- /.info-box-content -->
         </div>
@@ -49,8 +49,8 @@
           <span class="info-box-icon bg-success elevation-1"><i class="fas fa-users"></i></span>
 
           <div class="info-box-content">
-            <span class="info-box-text">Personnels Administratif</span>
-            <span class="info-box-number">760</span>
+            <span class="info-box-text">Etudiants Anciens</span>
+            <span class="info-box-number" id="ancien">{{ $etudiants_ancien }}</span>
           </div>
           <!-- /.info-box-content -->
         </div>
@@ -63,7 +63,7 @@
 
           <div class="info-box-content">
             <span class="info-box-text">Etudiants actifs</span>
-            <span class="info-box-number">2,000</span>
+            <span class="info-box-number" id="actif">{{ $etudiants_actif }}</span>
           </div>
           <!-- /.info-box-content -->
         </div>
@@ -92,46 +92,16 @@
           <!-- /.card-header -->
           <div class="card-footer">
             <div class="row justify-content-center">
+                @foreach($niveaux as $total => $tag)
               <div class="col-sm-2 col-4">
                 <div class="description-block border-right">
-                  <h5 class="description-header">35,210.43</h5>
-                  <span class="description-text">L1</span>
+                  <h5 class="description-header">{{ $total }}</h5>
+                  <span class="description-text">{{ $tag }}</span>
                 </div>
                 <!-- /.description-block -->
               </div>
               <!-- /.col -->
-              <div class="col-sm-2 col-4">
-                <div class="description-block border-right">
-                  <h5 class="description-header">35,210.43</h5>
-                  <span class="description-text">L2</span>
-                </div>
-                <!-- /.description-block -->
-              </div>
-              <!-- /.col -->
-              <div class="col-sm-2 col-4">
-                <div class="description-block border-right">
-                  <h5 class="description-header">35,210.43</h5>
-                  <span class="description-text">L3</span>
-                </div>
-                <!-- /.description-block -->
-              </div>
-              <!-- /.col -->
-              <div class="col-sm-2 col-6">
-                <div class="description-block border-right">
-                  <h5 class="description-header">35,210.43</h5>
-                  <span class="description-text">M1</span>
-                </div>
-                <!-- /.description-block -->
-              </div>
-              <!-- /.col -->
-              <div class="col-sm-2 col-6">
-                <div class="description-block border-right">
-                  <h5 class="description-header">35,210.43</h5>
-                  <span class="description-text">M2</span>
-                </div>
-                <!-- /.description-block -->
-              </div>
-              <!-- /.col -->
+                    @endforeach
 
             </div>
             <!-- /.row -->
@@ -163,30 +133,16 @@
           <!-- /.card-header -->
           <div class="card-footer">
             <div class="row justify-content-center">
+                @foreach($parcours as $total => $tag)
               <div class="col-sm-4 col-4">
                 <div class="description-block border-right">
-                  <h5 class="description-header">35,210.43</h5>
-                  <span class="description-text">GB</span>
+                  <h5 class="description-header">{{ $total }}</h5>
+                  <span class="description-text">{{ $tag }}</span>
                 </div>
                 <!-- /.description-block -->
               </div>
               <!-- /.col -->
-              <div class="col-sm-4 col-4">
-                <div class="description-block border-right">
-                  <h5 class="description-header">35,210.43</h5>
-                  <span class="description-text">SR</span>
-                </div>
-                <!-- /.description-block -->
-              </div>
-              <!-- /.col -->
-              <div class="col-sm-4 col-4">
-                <div class="description-block border-right">
-                  <h5 class="description-header">35,210.43</h5>
-                  <span class="description-text">Hybride</span>
-                </div>
-                <!-- /.description-block -->
-              </div>
-              <!-- /.col -->
+                @endforeach
 
             </div>
             <!-- /.row -->
@@ -220,7 +176,7 @@
             <div class="row">
               <div class="col-md-8">
                 <p class="text-center">
-                  <strong>Sales: 1 Jan, 2014 - 30 Jul, 2014</strong>
+                  <strong>{{ formatDate(\Carbon\Carbon::now()) }}</strong>
                 </p>
 
                 <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
@@ -235,9 +191,10 @@
                   <strong>Nombre d'etudiant</strong>
                 </p>
 
+                  @foreach($annees as $total => $libelle)
                 <div class="progress-group">
-                  Annee 2021
-                  <span class="float-right"><b>160</b></span>
+                    {{ $total }}
+                  <span class="float-right"><b>{{ $libelle }}</b></span>
                   <!--
                   <div class="progress progress-sm">
                     <div class="progress-bar bg-primary" style="width: 80%"></div>
@@ -245,24 +202,7 @@
                   -->
                 </div>
                 <!-- /.progress-group -->
-
-                <div class="progress-group">
-                  Annee 2020
-                  <span class="float-right"><b>310</b></span>
-                </div>
-                <!-- /.progress-group -->
-
-                <div class="progress-group">
-                  Anne 2019
-                  <span class="float-right"><b>480</b></span>
-                </div>
-                <!-- /.progress-group -->
-
-                <div class="progress-group">
-                  Annee 2018
-                  <span class="float-right"><b>250</b></span>
-                </div>
-                <!-- /.progress-group -->
+                  @endforeach
 
               </div>
               <!-- /.col -->
@@ -270,7 +210,7 @@
             <!-- /.row -->
           </div>
           <!-- ./card-body -->
-          <div class="card-footer">
+         {{-- <div class="card-footer">
             <div class="row">
               <div class="col-sm-3 col-6">
                 <div class="description-block border-right">
@@ -309,7 +249,7 @@
               </div>
             </div>
             <!-- /.row -->
-          </div>
+          </div>--}}
           <!-- /.card-footer -->
         </div>
         <!-- /.card -->

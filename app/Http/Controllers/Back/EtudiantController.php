@@ -6,8 +6,10 @@ use App\DataTables\EtudiantDataTable;
 use App\Http\Controllers\API\FilterTrait;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Back\EtudiantRequest;
+use App\Http\Resources\API\EtudiantResource;
 use App\Models\AnneeUniversitaireLibelle;
 use App\Models\Etudiant;
+use App\Models\Formation;
 use App\Models\Niveau;
 use App\Models\Parcours;
 use App\Notifications\NouveauCompte;
@@ -58,15 +60,15 @@ class EtudiantController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param EtudiantRequest $request
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(EtudiantRequest $request)
+    public function store(Request $request)
     {
 
         # dd($request->all(), $request->has('photo'), $request->photo);
 
-        $request->merge(['password' => Hash::make($request->password)]);
+        # $request->merge(['password' => Hash::make($request->password)]);
 
         # $inputs = $this->getInputs($request->all());
         $inputs = $this->getInputs($request);
@@ -85,7 +87,7 @@ class EtudiantController extends Controller
 
 
         ### Notification
-        $etudiant->notify(new NouveauCompte($etudiant->email, false, $etudiant->numero, null));
+        $etudiant->notify(new NouveauCompte($etudiant->email, false, $etudiant->numero, null, $etudiant->nom));
 
         return back()->with('ok', 'The post has been successfully created');
     }
@@ -93,12 +95,30 @@ class EtudiantController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Etudiant  $etudiant
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param  \App\Models\Etudiant $etudiant
+     * @return
      */
-    public function show(Etudiant $etudiant)
+    public function show(Request $request, Etudiant $etudiant)
     {
-        //
+        if ($request->ajax())
+        {
+            return new EtudiantResource($etudiant);
+        }
+
+        return new EtudiantResource($etudiant);
+    }
+
+    public function modal(Request $request, $email)
+    {
+        $etudiant = Etudiant::where('email', $email)->first();
+
+        if ($request->ajax())
+        {
+            return new EtudiantResource($etudiant);
+        }
+
+        return new EtudiantResource($etudiant);
     }
 
     /**
@@ -238,6 +258,13 @@ class EtudiantController extends Controller
         $etudiants = null;
         $data      = null;
 
+
+        $parcours = Parcours::all()->pluck('tag');
+        $niveaux = Niveau::all()->pluck('tag');
+        $annees = AnneeUniversitaireLibelle::all()->pluck('libelle');
+        $status = ['ancien' => 'Ancien', 'actif' => 'Actif'];
+        $formations = Formation::all()->pluck('libelle');
+
         if ($request->ajax())
         {
             return response()->json([
@@ -251,19 +278,19 @@ class EtudiantController extends Controller
         {
             $data = $request->all();
 
-            $query = Etudiant::query();
+            # $query = ;
 
-            $query = $this->contraintes($request, $query);
+            $query = $this->contraintes($request, Etudiant::query());
 
-            #dd($query->toSql(), $request->all(), $query->get());
+            # dd($query->toSql(), $request->all(), $query->get(), $query->paginate(10), $query->simplePaginate(15));
 
             # $etudiants = $query->get();
             $etudiants = $query->paginate(10);
-
-            # dd($etudiants);
+            # $etudiants = Etudiant::paginate(10);
         }
 
-        return view('back.etudiant.new-filter', compact('etudiants', 'data'));
+        return view('back.etudiant.new-filter',
+            compact('etudiants', 'data', 'niveaux', 'parcours', 'annees', 'formations', 'status'));
     }
 
 }

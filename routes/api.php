@@ -103,7 +103,7 @@ Route::get('/evenements/principal/top/actualite', [APIEvenementController::class
 Route::get('/evenements/detail/{evenement}', [APIEvenementController::class, 'get']);
 
 # Messages
-Route::post('/api/messages', [APIMessageController::class, 'post']);
+Route::post('/messages', [APIMessageController::class, 'post']);
 
 
 # Espace Numeriques
