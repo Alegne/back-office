@@ -88,18 +88,18 @@ Route::get('/clubs/{club}', [APIClubController::class, 'get']);
 
 # Article
 Route::get('/articles/{pagination?}', [APIArticleController::class, 'all']);
-Route::get('/articles/top', [APIArticleController::class, 'top']);
+Route::get('/articles/principal/top', [APIArticleController::class, 'top']);
 Route::get('/articles/detail/{article}', [APIArticleController::class, 'get']);
 
 # Annonces
 Route::get('/annonces/{pagination?}', [APIAnnonceController::class, 'all']);
-Route::get('/annonces/top', [APIAnnonceController::class, 'top']);
+Route::get('/annonces/principal/top', [APIAnnonceController::class, 'top']);
 Route::get('/annonces/detail/{annonce}', [APIAnnonceController::class, 'get']);
 
 # Evenements
 Route::get('/evenements/{pagination?}', [APIEvenementController::class, 'all']);
-Route::get('/evenements/top/nouvelle', [APIEvenementController::class, 'topNouvelle']);
-Route::get('/evenements/top/actualite', [APIEvenementController::class, 'topActualite']);
+Route::get('/evenements/principal/top/nouvelle', [APIEvenementController::class, 'topNouvelle']);
+Route::get('/evenements/principal/top/actualite', [APIEvenementController::class, 'topActualite']);
 Route::get('/evenements/detail/{evenement}', [APIEvenementController::class, 'get']);
 
 # Messages

@@ -3,6 +3,7 @@
 namespace App\Http\Resources\API;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use phpDocumentor\Reflection\Types\Null_;
 
 class AnnonceResource extends JsonResource
 {
@@ -25,7 +26,7 @@ class AnnonceResource extends JsonResource
             'image'          => $this->image ? getImageSingle($this->image) : null,
             'date_creation'  => $this->created_at,
             'date_mise_jour' => $this->updated_at,
-            'galerie'        => getFileMultiple($this->galerie),
+            'galerie'        => $this->galerie ? getFileMultiple($this->galerie) : null,
         ];
     }
 }

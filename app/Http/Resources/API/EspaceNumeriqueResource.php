@@ -24,7 +24,7 @@ class EspaceNumeriqueResource extends JsonResource
             'parcours'               => $this->parcours->pluck('tag'),
             'date_creation'          => $this->created_at,
             'date_mise_jour'         => $this->updated_at,
-            'pieces_jointes'         => getFileMultiple($this->pieces_jointes),
+            'pieces_jointes'         => $this->pieces_jointes ? getFileMultiple($this->pieces_jointes) : null,
         ];
     }
 }

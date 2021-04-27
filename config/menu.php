@@ -66,7 +66,12 @@ return [
                 'name'  => 'Filtre',
                 'role'  => 'administratif',
                 'route' => 'etudiant.filter',
-            ]
+            ],
+            [
+            'name'  => 'Filtre New',
+            'role'  => 'administratif',
+            'route' => 'etudiant.filter.new',
+        ]
         ],
     ],
     'Enseignants' => [

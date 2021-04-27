@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Back;
 
 use App\DataTables\EtudiantDataTable;
+use App\Http\Controllers\API\FilterTrait;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Back\EtudiantRequest;
 use App\Models\AnneeUniversitaireLibelle;
@@ -10,14 +11,19 @@ use App\Models\Etudiant;
 use App\Models\Niveau;
 use App\Models\Parcours;
 use App\Notifications\NouveauCompte;
+use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\View;
 use Intervention\Image\Facades\Image;
 
 class EtudiantController extends Controller
 {
+
+    use FilterTrait;
+
     /**
      * Display a listing of the resource.
      *
@@ -213,4 +219,50 @@ class EtudiantController extends Controller
 
         return view('back.etudiant.filter');
     }
+
+    public function filterJS(Request $request)
+    {
+        $etudiants = null;
+        $data      = null;
+
+        if (count($request->all()) > 0)
+        {
+            return view('back.etudiant.new-filter', compact('etudiants'));
+        }
+        return view('back.etudiant.new-filter', compact('etudiants'));
+    }
+
+    public function filterJSRequest(Request $request)
+    {
+        $etudiants = null;
+        $data      = null;
+
+        if ($request->ajax())
+        {
+            return response()->json([
+                'etudiants' =>  View::make('back.etudiant.filter._etudiants', []),
+                'filter'    =>  View::make('back.etudiant.filter._filter', []),
+                'pagination' => View::make('back.etudiant.filter._pagination', []),
+            ]);
+        }
+
+        if (count($request->all()) > 0)
+        {
+            $data = $request->all();
+
+            $query = Etudiant::query();
+
+            $query = $this->contraintes($request, $query);
+
+            #dd($query->toSql(), $request->all(), $query->get());
+
+            # $etudiants = $query->get();
+            $etudiants = $query->paginate(10);
+
+            # dd($etudiants);
+        }
+
+        return view('back.etudiant.new-filter', compact('etudiants', 'data'));
+    }
+
 }

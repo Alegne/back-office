@@ -91,6 +91,8 @@ Route::group(['prefix' => 'toor', 'middleware' => ['auth']], function (){
     Route::name('etudiant.indexactif')->get('/etudiant-actif', [EtudiantController::class, 'index']);
     Route::name('etudiant.indexold')->get('/etudiant-ancien', [EtudiantController::class, 'index']);
     ROute::name('etudiant.filter')->get('/etudiant/filter/avance', [EtudiantController::class, 'filter']);
+    ROute::name('etudiant.filter.new')->get('/etudiant/filter/avance/show', [EtudiantController::class, 'filterJS']);
+    ROute::name('etudiant.filter.new.request')->get('/etudiant/filter/avance/request', [EtudiantController::class, 'filterJSRequest']);
 
 # Enseignants
     Route::resource('enseignant', EnseignantController::class);
