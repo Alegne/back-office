@@ -53,7 +53,7 @@ class EnseignantController extends Controller
         $enseignant = Enseignant::create($inputs);
 
         ### Notification
-        $enseignant->notify(new NouveauCompte($enseignant->email, false, null, $enseignant->identifiant));
+        $enseignant->notify(new NouveauCompte($enseignant->email, false, null, $enseignant->identifiant, $enseignant->nom));
 
         return back()->with('ok', 'The post has been successfully created');
     }
@@ -83,14 +83,14 @@ class EnseignantController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param EnseignantRequest $request
+     * @param Request $request
      * @param  \App\Models\Enseignant $enseignant
      * @return \Illuminate\Http\Response
      */
-    public function update(EnseignantRequest $request, Enseignant $enseignant)
+    public function update(Request $request, Enseignant $enseignant)
     {
         #dd($request->all());
-        $request->merge(['mot_de_passe' => Hash::make($request->mot_de_passe)]);
+        # $request->merge(['mot_de_passe' => Hash::make($request->mot_de_passe)]);
 
         $inputs = $this->getInputs($request);
 

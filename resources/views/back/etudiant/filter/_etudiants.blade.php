@@ -1,4 +1,3 @@
-
 @isset($etudiants)
     @if(count($etudiants))
         @foreach($etudiants as $etudiant)

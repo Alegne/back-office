@@ -3,7 +3,7 @@
      id="etudiant{{ $etudiant->id }}"
      data-photo="{{ $etudiant->photo }}"
      data-id="{{ $etudiant->id }}"
-     data-route="{{ route('etudiant.show', ['etudiant' => $etudiant->id]) }}">
+     data-route="{{ route('etudiant.show.modal', ['email' => $etudiant->email]) }}">
 
     @if($etudiant->photo)
         <img class="card-img-top" src="{{ getImageSingle($etudiant->photo, true) }}" alt="Card image cap">

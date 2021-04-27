@@ -88,6 +88,7 @@ Route::group(['prefix' => 'toor', 'middleware' => ['auth']], function (){
 
 # Etudiants
     Route::resource('etudiant', EtudiantController::class);
+    Route::name('etudiant.show.modal')->get('/etudiant/modal/{email}', [EtudiantController::class, 'modal']);
     Route::name('etudiant.indexactif')->get('/etudiant-actif', [EtudiantController::class, 'index']);
     Route::name('etudiant.indexold')->get('/etudiant-ancien', [EtudiantController::class, 'index']);
     ROute::name('etudiant.filter')->get('/etudiant/filter/avance', [EtudiantController::class, 'filter']);

@@ -12,7 +12,8 @@
 @section('main')
     <form
             method="post"
-            action="{{ Route::currentRouteName() === 'user.edit' ? route('user.update', $user->id) : route('user.store') }}">
+            action="{{ Route::currentRouteName() === 'user.edit' ? route('user.update', $user->id) : route('user.store') }}"
+            enctype="multipart/form-data">
 
         @if(Route::currentRouteName() === 'user.edit')
             @method('PUT')
@@ -95,13 +96,11 @@
 
 
             <div class="col-md-4">
-
-                {{-- Upload --}}
                 <x-back.card
                         id="photo_upload"
                         type='primary'
                         :outline="false"
-                        title='Photo Upload'>
+                        title='Photo'>
 
                     <div class="form-group{{ $errors->has('photo') ? ' is-invalid' : '' }}">
                         <label for="changeImage">Image</label>

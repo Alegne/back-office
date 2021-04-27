@@ -60,15 +60,15 @@ class EtudiantController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param EtudiantRequest $request
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(EtudiantRequest $request)
+    public function store(Request $request)
     {
 
         # dd($request->all(), $request->has('photo'), $request->photo);
 
-        $request->merge(['password' => Hash::make($request->password)]);
+        # $request->merge(['password' => Hash::make($request->password)]);
 
         # $inputs = $this->getInputs($request->all());
         $inputs = $this->getInputs($request);
@@ -86,7 +86,7 @@ class EtudiantController extends Controller
         # $etudiant->niveau()->sync();
 
         ### Notification
-        $etudiant->notify(new NouveauCompte($etudiant->email, false, $etudiant->numero, null));
+        $etudiant->notify(new NouveauCompte($etudiant->email, false, $etudiant->numero, null, $etudiant->nom));
 
         return back()->with('ok', 'The post has been successfully created');
     }
@@ -100,6 +100,18 @@ class EtudiantController extends Controller
      */
     public function show(Request $request, Etudiant $etudiant)
     {
+        if ($request->ajax())
+        {
+            return new EtudiantResource($etudiant);
+        }
+
+        return new EtudiantResource($etudiant);
+    }
+
+    public function modal(Request $request, $email)
+    {
+        $etudiant = Etudiant::where('email', $email)->first();
+
         if ($request->ajax())
         {
             return new EtudiantResource($etudiant);
@@ -265,18 +277,15 @@ class EtudiantController extends Controller
         {
             $data = $request->all();
 
-            $query = Etudiant::query();
+            # $query = ;
 
-            $query = $this->contraintes($request, $query);
+            $query = $this->contraintes($request, Etudiant::query());
 
-            # dd($query->toSql(), $request->all(), $query->get());
+            # dd($query->toSql(), $request->all(), $query->get(), $query->paginate(10), $query->simplePaginate(15));
 
             # $etudiants = $query->get();
-
-            dd(Etudiant::paginate(10));
             $etudiants = $query->paginate(10);
-
-            dd($etudiants);
+            # $etudiants = Etudiant::paginate(10);
         }
 
         return view('back.etudiant.new-filter',
