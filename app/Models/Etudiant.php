@@ -144,4 +144,12 @@ class Etudiant extends Model
     {
         return "{$this->nom} {$this->prenom}";
     }
+
+    /**
+     * get FullName
+     */
+    public function getNumeroNameAttribute()
+    {
+        return "{$this->numero} - {$this->nom} {$this->prenom}";
+    }
 }

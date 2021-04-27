@@ -23,7 +23,7 @@
 
             <div class="col-md-4">
                 <x-back.card
-                        type='danger'
+                        type='info'
                         :outline="false"
                         title='Club'>
 
@@ -66,9 +66,9 @@
                                        <p class="card-text">{{ $staff->etudiant->nom }}</p>
 
                                        @if($staff->type == 'leader')
-                                           <a href="#" class="btn btn-outline-info text-light">{{ $staff->type }}</a>
+                                           <a href="#" class="btn btn-info text-light">{{ $staff->type }}</a>
                                        @else
-                                           <a href="#" class="btn btn-outline-primary text-light">{{ $staff->type }}</a>
+                                           <a href="#" class="btn btn-primary text-light">{{ $staff->type }}</a>
                                        @endif
                                    </div>
                                </div>
