@@ -14,7 +14,13 @@ class EtudiantExport extends DataTablesCollectionExport implements WithMapping,F
     */
     public function collection()
     {
-        return Etudiant::all();
+        return Etudiant::
+           with(
+                'niveau',
+                'parcours'
+            )
+            ->where('status', 'actif')
+            ->get();
     }
 
     /**
@@ -23,8 +29,17 @@ class EtudiantExport extends DataTablesCollectionExport implements WithMapping,F
     public function headings(): array
     {
         return [
-            'Name',
+            'Numero',
+            'Nom',
+            'Prenom',
             'Email',
+            'CIN',
+            'Date de Naissance',
+            'Lieu de Naissance',
+            'Adresse',
+            'Parcours',
+            'Niveau',
+            'Status',
         ];
     }
 
@@ -38,6 +53,14 @@ class EtudiantExport extends DataTablesCollectionExport implements WithMapping,F
             $row['numero'],
             $row['nom'],
             $row['prenom'],
+            $row['email'],
+            $row['cin'],
+            $row['date_naissance'],
+            $row['lieu_naissance'],
+            $row['adresse'],
+            $row['parcours'],
+            $row['niveau'],
+            $row['status'],
         ];
     }
 }

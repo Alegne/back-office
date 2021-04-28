@@ -19,8 +19,7 @@ class EspaceNumeriqueController extends Controller
     public function all(Request $request)
     {
         if ($request->has('niveau') && $request->niveau &&
-            $request->has('parcours') && $request->parcours &&
-            $request->has('annee') && $request->annee)
+            $request->has('parcours') && $request->parcours )
         {
             $niveau   = Niveau::where('tag', $request->niveau)->first();
             $parcours = Parcours::where('tag', $request->parcours)->first();
@@ -77,7 +76,7 @@ class EspaceNumeriqueController extends Controller
 
         $espaceNumerique = EspaceNumerique::create($inputs);
 
-        $espaceNumerique->parcours()->attach($request->parcours_id);
+        $espaceNumerique->parcours()->attach($parcours->id);
 
         return new EspaceNumeriqueResource($espaceNumerique);
     }

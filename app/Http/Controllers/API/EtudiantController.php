@@ -39,7 +39,7 @@ class EtudiantController extends Controller
                 'nom'            => 'required',
                 'prenom'         => 'required',
                 'password'       => 'required',
-                'cin'            => 'required|numeric|min:20',
+                'cin'            => 'required|numeric',
                 'date_naissance' => 'required',
                 'lieu_naissance' => 'required',
                 'adresse'        => 'required',
