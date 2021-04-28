@@ -13,7 +13,7 @@
 @section('css')
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css">
 
-  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.0.3/css/buttons.dataTables.min.css">
+  {{--<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.0.3/css/buttons.dataTables.min.css">--}}
   <style>
     a > * { pointer-events: none; }
 
@@ -68,8 +68,8 @@
   <script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap4.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
-  <script src="https://cdn.datatables.net/buttons/1.0.3/js/dataTables.buttons.min.js"></script>
-  <script src="{{ asset('vendor/datatables/buttons.server-side.js') }}"></script>
+  {{--<script src="https://cdn.datatables.net/buttons/1.0.3/js/dataTables.buttons.min.js"></script>
+  <script src="{{ asset('vendor/datatables/buttons.server-side.js') }}"></script>--}}
 
   @if(config('app.locale') == 'fr')
     <script>

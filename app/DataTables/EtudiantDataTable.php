@@ -113,9 +113,9 @@ class EtudiantDataTable extends DataTable
                     ->minifiedAjax()
                     ->dom('Bfrtip')
                     ->orderBy(1)
-                    ->parameters([
+                    /*->parameters([
                         'buttons'      => ['excel'],
-                    ])
+                    ])*/
 
             ;
     }
