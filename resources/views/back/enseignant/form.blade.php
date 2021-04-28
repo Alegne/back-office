@@ -132,7 +132,7 @@
                         id="photo_upload"
                         type='primary'
                         :outline="false"
-                        title='Photo Upload'>
+                        title='Photo'>
 
                     <div class="form-group{{ $errors->has('photo') ? ' is-invalid' : '' }}">
                         <label for="changeImage">Image</label>
