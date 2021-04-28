@@ -1,5 +1,16 @@
 @extends('back.parent.layout')
 
+
+@section('breadcrumb')
+
+    @include('back.parent.partial.breadcrumb', [
+        'parent' => 'Pedagogique',
+        'parent_route' => '#',
+        'child' => 'Emploi du temps',
+    ])
+
+@endsection
+
 @section('css')
     <link rel="stylesheet" href="/admin/plugins/fullcalendar/main.min.css">
     <link rel="stylesheet" href="/admin/plugins/toastr/toastr.min.css">

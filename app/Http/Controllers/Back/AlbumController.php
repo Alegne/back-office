@@ -151,9 +151,10 @@ class AlbumController extends Controller
         if (in_array($request->file('file')->extension(), $extensions_images))
         {
             $img   = Image::make($request->file('file')->path());
-            $img->widen(800)->encode()->save(public_path('/storage/images/') . $name);
-            $img->widen(400)->encode()->save(public_path('/storage/images/thumbs/') . $name);
+            $img->resize(1000,800)->encode()->save(public_path('/storage/images/') . $name);
+            $img->resize(400,400)->encode()->save(public_path('/storage/images/thumbs/') . $name);
 
+            # $img->resize(300, 200);
         }else{
 
             # dd(public_path('/storage/fichiers/')); # D:\projet M1\WebCup\_projet\projet-back-office-webcup\public\/storage/fichiers/

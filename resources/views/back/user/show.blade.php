@@ -1,5 +1,15 @@
 @extends('back.parent.layout')
 
+@section('breadcrumb')
+
+    @include('back.parent.partial.breadcrumb', [
+        'parent' => 'Parametres',
+        'parent_route' => '#',
+        'child' => 'Comptes',
+    ])
+
+@endsection
+
 @section('css')@endsection
 
 @section('main')

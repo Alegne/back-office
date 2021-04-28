@@ -1,5 +1,15 @@
 @extends('back.parent.layout')
 
+@section('breadcrumb')
+
+    @include('back.parent.partial.breadcrumb', [
+        'parent' => 'Pedadogique',
+        'parent_route' => '#',
+        'child' => 'Etudiants',
+    ])
+
+@endsection
+
 @section('css')
     <link rel="stylesheet" href="/admin/dist/css/loading.css">
 
@@ -32,7 +42,7 @@
                 <div class="col-12">
                     <div class="card card-info">
                         <div class="card-header">
-                            <h3 class="card-title">Etudiants  | Total : {{ $etudiants->total() }} </h3>
+                            <h3 class="card-title">Etudiants @if(isset($etudiants)) | Total : {{ $etudiants->total() }} @endif</h3>
                             <div class="card-tools pull-right">
                                 <button
                                         type="button"
@@ -65,7 +75,7 @@
                         </div>
 
                         <div class="card-footer">
-                            {{ $etudiants->appends($data)->links() }}
+                            @if($etudiants) {{ $etudiants->appends($data)->links() }} @endif
                         </div>
                     </div>
                 </div>

@@ -2,6 +2,7 @@
 
 namespace App\DataTables;
 
+use App\Exports\EtudiantExport;
 use App\Models\Etudiant;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
@@ -13,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 class EtudiantDataTable extends DataTable
 {
     use DataTableTrait;
+
+    protected $exportClass = EtudiantExport::class;
 
     /**
      * Build DataTable class.
@@ -110,6 +113,9 @@ class EtudiantDataTable extends DataTable
                     ->minifiedAjax()
                     ->dom('Bfrtip')
                     ->orderBy(1)
+                    ->parameters([
+                        'buttons'      => ['excel'],
+                    ])
 
             ;
     }

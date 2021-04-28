@@ -1,5 +1,15 @@
 @extends('back.parent.layout')
 
+@section('breadcrumb')
+
+    @include('back.parent.partial.breadcrumb', [
+        'parent' => 'Activites',
+        'parent_route' => '#',
+        'child' => 'Club',
+    ])
+
+@endsection
+
 @section('css')
     <style>
         #holder img {
@@ -67,7 +77,7 @@
                         id="photo_upload"
                         type='primary'
                         :outline="false"
-                        title='Photo Upload'>
+                        title='Image'>
 
                     <div class="form-group{{ $errors->has('image') ? ' is-invalid' : '' }}">
                         <label for="changeImage">Image</label>
