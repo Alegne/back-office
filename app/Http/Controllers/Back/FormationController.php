@@ -140,8 +140,8 @@ class FormationController extends Controller
 
         # $img->resize(width, height);
 
-        $img->widen(800)->encode()->save(public_path('/storage/images/') . $name);
-        $img->widen(400)->encode()->save(public_path('/storage/images/thumbs/') . $name);
+        $img->resize(1000,800)->encode()->save(public_path('/storage/images/') . $name);
+        $img->resize(400,400)->encode()->save(public_path('/storage/images/thumbs/') . $name);
 
         return $name;
     }

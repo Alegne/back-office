@@ -1,5 +1,15 @@
 @extends('back.parent.layout')
 
+@section('breadcrumb')
+
+    @include('back.parent.partial.breadcrumb', [
+        'parent' => 'Actualites',
+        'parent_route' => '#',
+        'child' => 'Nouvelles',
+    ])
+
+@endsection
+
 @section('css')
 
     <link rel="stylesheet" href="/admin/plugins/dropzone/min/dropzone.min.css">

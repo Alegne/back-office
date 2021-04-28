@@ -167,8 +167,8 @@ class EvenementController extends Controller
         if (in_array($request->file('file')->extension(), $extensions_images))
         {
             $img   = Image::make($request->file('file')->path());
-            $img->widen(800)->encode()->save(public_path('/storage/images/') . $name);
-            $img->widen(400)->encode()->save(public_path('/storage/images/thumbs/') . $name);
+            $img->resize(1000,800)->encode()->save(public_path('/storage/images/') . $name);
+            $img->resize(400,400)->encode()->save(public_path('/storage/images/thumbs/') . $name);
 
         }else{
 
@@ -281,8 +281,8 @@ class EvenementController extends Controller
 
         # $img->resize(width, height);
 
-        $img->resize(1800, 800)->encode()->save(public_path('/storage/images/') . $name);
-        $img->widen(800)->encode()->save(public_path('/storage/images/thumbs/') . $name);
+        $img->resize(1800,800)->encode()->save(public_path('/storage/images/') . $name);
+        $img->resize(800,800)->encode()->save(public_path('/storage/images/thumbs/') . $name);
 
         return $name;
     }

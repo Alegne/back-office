@@ -104,6 +104,11 @@ return [
         'role'   => 'annonceur',
         'children' => [
             [
+                'name'  => 'Albums ',
+                'role'  => 'annonceur',
+                'route' => 'album.index',
+            ],
+            [
                 'name'  => 'Annonces ',
                 'role'  => 'annonceur',
                 'route' => 'annonce.index',

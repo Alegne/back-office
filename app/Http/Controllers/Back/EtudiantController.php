@@ -8,6 +8,7 @@ use App\Http\Controllers\API\FilterTrait;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Back\EtudiantRequest;
 use App\Http\Resources\API\EtudiantResource;
+use App\Imports\EtudiantImport;
 use App\Models\AnneeUniversitaireLibelle;
 use App\Models\Etudiant;
 use App\Models\Formation;
@@ -21,6 +22,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\View;
 use Intervention\Image\Facades\Image;
 use Maatwebsite\Excel\Facades\Excel;
+use mysql_xdevapi\Exception;
 
 class EtudiantController extends Controller
 {
@@ -69,7 +71,7 @@ class EtudiantController extends Controller
 
         # dd($request->all(), $request->has('photo'), $request->photo);
 
-        # $request->merge(['password' => Hash::make($request->password)]);
+        $request->merge(['password' => Hash::make($request->password)]);
 
         # $inputs = $this->getInputs($request->all());
         $inputs = $this->getInputs($request);
@@ -220,8 +222,8 @@ class EtudiantController extends Controller
 
         # $img->resize(width, height);
 
-        $img->widen(800)->encode()->save(public_path('/storage/images/') . $name);
-        $img->widen(400)->encode()->save(public_path('/storage/images/thumbs/') . $name);
+        $img->resize(1000,800)->encode()->save(public_path('/storage/images/') . $name);
+        $img->resize(1000,400)->encode()->save(public_path('/storage/images/thumbs/') . $name);
 
         return $name;
     }
@@ -293,9 +295,80 @@ class EtudiantController extends Controller
             compact('etudiants', 'data', 'niveaux', 'parcours', 'annees', 'formations', 'status'));
     }
 
+    public function excelView(Request $request)
+    {
+        $parcours    = Parcours::all()->pluck('tag', 'id');
+        $niveaux     = Niveau::all()->pluck('tag', 'id');
+        $annees      = AnneeUniversitaireLibelle::all()->pluck('libelle', 'id');
+        $status      = ['ancien' => 'Ancien', 'actif' => 'Actif'];
+        $message     = '';
+
+        $data      = null;
+
+        if (count($request->all()) > 0)
+        {
+            $data = $request->all();
+            $message = "Exportation Success";
+
+            ## Query
+            dd($data);
+
+            # return view('back.etudiant.excel', compact('parcours', 'niveaux', 'annees', 'status', 'message', 'data'));
+        }
+
+        return view('back.etudiant.excel', compact('parcours', 'niveaux', 'annees', 'status', 'message', 'data'));
+    }
+
+    public function excelExport(Request $request)
+    {
+        $query = $this->contraintes($request, Etudiant::query());
+        # dd($request->all(), $query->get());
+
+        return Excel::download(new EtudiantExport($query->get()), 'etudiants' . date('YmdHis') . '.xlsx');
+    }
+
+    public function excelImport(Request $request)
+    {
+        # $path1 = $request->file('file')->store('file');
+        # $path  = storage_path('app') . '/' . $path1;
+
+        $jointe = $request->file('file');
+
+        if ($jointe->extension())
+        {
+            $name  = time() . '.' . $jointe->extension();
+        } else {
+            $name  = time() . '.' . $jointe->getClientOriginalExtension();
+        }
+
+        $store = $jointe->storeAs('public\fichiers', $name);
+        # $path  = storage_path('app\public\fichiers') . $store;
+        $path  = storage_path('app\public\fichiers\\' . $name);
+
+        # "D:\projet M1\WebCup\_projet\projet-back-office-webcup\storage\app\public\fichiers\1619623265.xlsx"
+        # dd($path);
+        # Excel::import(new EtudiantImport,$request->file);
+
+        try {
+            Excel::import(new EtudiantImport(), $path);
+        } catch (\Exception $e)
+        {
+            return response()->json([
+                'ok'      => false,
+                'message' => "Error"
+            ]);
+        }
+
+
+        return response()->json([
+            'ok'      => true,
+            'message' => "Success"
+        ]);
+    }
+
     public function downloadActif(Request $request)
     {
-        return Excel::download(new EtudiantExport(), 'etudiants' . date('YmdHis') . '.xlsx');
+        return Excel::download(new EtudiantExport($this->query('actif')), 'etudiants' . date('YmdHis') . '.xlsx');
     }
 
     public function importData()
@@ -304,6 +377,41 @@ class EtudiantController extends Controller
         $path  = storage_path('app') . '/' . $path1;
 
         Excel::import(new Etudiant(),$path);
+    }
+
+    protected function query($status = 'actif', $niveau = null, $parcours = null, $annee = null)
+    {
+        $etudiants = Etudiant::with(
+            'niveau:tag',
+            'parcours:tag'
+        )
+            ->where('status', $status)
+            #->get()
+        ;
+
+        if (isset($niveau) && $niveau)
+        {
+            $etudiants->whereHas('niveau', function ($q) use ($niveau) {
+                $q->whereIn('cactus_niveaux.tag', $niveau);
+            });
+        }
+
+        if (isset($parcours) && $parcours)
+        {
+            # $parcours_tag = Parcours::where('tag', $parcours)->first();
+
+            $etudiants->whereIn('parcours_id', $parcours);
+        }
+
+        if (isset($annee) && $annee)
+        {
+            $etudiants->whereHas('annee', function ($q) use ($annee) {
+                $q->whereIn('cactus_annee_universitaire_libelle.libelle', $annee);
+            });
+        }
+
+        # dd($etudiants->toSql());
+        return $etudiants->get();
     }
 
 }

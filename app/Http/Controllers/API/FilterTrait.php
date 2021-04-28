@@ -52,7 +52,7 @@ trait FilterTrait
         if ($request->has('annees') && $request->annees)
         {
             $query->whereHas('annee', function ($q) use ($request) {
-                $q->whereIn('cactus_annee_universitaire_libelle.libelle', $request->annees);
+                $q->whereIn('cactus_annee_universitaire_libelles.libelle', $request->annees);
             });
         }
 

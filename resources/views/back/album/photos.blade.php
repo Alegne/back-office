@@ -1,5 +1,15 @@
 @extends('back.parent.layout')
 
+@section('breadcrumb')
+
+    @include('back.parent.partial.breadcrumb', [
+        'parent' => 'Actualites',
+        'parent_route' => '#',
+        'child' => 'Album',
+    ])
+
+@endsection
+
 @section('css')
 
     <link rel="stylesheet" href="/admin/plugins/dropzone/min/dropzone.min.css">
@@ -106,6 +116,8 @@
 
     <script type="text/javascript">
         Dropzone.options.dropzone = {
+            resizeWidth: 800,
+            resizeHeight: 800,
             maxFilesize: 12,
             renameFile: function(file) {
                 let dt   = new Date();

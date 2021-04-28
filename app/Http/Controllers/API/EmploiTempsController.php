@@ -20,16 +20,21 @@ class EmploiTempsController extends Controller
     public function all(Request $request)
     {
         if ($request->has('niveau') && $request->niveau &&
-            $request->has('parcours') && $request->parcours &&
-            $request->has('annee') && $request->annee)
+            $request->has('parcours') && $request->parcours
+        )
         {
             $niveau   = Niveau::where('tag', $request->niveau)->first();
             $parcours = Parcours::where('tag', $request->parcours)->first();
             $annee    = AnneeUniversitaireLibelle::where('libelle', $request->annee)->first();
 
-            $emploiTemps = EmploiTemps::where('niveau_id', $niveau->id)
-                                ->where('annee_id', $annee->id)
-                                ->whereHas('parcours', function ($q) use ($parcours) {
+            $emploiTemps = EmploiTemps::where('niveau_id', $niveau->id);
+
+            if($request->has('annee') && $request->annee)
+            {
+                $emploiTemps->where('annee_id', $annee->id);
+            }
+
+            $emploiTemps->whereHas('parcours', function ($q) use ($parcours) {
                                     $q->where('cactus_parcours.tag', $parcours->tag);
                                 })
                                 ->latest('id')

@@ -1,5 +1,15 @@
 @extends('back.parent.layout')
 
+@section('breadcrumb')
+
+    @include('back.parent.partial.breadcrumb', [
+        'parent' => 'Parametres',
+        'parent_route' => '#',
+        'child' => 'Configurations',
+    ])
+
+@endsection
+
 @section('css')
     <style>
         #holder img {

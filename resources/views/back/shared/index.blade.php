@@ -1,5 +1,15 @@
 @extends('back.parent.layout')
 
+@section('breadcrumb')
+
+    @include('back.parent.partial.breadcrumb', [
+        'parent' => 'Tableau de ' . str_replace('-', ' ', explode('.', Route::currentRouteName())[0]),
+        'parent_route' => '#',
+        'child' => str_replace('-', ' ', explode('.', Route::currentRouteName())[0]),
+    ])
+
+@endsection
+
 @section('css')
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css">
 
@@ -30,7 +40,8 @@
                             <a href="{{ route('etudiant.indexactif') }}" class="btn btn-primary mr-1 ">Actif</a>
                             <a href="{{ route('etudiant.indexold') }}" class="btn btn-primary mr-1">Ancien</a>
                             <a href="{{ route('etudiant.filter.new.request') }}" class="btn btn-primary mr-1">Filtre</a>
-                            <a href="{{ route('etudiant.download.actif') }}" class="btn btn-primary mr-1">Excel</a>
+{{--                            <a href="{{ route('etudiant.download.actif') }}" class="btn btn-primary mr-1">Excel</a>--}}
+                            <a href="{{ route('etudiant.excel.view') }}" class="btn btn-primary mr-1">Excel</a>
                         @endif
                     </div>
                 </div>

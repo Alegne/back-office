@@ -1,5 +1,15 @@
 @extends('back.parent.layout')
 
+@section('breadcrumb')
+
+  @include('back.parent.partial.breadcrumb', [
+      'parent' => 'Tableau de Bord',
+      'parent_route' => route('dashboard.webcup'),
+      'child' => '',
+  ])
+
+@endsection
+
 @section('css')
 @endsection
 

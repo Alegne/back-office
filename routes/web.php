@@ -23,24 +23,6 @@ use App\Http\Controllers\Back\UserController;
 use Illuminate\Support\Facades\Route;
 
 
-use App\Http\Controllers\API\ConfigurationController as APIConfigurationController;
-use App\Http\Controllers\API\FormationController as APIFormationController;
-use App\Http\Controllers\API\EtudiantController as APIEtudiantController;
-use App\Http\Controllers\API\EnseignantController as APIEnseignantController;
-use App\Http\Controllers\API\EspaceMembreController as APIEspaceMembreController;
-use App\Http\Controllers\API\TokenController as APITokenController;
-use App\Http\Controllers\API\EmploiTempsController as APIEmploiTempsController;
-use App\Http\Controllers\API\ClubController as APIClubController;
-use App\Http\Controllers\API\ArticleController as APIArticleController;
-use App\Http\Controllers\API\AnnonceController as APIAnnonceController;
-use App\Http\Controllers\API\EvenementController as APIEvenementController;
-use App\Http\Controllers\API\MessageController as APIMessageController;
-use App\Http\Controllers\API\NewsletterController as APINewsletterController;
-use App\Http\Controllers\API\EspaceNumeriqueController as APIEspaceNumeriqueController;
-use App\Http\Controllers\API\ParcoursController as APIParcoursController;
-use App\Http\Controllers\API\NiveauController as APINiveauController;
-use App\Http\Controllers\API\AnneeUniversitaireController as APIAnneeUniversitaireController;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -95,6 +77,9 @@ Route::group(['prefix' => 'toor', 'middleware' => ['auth']], function (){
     Route::name('etudiant.filter.new')->get('/etudiant/filter/avance/show', [EtudiantController::class, 'filterJS']);
     Route::name('etudiant.filter.new.request')->get('/etudiant/filter/avance/request', [EtudiantController::class, 'filterJSRequest']);
     Route::name('etudiant.download.actif')->get('/etudiant/download/actif', [EtudiantController::class, 'downloadActif']);
+    Route::name('etudiant.excel.view')->get('/etudiant/excel/view', [EtudiantController::class, 'excelView']);
+    Route::name('etudiant.excel.export')->get('/etudiant/excel/export', [EtudiantController::class, 'excelExport']);
+    Route::name('etudiant.excel.import')->post('/etudiant/excel/import', [EtudiantController::class, 'excelImport']);
 
 # Enseignants
     Route::resource('enseignant', EnseignantController::class);
