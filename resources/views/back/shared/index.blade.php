@@ -4,16 +4,48 @@
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css">
   <style>
     a > * { pointer-events: none; }
+
+.table-perso{
+    width: 800px !important;
+}
   </style>
 @endsection
 
 @section('main')
 
-    <div class="row justify-content-start mx-1">
-        <a href="{{ route(parseRouteActive()) }}" class="btn btn-primary">Ajouter</a>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row justify-content-start mx-1">
+                        <a href="{{ route(parseRouteActive()) }}" class="btn btn-primary  mr-1">Ajouter</a>
+
+                        @if(Route::currentRouteName() === 'etudiant.indexactif' || Route::currentRouteName() === 'etudiant.indexold')
+                            <a href="{{ route('etudiant.index') }}" class="btn btn-primary">Retour</a>
+                        @endif
+
+                        @if(Route::currentRouteName() === 'etudiant.index')
+                            <a href="{{ route('etudiant.indexactif') }}" class="btn btn-primary mr-1 ">Actif</a>
+                            <a href="{{ route('etudiant.indexold') }}" class="btn btn-primary mr-1">Ancien</a>
+                            <a href="{{ route('etudiant.filter.new.request') }}" class="btn btn-primary">Filtre</a>
+                        @endif
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row justify-content-center">
+                        <div class="col-12">
+                            {{ $dataTable->table(['class' => 'table table-sm table-bordered table-hover '], true) }}
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
     </div>
 
-  {{ $dataTable->table(['class' => 'table table-bordered table-hover table-sm'], true) }}
+
+
 
 @endsection
 

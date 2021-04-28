@@ -187,52 +187,52 @@
 
             {{-- Parcourir menu config --}}
             @foreach(config('menu') as $name => $elements)
+                    @if($elements['role'] === auth()->user()->role || auth()->user()->isAdmin())
+                      {{-- Si element possede un children --}}
+                      @isset($elements['children'])
 
-                {{-- Si element possede un children --}}
-                @isset($elements['children'])
+                          {{-- MenuOpen return 'menu-open' --}}
+                          <li class="nav-item has-treeview {{ menuOpen($elements['children']) }}">
 
-                  {{-- MenuOpen return 'menu-open' --}}
-                  <li class="nav-item has-treeview {{ menuOpen($elements['children']) }}">
+                              {{-- currentChildActive return 'active'--}}
+                              <a href="#" class="nav-link {{ currentChildActive($elements['children']) }}">
+                                  <i class="nav-icon fas fa-{{ $elements['icon'] }}"></i>
+                                  <p>
+                                      @lang($name)
+                                      <i class="right fas fa-angle-left"></i>
+                                      {{-- <i class="fas fa-angle-left right"></i>--}}
+                                  </p>
+                              </a>
+                              <ul class="nav nav-treeview" style="width: 200px !important; margin-left: 30px !important;">
 
-                    {{-- currentChildActive return 'active'--}}
-                    <a href="#" class="nav-link {{ currentChildActive($elements['children']) }}">
-                      <i class="nav-icon fas fa-{{ $elements['icon'] }}"></i>
-                      <p>
-                        @lang($name)
-                        <i class="right fas fa-angle-left"></i>
-                        {{-- <i class="fas fa-angle-left right"></i>--}}
-                      </p>
-                    </a>
-                    <ul class="nav nav-treeview" style="width: 200px !important; margin-left: 30px !important;">
+                                  {{-- Parcourir children --}}
+                                  @foreach($elements['children'] as $child)
 
-                      {{-- Parcourir children --}}
-                      @foreach($elements['children'] as $child)
-
-                        {{-- Si element doit afficher au role redac --}}
-{{--                        @if(($child['role'] === 'redac' || auth()->user()->isAdmin()) && $child['name'] !== 'fake')--}}
+                                      {{-- Si element doit afficher au role redac --}}
+                                      {{--                        @if(($child['role'] === 'redac' || auth()->user()->isAdmin()) && $child['name'] !== 'fake')--}}
 
 
+                                      {{-- Appel  composant menu-item.blade.php --}}
+                                      <x-back.menu-item
+                                              :route="$child['route']"
+                                              :sub=true>
+                                          @lang($child['name'])
+                                      </x-back.menu-item>
+                                      {{--@endif--}}
+                                  @endforeach
+                              </ul>
+                          </li>
+                          {{-- Si element ne possede pas un children --}}
+                      @else
                           {{-- Appel  composant menu-item.blade.php --}}
                           <x-back.menu-item
-                                  :route="$child['route']"
-                                  :sub=true>
-                            @lang($child['name'])
+                                  :route="$elements['route']"
+                                  :icon="$elements['icon']">
+                              @lang($name)
                           </x-back.menu-item>
-                        {{--@endif--}}
-                      @endforeach
-                    </ul>
-                  </li>
+                      @endisset
+                @endif
 
-                  {{-- Si element ne possede pas un children --}}
-                @else
-
-                  {{-- Appel  composant menu-item.blade.php --}}
-                  <x-back.menu-item
-                          :route="$elements['route']"
-                          :icon="$elements['icon']">
-                    @lang($name)
-                  </x-back.menu-item>
-                @endisset
             @endforeach
 
           </ul>
