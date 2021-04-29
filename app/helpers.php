@@ -8,6 +8,7 @@
 
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 
 /**
  *  Helper use to Admin
@@ -227,6 +228,29 @@ if (!function_exists('uploadFileMultiple')) {
     {
 
         return null;
+    }
+}
+
+
+/**
+ * Espace MEMBRE
+ */
+if (!function_exists('getUtilisateur')) {
+    function getUtilisateur(Request $request)
+    {
+        $data = null;
+
+        if(session('espace_utlisateur'))
+        {
+            $data = json_decode(session('espace_utlisateur'));
+        }
+
+        if(!isset($data) && $request->cookie('espace_utlisateur'))
+        {
+            $data = json_decode($request->cookie('espace_utlisateur'));
+        }
+
+        return $data;
     }
 }
 

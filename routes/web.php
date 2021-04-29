@@ -66,6 +66,12 @@ Route::group(['prefix' => 'espace', 'middleware' => ['espace']], function (){
 
     # Annonces
     Route::get('/annonces', [AnnoncesController::class, 'index'])->name('espace.annonces.index');
+    Route::get('/annonces/{annonce}', [AnnoncesController::class, 'show'])->name('espace.annonces.show');
+    Route::get('/annonces/create/form', [AnnoncesController::class, 'create'])->name('espace.annonces.create.form');
+    Route::post('/annonces', [AnnoncesController::class, 'store'])->name('espace.annonces.store');
+    Route::get('/annonces/galeries', [AnnoncesController::class, 'galeriesView'])->name('espace.annonces.galeries.view');
+    Route::post('/annonces/{annonce}/galeries', [AnnoncesController::class, 'galeries'])->name('espace.annonces.galeries.store');
+    Route::post('/annonce/galeries/delete/{annonce}', [AnnoncesController::class, 'deleteGaleries'])->name('espace.annonce.galeries.delete');
 
     # Profile
     Route::get('/profils', [ProfilsController::class, 'index'])->name('espace.profils.index');

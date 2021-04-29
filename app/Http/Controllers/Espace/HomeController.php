@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use function PHPSTORM_META\type;
 
 class HomeController extends Controller
 {
@@ -22,9 +23,12 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         $data = null;
+        $type = null;
 
         if ($request->has('type') && $request->type)
         {
+            $type = $request->type;
+
             if ($request->type == 'etudiant')
             {
                 if ($request->has('id') && $request->id)
@@ -35,6 +39,8 @@ class HomeController extends Controller
 
                     if ($data)
                     {
+                        $type = 'etudiant';
+
                         #### Delete Session | Coockie
                         # Cookie::expire('espace_utlisateur');
                         Cookie::forget('espace_utlisateur');
@@ -58,6 +64,8 @@ class HomeController extends Controller
 
                     if ($data)
                     {
+                        $type = 'enseignant';
+
                         #### Delete Session | Coockie
                         # Cookie::expire('espace_utlisateur');
                         Cookie::forget('espace_utlisateur');
@@ -79,7 +87,7 @@ class HomeController extends Controller
         {
             $data = json_decode($data);
 
-            return view('espace.index', compact('data'));
+            return view('espace.index', compact('data', 'type'));
         }
 
         $data = $request->cookie('espace_utlisateur');
@@ -88,7 +96,7 @@ class HomeController extends Controller
         {
             $data = json_decode($data);
 
-            return view('espace.index', compact('data'));
+            return view('espace.index', compact('data', 'type'));
         }
 
         # Get Session
