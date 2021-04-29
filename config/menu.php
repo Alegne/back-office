@@ -22,6 +22,59 @@ return [
         'route'  => 'dashboard.webcup',
         'icon'   => 'tachometer-alt',
     ],
+    'Activites' => [
+        'icon' => 'school',
+        'role'   => 'redacteur',
+        'children' => [
+            [
+                'name'  => 'Clubs',
+                'role'  => 'redacteur',
+                'route' => 'club.index',
+            ],
+            [
+                'name'  => 'Articles',
+                'role'  => 'redacteur',
+                'route' => 'article.index',
+            ]
+        ]
+    ],
+    'Actualites' => [
+        'icon' => 'book',
+        'role'   => 'annonceur',
+        'children' => [
+            [
+                'name'  => 'Albums ',
+                'role'  => 'annonceur',
+                'route' => 'album.index',
+            ],
+            [
+                'name'  => 'Annonces ',
+                'role'  => 'annonceur',
+                'route' => 'annonce.index',
+            ],
+            [
+                'name'  => 'Nouvelles',
+                'role'  => 'annonceur',
+                'route' => 'evenement.index',
+            ]
+        ],
+    ],
+    'Messages' => [
+        'icon' => 'envelope',
+        'role'   => 'admin',
+        'children' => [
+            [
+                'name'  => 'News letters',
+                'role'  => 'admin',
+                'route' => 'newsletter.index',
+            ],
+            [
+                'name'  => 'Messages',
+                'role'  => 'admin',
+                'route' => 'message.index',
+            ]
+        ]
+    ],
     'Pedadogique' => [
         'icon' => 'university',
         'role'   => 'pedagogique',
@@ -96,43 +149,6 @@ return [
                 'name'  => 'SEO',
                 'role'  => 'admin',
                 'route' => '',
-            ]
-        ]
-    ],
-    'Actualites' => [
-        'icon' => 'book',
-        'role'   => 'annonceur',
-        'children' => [
-            [
-                'name'  => 'Albums ',
-                'role'  => 'annonceur',
-                'route' => 'album.index',
-            ],
-            [
-                'name'  => 'Annonces ',
-                'role'  => 'annonceur',
-                'route' => 'annonce.index',
-            ],
-            [
-                'name'  => 'Nouvelles',
-                'role'  => 'annonceur',
-                'route' => 'evenement.index',
-            ]
-        ],
-    ],
-    'Activites' => [
-        'icon' => 'school',
-        'role'   => 'redacteur',
-        'children' => [
-            [
-                'name'  => 'Clubs',
-                'role'  => 'redacteur',
-                'route' => 'club.index',
-            ],
-            [
-                'name'  => 'Articles',
-                'role'  => 'redacteur',
-                'route' => 'article.index',
             ]
         ]
     ]
