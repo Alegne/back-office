@@ -132,7 +132,7 @@ return [
             [
                 'name'  => 'Articles',
                 'role'  => 'redacteur',
-                'route' => 'club.index',
+                'route' => 'article.index',
             ]
         ]
     ]
