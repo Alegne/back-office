@@ -9,6 +9,7 @@ use App\Models\Annonce;
 use App\Models\Niveau;
 use App\Models\Parcours;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
@@ -131,7 +132,17 @@ class AnnonceController extends Controller
      */
     public function destroy(Annonce $annonce)
     {
+        $annonce_parcours = DB::table('cactus_annonces_parcours')
+            ->where('annonce_id', $annonce->id)
+            ->update(['annonce_id' => null]);
+
+        $annonce_niveaux = DB::table('cactus_annonces_niveaux')
+            ->where('annonce_id', $annonce->id)
+            ->update(['annonce_id' => null]);
+
+        # dd($annonce);
         $annonce->delete();
+
 
         $this->deleteImages($annonce);
 
