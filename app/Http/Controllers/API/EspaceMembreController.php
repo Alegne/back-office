@@ -42,11 +42,14 @@ class EspaceMembreController extends Controller
                 $etudiant->remember_token = $token;
                 $etudiant->save();
 
+                # Session | Cookie
+
                 return response()->json([
                     'ok'    => true,
                     'token' => $token,
                     'id'    => $etudiant->id,
-                    'url'   => 'http://...'
+                    'type'  => 'etudiant',
+                    'url'   => route('espace.index')
                 ]);
             } else {
                 return response()->json([
@@ -75,12 +78,16 @@ class EspaceMembreController extends Controller
                 $enseignant->remember_token = $token;
                 $enseignant->save();
 
+
+                # Session | Cookie
+
                 # return new EtudiantResource($etudiant);
                 return response()->json([
                     'ok'    => true,
                     'token' => $token,
                     'id'    => $enseignant->id,
-                    'url'   => 'http://...'
+                    'type'  => 'enseignant',
+                    'url'   => route('espace.index')
                 ]);
 
                 # return new EnseignantResource($enseignant);

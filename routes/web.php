@@ -20,7 +20,14 @@ use App\Http\Controllers\Back\AnneeUniversitaireLibelleController;
 use App\Http\Controllers\Back\LangueController;
 use App\Http\Controllers\Back\ConfigurationController;
 use App\Http\Controllers\Back\UserController;
+use App\Http\Controllers\Espace\EmploiTempsController;
+use App\Http\Controllers\Espace\HomeController;
+use App\Http\Controllers\Espace\ProfilsController;
 use Illuminate\Support\Facades\Route;
+
+
+use App\Http\Controllers\Espace\AnnoncesController;
+use App\Http\Controllers\Espace\EspaceNumeriquesController as EspaceEspaceNumeriquesController;
 
 
 /*
@@ -48,6 +55,34 @@ Route::get('/', function () {
 require __DIR__ . '/auth.php';
 
 
+/**
+ * Route Espace Membre
+ */
+
+Route::group(['prefix' => 'espace', 'middleware' => ['espace']], function (){
+
+    # Home
+    Route::get('/home', [HomeController::class, 'index'])->name('espace.index');
+
+    # Annonces
+    Route::get('/annonces', [AnnoncesController::class, 'index'])->name('espace.annonces.index');
+
+    # Profile
+    Route::get('/profils', [ProfilsController::class, 'index'])->name('espace.profils.index');
+    Route::put('/profils/update/{id}/{type}', [ProfilsController::class, 'update'])->name('espace.profils.update');
+
+    # Emploi du temps
+    Route::get('/emploi-temps', [EmploiTempsController::class, 'index'])->name('espace.emploi_temps.index');
+
+    # Espace Numerique
+    Route::get('/espace-numeriques', [EspaceEspaceNumeriquesController::class, 'index'])->name('espace.espace_numerique.index');
+
+
+    Route::get('/verification-compte', [HomeController::class, 'verification'])->name('espace.verification');
+    Route::get('/login', [HomeController::class, 'login'])->name('espace.login');
+
+    # Route::view('/layout', 'espace.parent.layout')->name('espace.parent.layouts');
+});
 
 
 /**
