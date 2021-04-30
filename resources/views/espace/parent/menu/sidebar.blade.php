@@ -13,6 +13,7 @@
     </li>
 
     @if(isset($data))
+
     @if(!isset($data->identifiant))
         @if($data->status == 'actif')
             <li>
@@ -28,6 +29,19 @@
                 </a>
             </li>
         @endif
+    @else
+    <li>
+        <a class="nav-link" href="{{ route('espace.emploi_temps.index') }}">
+            <i class="nc-icon nc-notes"></i>
+            <p>Emploi du temps</p>
+        </a>
+    </li>
+    <li>
+        <a class="nav-link" href="{{ route('espace.espace_numerique.index') }}">
+            <i class="nc-icon nc-paper-2"></i>
+            <p>Espace Numerique</p>
+        </a>
+    </li>
     @endif
     @endif
 

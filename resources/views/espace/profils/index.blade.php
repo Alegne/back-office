@@ -345,7 +345,7 @@
                         <table>
                             <tr>
                                 <td>Identifiant</td>
-                                <td >{{ $data->identifiant }}</td>
+                                <td class="px-3">{{ $data->identifiant }}</td>
                             </tr>
                             <tr>
                                 <td>Email</td>

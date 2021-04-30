@@ -7,6 +7,7 @@ use App\Models\Calendar;
 use App\Models\EmploiTemps;
 use App\Models\EmploiTempsItem;
 use App\Models\Enseignant;
+use App\Models\Etudiant;
 use App\Models\Matiere;
 use App\Models\Niveau;
 use App\Models\Parcours;
@@ -20,20 +21,33 @@ class EmploiTempsController extends Controller
 
         $emploiTemps = EmploiTemps::query();
 
-        if ($utilisateur)
-        {
-            if ($utilisateur->status == 'actif')
-            {
-                $niveaux = Niveau::whereIn('tag', $utilisateur->niveau)->first();
-                $parcours = Parcours::whereIn('tag', $utilisateur->parcours)->first();
+        if ($utilisateur) {
 
-                $emploiTemps = $emploiTemps->whereHas('parcours', function ($q) use ($parcours) {
-                                        $q->where('cactus_parcours.tag', $parcours->tag);
-                                    })
-                                        ->where('niveau_id', $niveaux->id)
-                                        #->get()
-                                    ;
+            if (!isset($utilisateur->identifiant)) {
+
+                if ($utilisateur->status == 'actif') {
+
+                    $etudiant = Etudiant::find($utilisateur->id);
+
+                    # $niveaux = Niveau::whereIn('tag', $utilisateur->niveau)->first();
+                    # $parcours = Parcours::whereIn('tag', $utilisateur->parcours)->first();
+
+                    $niveaux = Niveau::whereIn('id', $etudiant->niveau->pluck('id'))->get();
+                    $parcours = Parcours::where('id', $etudiant->parcours->id)->get();
+
+
+
+                    $emploiTemps = $emploiTemps->whereHas('parcours', function ($q) use ($parcours) {
+                        # $q->where('cactus_parcours.tag', $parcours->tag);
+                        $q->where('cactus_parcours.id', $parcours[0]->id);
+                    })
+                        # ->where('niveau_id', $niveaux->id)
+                        ->where('niveau_id', $niveaux[0]->id)
+                        #->get()
+                    ;
+                }
             }
+
 
             $emploiTemps = $emploiTemps->latest('updated_at');
 
@@ -50,8 +64,7 @@ class EmploiTempsController extends Controller
 
     public function show(Request $request, EmploiTemps $emploiTemps)
     {
-        if ($request->ajax() or $request->ajax == 1)
-        {
+        if ($request->ajax() or $request->ajax == 1) {
 
             $items = EmploiTempsItem::where('emploi_du_temps_id', $emploiTemps->id)->get();
 
