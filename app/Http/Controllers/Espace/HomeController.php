@@ -22,20 +22,16 @@ class HomeController extends Controller
         $data = null;
         $type = null;
 
-        if ($request->has('type') && $request->type)
-        {
+        if ($request->has('type') && $request->type) {
             $type = $request->type;
 
-            if ($request->type == 'etudiant')
-            {
-                if ($request->has('id') && $request->id)
-                {
+            if ($request->type == 'etudiant') {
+                if ($request->has('id') && $request->id) {
                     $data = Etudiant::find($request->id);
 
                     # dd($data);
 
-                    if ($data)
-                    {
+                    if ($data) {
                         $type = 'etudiant';
 
                         #### Delete Session | Coockie
@@ -50,17 +46,14 @@ class HomeController extends Controller
                         # Cookie::queue('espace_utlisateur', json_encode($data), $minutes);
                         Cookie::queue(cookie()->forever('espace_utlisateur', json_encode($data)));
 
-                        return view('espace.index', compact('data'));
+                        return view('espace.index', compact('data', 'type'));
                     }
                 }
-            } elseif ($request->type == 'enseignant')
-            {
-                if ($request->has('id') && $request->id)
-                {
+            } elseif ($request->type == 'enseignant') {
+                if ($request->has('id') && $request->id) {
                     $data = Enseignant::find($request->id);
 
-                    if ($data)
-                    {
+                    if ($data) {
                         $type = 'enseignant';
 
                         #### Delete Session | Coockie
@@ -71,17 +64,15 @@ class HomeController extends Controller
                         session(['espace_utlisateur' => json_encode($data)]);
                         Cookie::queue(cookie()->forever('espace_utlisateur', json_encode($data)));
 
-                        return view('espace.index', compact('data'));
+                        return view('espace.index', compact('data', 'type'));
                     }
                 }
             }
-
         }
 
         $data = session('espace_utlisateur');
 
-        if($data)
-        {
+        if ($data) {
             $data = json_decode($data);
 
             return view('espace.index', compact('data', 'type'));
@@ -89,8 +80,7 @@ class HomeController extends Controller
 
         $data = $request->cookie('espace_utlisateur');
 
-        if($data)
-        {
+        if ($data) {
             $data = json_decode($data);
 
             return view('espace.index', compact('data', 'type'));
@@ -100,7 +90,6 @@ class HomeController extends Controller
         # dd(session('espace_utlisateur'), $request->token, $request->id, $request->type);
 
         return redirect(config('app.front_office'));
-
     }
 
     public function logout(Request $request)

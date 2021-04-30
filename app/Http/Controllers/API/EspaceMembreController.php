@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Cookie;
 
 class EspaceMembreController extends Controller
 {
@@ -19,12 +20,10 @@ class EspaceMembreController extends Controller
     {
         # dd($request->all(), $request->has('email'));
 
-        if ($request->has('type') && $request->type == 'etudiant')
-        {
-            if ($request->has('numero') && $request->numero)
-            {
+        if ($request->has('type') && $request->type == 'etudiant') {
+            if ($request->has('numero') && $request->numero) {
                 $etudiant = Etudiant::where('numero', $request->numero)->first();
-            } elseif ($request->has('email') && $request->email){
+            } elseif ($request->has('email') && $request->email) {
                 $etudiant = Etudiant::where('email', $request->email)->first();
             } else {
                 return response()->json([
@@ -34,35 +33,50 @@ class EspaceMembreController extends Controller
             }
 
             # request | BDD
-            if ($etudiant && $request->has('password') &&
-                Hash::check($request->password, $etudiant->password)){
+            if (
+                $etudiant && $request->has('password') &&
+                Hash::check($request->password, $etudiant->password)
+            ) {
                 # return response()->json($etudiant);
 
                 $token = Str::random(100);
                 $etudiant->remember_token = $token;
                 $etudiant->save();
 
-                # Session | Cookie
+                $data = $etudiant;
+                $type = 'etudiant';
 
-                return response()->json([
+                # Session | Cookie
+                Cookie::forget('espace_utlisateur');
+                $request->session()->forget('espace_utlisateur');
+
+
+                session(['espace_utlisateur' => json_encode($data)]);
+                # $cookie = cookie('name', 'value', $minutes);
+
+                # Cookie::queue('espace_utlisateur', json_encode($data), $minutes);
+                Cookie::queue(cookie()->forever('espace_utlisateur', json_encode($data)));
+
+
+                return view('espace.index', compact('data', 'type'));
+
+                /*return response()->json([
                     'ok'    => true,
                     'token' => $token,
                     'id'    => $etudiant->id,
                     'type'  => 'etudiant',
                     'url'   => route('espace.index')
-                ]);
+                ]);*/
             } else {
                 return response()->json([
                     'ok'      => false,
                     'message' => 'Mot de passe Incorrect'
                 ]);
             }
-        } elseif ($request->has('type') && $request->type == 'enseignant')
-        {
-            if ($request->has('identifiant') && $request->identifiant)
-            {
+        } elseif ($request->has('type') && $request->type == 'enseignant') {
+            if ($request->has('identifiant') && $request->identifiant) {
                 $enseignant = Enseignant::where('identifiant', $request->identifiant)->first();
-            } elseif ($request->has('email') && $request->email){
+            } elseif ($request->has('email') && $request->email) {
                 $enseignant = Enseignant::where('email', $request->email)->first();
             } else {
                 return response()->json([
@@ -71,24 +85,40 @@ class EspaceMembreController extends Controller
                 ]);
             }
 
-            if ($enseignant && $request->has('mot_de_passe') &&
-                Hash::check($request->mot_de_passe, $enseignant->mot_de_passe)){
+            if (
+                $enseignant && $request->has('mot_de_passe') &&
+                Hash::check($request->mot_de_passe, $enseignant->mot_de_passe)
+            ) {
 
                 $token = Str::random(100);
                 $enseignant->remember_token = $token;
                 $enseignant->save();
 
 
+                $data = $enseignant;
+                $type = 'enseignant';
+
                 # Session | Cookie
+                $type = 'enseignant';
+
+                #### Delete Session | Coockie
+                # Cookie::expire('espace_utlisateur');
+                Cookie::forget('espace_utlisateur');
+                $request->session()->forget('espace_utlisateur');
+
+                session(['espace_utlisateur' => json_encode($data)]);
+                Cookie::queue(cookie()->forever('espace_utlisateur', json_encode($data)));
+
+                return view('espace.index', compact('data', 'type'));
 
                 # return new EtudiantResource($etudiant);
-                return response()->json([
+                /*return response()->json([
                     'ok'    => true,
                     'token' => $token,
                     'id'    => $enseignant->id,
                     'type'  => 'enseignant',
                     'url'   => route('espace.index')
-                ]);
+                ]);*/
 
                 # return new EnseignantResource($enseignant);
             } else {
@@ -97,30 +127,29 @@ class EspaceMembreController extends Controller
                     'message' => 'Mot de passe Incorrect'
                 ]);
             }
-        } else{
+        } else {
             return response()->json([
                 'ok'      => false,
                 'message' => "Erreur d'authentification"
             ]);
         }
-
-
     }
 
     public function logout(Request $request)
     {
         # dd($request->all(), $request->has('token'), $request->token);
 
-        if ($request->has('token') && $request->token &&
+        if (
+            $request->has('token') && $request->token &&
             $request->has('id') && $request->id &&
-            $request->has('type') && $request->type){
+            $request->has('type') && $request->type
+        ) {
 
-            if ($request->type == 'etudiant')
-            {
+            if ($request->type == 'etudiant') {
                 # $etudiant = Etudiant::find($request->id);
                 $etudiant = Etudiant::where('id', $request->id)
-                                    ->where('remember_token', $request->token)
-                                    ->first();
+                    ->where('remember_token', $request->token)
+                    ->first();
 
                 $token = Str::random(100);
                 $etudiant->remember_token = $token;
@@ -130,8 +159,7 @@ class EspaceMembreController extends Controller
                     'ok'    => true,
                     'message' => "Suucess de se deconnecter"
                 ]);
-            } elseif ($request->type == 'enseignant')
-            {
+            } elseif ($request->type == 'enseignant') {
                 # $enseignant = Enseignant::find($request->id);
                 $enseignant = Enseignant::where('id', $request->id)
                     ->where('remember_token', $request->token)
@@ -145,13 +173,12 @@ class EspaceMembreController extends Controller
                     'ok'    => true,
                     'message' => "Suucess de se deconnecter"
                 ]);
-            } else{
+            } else {
                 return response()->json([
                     'ok'      => false,
                     'message' => "Erreur de se deconnecter"
                 ]);
             }
-
         } else {
             return response()->json([
                 'ok'      => false,
@@ -164,10 +191,11 @@ class EspaceMembreController extends Controller
     public function verifyEspace(Request $request)
     {
         # dd($request->all());
-        if ($request->has('type') && $request->type == 'etudiant')
-        {
-            if ($request->has('id') && $request->id &&
-                $request->has('token') && $request->token) {
+        if ($request->has('type') && $request->type == 'etudiant') {
+            if (
+                $request->has('id') && $request->id &&
+                $request->has('token') && $request->token
+            ) {
 
                 $etudiant = Etudiant::where('id', $request->id)
                     ->where('remember_token', $request->token)
@@ -178,16 +206,16 @@ class EspaceMembreController extends Controller
                 if ($etudiant) {
                     # return response()->json($etudiant);
                     return new EtudiantResource(Etudiant::find($request->id));
-                } else{
+                } else {
                     return response()->json(['message' => "Etudiant introuvable"]);
                 }
-
-            } else{
+            } else {
                 return response()->json(['message' => "ID obligatoire"]);
             }
-
-        }elseif ($request->has('type') && $request->type == 'enseignant' &&
-            $request->has('token') && $request->token){
+        } elseif (
+            $request->has('type') && $request->type == 'enseignant' &&
+            $request->has('token') && $request->token
+        ) {
 
             if ($request->has('id') && $request->id) {
                 $enseignant = Enseignant::where('id', $request->id)
@@ -199,14 +227,13 @@ class EspaceMembreController extends Controller
                 if ($enseignant) {
                     return response()->json($enseignant);
                     # View
-                } else{
+                } else {
                     return response()->json(['message' => "Enseignant introuvable"]);
                 }
-
-            } else{
+            } else {
                 return response()->json(['message' => "Champ ID obligatoire"]);
             }
-        }else{
+        } else {
             return response()->json(['message' => "Erreur de Confirmation"]);
         }
     }
@@ -214,10 +241,11 @@ class EspaceMembreController extends Controller
     # GET Email|Token
     public function verify(Request $request)
     {
-        if ($request->has('type') && $request->type == 'etudiant')
-        {
-            if ($request->has('email') && $request->email &&
-                $request->has('remember_token') && $request->remember_token) {
+        if ($request->has('type') && $request->type == 'etudiant') {
+            if (
+                $request->has('email') && $request->email &&
+                $request->has('remember_token') && $request->remember_token
+            ) {
 
                 $etudiant = Etudiant::where('email', $request->email)
                     ->where('remember_token', $request->remember_token)
@@ -230,15 +258,13 @@ class EspaceMembreController extends Controller
 
                     return response()->json($etudiant);
                     # view
-                } else{
+                } else {
                     return response()->json(['message' => "Etudiant introuvable"]);
                 }
-
-            } else{
+            } else {
                 return response()->json(['message' => "Email obligatoire"]);
             }
-
-        }elseif ($request->has('type') && $request->type == 'enseignant'){
+        } elseif ($request->has('type') && $request->type == 'enseignant') {
 
             if ($request->has('email') && $request->email) {
                 $enseignant = Enseignant::where('email', $request->email)
@@ -253,14 +279,13 @@ class EspaceMembreController extends Controller
 
                     return response()->json($enseignant);
                     # View
-                } else{
+                } else {
                     return response()->json(['message' => "Enseignant introuvable"]);
                 }
-
-            } else{
+            } else {
                 return response()->json(['message' => "Champ Email obligatoire"]);
             }
-        }else{
+        } else {
             return response()->json(['message' => "Erreur de Confirmation"]);
         }
     }
@@ -268,8 +293,7 @@ class EspaceMembreController extends Controller
     # Envoi Email
     public function forgot(Request $request)
     {
-        if ($request->has('type') && $request->type == 'etudiant')
-        {
+        if ($request->has('type') && $request->type == 'etudiant') {
             if ($request->has('email') && $request->email) {
                 $etudiant = Etudiant::where('email', $request->email)->first();
 
@@ -278,15 +302,13 @@ class EspaceMembreController extends Controller
                     # Envoi d'email
 
                     return response()->json(['message' => "Envoi d'Email"]);
-                } else{
+                } else {
                     return response()->json(['message' => "Etudiant introuvable"]);
                 }
-
-            } else{
+            } else {
                 return response()->json(['message' => "Champ Email obligatoire"]);
             }
-
-        }elseif ($request->has('type') && $request->type == 'enseignant'){
+        } elseif ($request->has('type') && $request->type == 'enseignant') {
 
             if ($request->has('email') && $request->email) {
                 $enseignant = Enseignant::where('email', $request->email)->first();
@@ -295,24 +317,21 @@ class EspaceMembreController extends Controller
                     # Envoi d'email
 
                     return response()->json(['message' => "Envoi d'Email"]);
-                } else{
+                } else {
                     return response()->json(['message' => "Enseignant introuvable"]);
                 }
-
-            } else{
+            } else {
                 return response()->json(['message' => "Champ Email obligatoire"]);
             }
-        }else{
+        } else {
             return response()->json(['message' => "Erreur de reinitialisation"]);
         }
-
     }
 
     # Reset
     public function reset(Request $request)
     {
-        if ($request->has('type') && $request->type == 'etudiant')
-        {
+        if ($request->has('type') && $request->type == 'etudiant') {
             if ($request->has('email') && $request->email) {
                 $etudiant = Etudiant::where('email', $request->email)->update([
                     'password' => Hash::make($request->password)
@@ -322,15 +341,13 @@ class EspaceMembreController extends Controller
 
                     return response()->json($etudiant);
                     # view
-                } else{
+                } else {
                     return response()->json(['message' => "Etudiant introuvable"]);
                 }
-
-            } else{
+            } else {
                 return response()->json(['message' => "Champ Email obligatoire"]);
             }
-
-        }elseif ($request->has('type') && $request->type == 'enseignant'){
+        } elseif ($request->has('type') && $request->type == 'enseignant') {
 
             if ($request->has('email') && $request->email) {
                 $enseignant = Enseignant::where('email', $request->email)->update([
@@ -342,16 +359,14 @@ class EspaceMembreController extends Controller
 
                     return response()->json($enseignant);
                     # View
-                } else{
+                } else {
                     return response()->json(['message' => "Enseignant introuvable"]);
                 }
-
-            } else{
+            } else {
                 return response()->json(['message' => "Champ Email obligatoire"]);
             }
-        }else{
+        } else {
             return response()->json(['message' => "Erreur de reinitialisation"]);
         }
     }
-
 }
