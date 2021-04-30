@@ -88,7 +88,7 @@
                 @if(count($annonce->galerie) > 0)
                     <x-back.card
                             type='primary'
-                            title='Vos fichiers'>
+                            title='Vos Images'>
 
 
                         <div class="owl-carousel owl-theme">
@@ -96,7 +96,7 @@
                                 <div class="item">
                                     <div class="card  justify-content-center mx-1" >
                                         @if(in_array(Str::lower(explode('.', $galerie)[1]), ['jpeg','pjpeg','png','gif','jpg']))
-                                            <img class="card-img-top m-auto" src="{{ getImageSingle($galerie, true) }}" alt="Card image cap">
+                                            <img class="card-img-top m-auto" src="{{ getImageSingle($galerie, 'card') }}" alt="Card image cap">
                                         @else
                                             <img class="card-img-top m-auto" src="/default.png" alt="Card image cap">
                                         @endif
@@ -126,6 +126,7 @@
 
     <script type="text/javascript">
         Dropzone.options.dropzone = {
+            acceptedFiles: ".jpeg,.jpg,.png,.PNG,.gif",
             maxFilesize: 12,
             renameFile: function(file) {
                 let dt   = new Date();

@@ -65,13 +65,15 @@
                             :required="true">
                     </x-back.input>
 
-                    <x-back.input
-                            name='slug'
-                            title='Slug'
-                            :value="isset($evenement) ? $evenement->slug : ''"
-                            input='text'
-                            :required="true">
-                    </x-back.input>
+                    <div class="d-none">
+                        <x-back.input
+                                name='slug'
+                                title='Slug'
+                                :value="isset($evenement) ? $evenement->slug : ''"
+                                input='text'
+                                :required="false">
+                        </x-back.input>
+                    </div>
 
                     <x-back.input
                             name='posteur'
@@ -111,7 +113,7 @@
                         id="photo_upload"
                         type='primary'
                         :outline="false"
-                        title='Photo'>
+                        title='Image'>
 
                     <div class="form-group{{ $errors->has('image') ? ' is-invalid' : '' }}">
                         <label for="changeImage">Image</label>
@@ -119,7 +121,7 @@
                             <div>
                                 <p>
                                     @if($evenement->image)
-                                        <img src="{{ getImageSingle($evenement->image, true) }}" style="width:100%;">
+                                        <img src="{{ getImageSingle($evenement->image, 'card') }}" style="width:100%;">
                                     @else
                                         <img src="{{ asset('/default.png') }}" style="width:100%;">
                                     @endif

@@ -99,7 +99,7 @@
                                 <div>
                                     <p>
                                         @if($formation->photo)
-                                            <img src="{{ getImageSingle($formation->photo, true) }}" style="width:100%;">
+                                            <img src="{{ getImageSingle($formation->photo, 'card') }}" style="width:100%;">
                                         @else
                                             <img src="{{ asset('/default.png') }}" style="width:100%;">
                                         @endif

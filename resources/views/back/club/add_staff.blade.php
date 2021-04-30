@@ -40,7 +40,7 @@
                     <div id="holder" class="text-center" style="margin-bottom:15px;">
                         @if($club->image)
                             <img style="width:100%;"
-                                 src="{{ getImageSingle($club->image, true) }}"
+                                 src="{{ getImageSingle($club->image, 'card') }}"
                                  alt="">
                         @else
                             <img class="card-img-top" src="/default.png" alt="Card image cap">
@@ -67,7 +67,7 @@
                            <div class="item">
                                <div class="card mx-1">
                                    @if($staff->etudiant->photo)
-                                       <img class="card-img-top" src="{{ getImageSingle($staff->etudiant->photo, true) }}"
+                                       <img class="card-img-top" src="{{ getImageSingle($staff->etudiant->photo, 'card') }}"
                                             alt="Card image cap" style="width: 215px !important; height: 150px !important;">
                                    @else
                                        <img class="card-img-top" src="/default.png"
