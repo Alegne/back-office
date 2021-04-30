@@ -19,6 +19,8 @@ class HomeController extends Controller
 
     public function index(Request $request)
     {
+        dd('die');
+
         $data = null;
         $type = null;
 

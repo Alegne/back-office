@@ -58,15 +58,15 @@ class EspaceMembreController extends Controller
                 # Cookie::queue(cookie()->forever('espace_utlisateur', json_encode($data)));
 
 
-                return view('espace.example', compact('data', 'type'));
+                # return view('espace.example', compact('data', 'type'));
 
-                /*return response()->json([
+                return response()->json([
                     'ok'    => true,
                     'token' => $token,
                     'id'    => $etudiant->id,
                     'type'  => 'etudiant',
                     'url'   => route('espace.index')
-                ]);*/
+                ]);
             } else {
                 return response()->json([
                     'ok'      => false,
@@ -95,30 +95,30 @@ class EspaceMembreController extends Controller
                 $enseignant->save();
 
 
-                $data = $enseignant;
-                $type = 'enseignant';
+                # $data = $enseignant;
+                # $type = 'enseignant';
 
                 # Session | Cookie
-                $type = 'enseignant';
+                # $type = 'enseignant';
 
                 #### Delete Session | Coockie
                 # Cookie::expire('espace_utlisateur');
-                Cookie::forget('espace_utlisateur');
-                $request->session()->forget('espace_utlisateur');
+                # Cookie::forget('espace_utlisateur');
+                # $request->session()->forget('espace_utlisateur');
 
-                session(['espace_utlisateur' => json_encode($data)]);
-                Cookie::queue(cookie()->forever('espace_utlisateur', json_encode($data)));
+                # session(['espace_utlisateur' => json_encode($data)]);
+                # Cookie::queue(cookie()->forever('espace_utlisateur', json_encode($data)));
 
-                return view('espace.index', compact('data', 'type'));
+                # return view('espace.index', compact('data', 'type'));
 
                 # return new EtudiantResource($etudiant);
-                /*return response()->json([
+                return response()->json([
                     'ok'    => true,
                     'token' => $token,
                     'id'    => $enseignant->id,
                     'type'  => 'enseignant',
                     'url'   => route('espace.index')
-                ]);*/
+                ]);
 
                 # return new EnseignantResource($enseignant);
             } else {
