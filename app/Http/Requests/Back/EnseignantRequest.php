@@ -40,9 +40,10 @@ class EnseignantRequest extends FormRequest
             'identifiant'   => 'required|unique:cactus_enseignants',
             'nom'           => 'required',
             'prenom'        => 'required',
-            'email'         => 'required|unique:cactus_enseignants',
+            'email'         => 'required|unique:cactus_enseignants|email',
             'telephone'     => 'required|numeric',
             'adresse'       => 'required',
         ];
+        # |size:10
     }
 }

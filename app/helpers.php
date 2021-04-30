@@ -185,7 +185,12 @@ if (!function_exists('getConfiguration')) {
     {
         $configuration = \App\Models\Configuration::where('cle', $cle)->first();
 
-        return $configuration->valeur;
+        if (isset($configuration))
+        {
+            return $configuration->valeur;
+        }
+
+        return null;
     }
 }
 

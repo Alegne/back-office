@@ -48,7 +48,9 @@
                         type='primary'
                         title='Etudiant'>
 
-                    <input type="hidden" name="password" value="password">
+                    @if(Route::currentRouteName() !== 'etudiant.edit')
+                        <input type="hidden" name="password" value="password">
+                    @endif
 
                     <div class="form-row">
                         <x-back.input
@@ -68,6 +70,10 @@
                                 maxlength="12"
                                 :required="true">
                         </x-back.input>
+
+
+                        <input type="hidden" id="cin_clone"
+                               value="{{ old('cin', isset($etudiant) ? $etudiant->cin : '') }}">
                     </div>
 
                     <div class="form-row">
@@ -346,6 +352,14 @@
                 console.log('Moment.js', dateString) // Output: 2020-07-21
 
                 $('#date_naissance').val(dateString)
+            }
+
+            if ($('#cin_clone').val())
+            {
+                let data_input = $('#cin_clone').val()
+
+
+                $('#cin').val(data_input)
             }
         });
 

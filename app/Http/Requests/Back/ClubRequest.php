@@ -24,7 +24,7 @@ class ClubRequest extends FormRequest
     public function rules()
     {
         return [
-            'libelle'       => 'required',
+            'libelle'       => 'required|unique:cactus_clubs',
             'description'   => 'required',
         ];
     }

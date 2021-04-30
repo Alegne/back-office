@@ -66,17 +66,19 @@
                             :required="true">
                     </x-back.input>
 
-                    <x-back.input
-                            name='slug'
-                            title='Slug'
-                            :value="isset($article) ? $article->slug : ''"
-                            input='text'
-                            :required="true">
-                    </x-back.input>
+                    <div class="d-none">
+                        <x-back.input
+                                name='slug'
+                                title='Slug'
+                                :value="isset($article) ? $article->slug : ''"
+                                input='text'
+                                :required="false">
+                        </x-back.input>
+                    </div>
 
                     <x-back.input
                             name='posteur'
-                            title='Posteur'
+                            title='Auteur'
                             :value="isset($article) ? $article->posteur : ''"
                             input='text'
                             :required="true">

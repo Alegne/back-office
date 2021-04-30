@@ -25,7 +25,6 @@ class AnneeUniversitaireLibelleRequest extends FormRequest
     {
         return [
             'libelle'     => 'required|max:255|unique:cactus_annee_universitaire_libelles',
-            //
         ];
     }
 }

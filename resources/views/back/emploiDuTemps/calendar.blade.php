@@ -108,7 +108,7 @@
                                 </select>
                             </div>
                             <div class="form-group col-6">
-                                <label for="modal-specification">Specification</label>
+                                <label for="modal-specification">Parcours</label>
                                 <select class="form-control" id="modal-specification" multiple>
                                     @foreach($emploiDuTemps->parcours as $parcours)
                                         <option value="{{ $parcours->tag }}"  @if ($loop->first) selected @endif>{{ $parcours->tag }}</option>

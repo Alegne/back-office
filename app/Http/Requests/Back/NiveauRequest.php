@@ -24,8 +24,8 @@ class NiveauRequest extends FormRequest
     public function rules()
     {
         return [
-            'libelle'     => 'required|max:255',
-            'tag'         => 'required|max:10',
+            'libelle'     => 'required|max:255|unique:cactus_niveaux',
+            'tag'         => 'required|max:10|unique:cactus_niveaux',
             //
         ];
     }

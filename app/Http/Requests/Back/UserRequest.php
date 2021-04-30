@@ -25,7 +25,7 @@ class UserRequest extends FormRequest
     {
         return [
             'identifiant'  => 'required|unique:cactus_users',
-            'email'        => 'required|unique:cactus_users',
+            'email'        => 'required|email|unique:cactus_users',
             'role'         => 'required',
             #'password'     => 'required'
         ];

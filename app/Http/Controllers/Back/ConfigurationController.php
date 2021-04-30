@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Back;
 
 use App\Http\Controllers\Controller;
 use App\Models\Configuration;
+use function GuzzleHttp\Promise\all;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
@@ -22,6 +23,18 @@ class ConfigurationController extends Controller
      */
     public function update(Request $request)
     {
+        $request->validate([
+            'telephone'     => 'numeric',
+            'email'         => 'email',
+            'lien_ent'      => 'url',
+            'lien_facebook' => 'url',
+            'lien_twitter'  => 'url',
+            'lien_youtube'  => 'url',
+            'lien_map'      => 'url',
+        ]);
+
+        # dd($request->all());
+
         $keys = $request->except('_token', '_method');
 
         # dd($keys);

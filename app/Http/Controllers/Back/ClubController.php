@@ -9,6 +9,7 @@ use App\Http\Requests\Back\StaffRequest;
 use App\Models\Club;
 use App\Models\Etudiant;
 use App\Models\Staff;
+use App\Rules\GenericUpdate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
@@ -78,12 +79,18 @@ class ClubController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param ClubRequest $request
+     * @param Request $request
      * @param  \App\Models\Club $club
      * @return \Illuminate\Http\Response
      */
-    public function update(ClubRequest $request, Club $club)
+    public function update(Request $request, Club $club)
     {
+        $request->validate([
+            'libelle'        => ['required', new GenericUpdate('cactus_clubs', 'libelle', $request->libelle,
+                                                                $club->id, 'Nom du Club')],
+            'description'   => 'required',
+        ]);
+
         $inputs = $this->getInputs($request);
 
         if ($request->has('image') && $request->image) {

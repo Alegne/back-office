@@ -24,8 +24,8 @@ class ParcoursRequest extends FormRequest
     public function rules()
     {
         return [
-            'libelle'     => 'required|max:255',
-            'tag'         => 'required|max:20',
+            'libelle'     => 'required|max:255|unique:cactus_parcours',
+            'tag'         => 'required|max:20|unique:cactus_parcours',
         ];
     }
 }

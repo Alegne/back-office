@@ -6,6 +6,7 @@ use App\DataTables\AlbumDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Back\AlbumRequest;
 use App\Models\Album;
+use App\Rules\AlbumUpdate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
@@ -88,6 +89,11 @@ class AlbumController extends Controller
      */
     public function update(Request $request, Album $album)
     {
+        $request->validate([
+            'titre'        => ['required', new AlbumUpdate($request->titre, $album->id)],
+            'description'  => 'required',
+        ]);
+
         $album->update($request->all());
 
         #return back()->with('ok', 'The post has been successfully updated');

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Back\AnneeUniversitaireLibelleRequest;
 use App\Models\AnneeUniversitaireLibelle;
 use App\Models\Formation;
+use App\Rules\AnneeUniversitaireUpdate;
 use Illuminate\Http\Request;
 
 class AnneeUniversitaireLibelleController extends Controller
@@ -72,12 +73,16 @@ class AnneeUniversitaireLibelleController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param AnneeUniversitaireLibelleRequest $request
+     * @param Request $request
      * @param AnneeUniversitaireLibelle $annee
      * @return \Illuminate\Http\Response
      */
-    public function update(AnneeUniversitaireLibelleRequest $request, AnneeUniversitaireLibelle $annee)
+    public function update(Request $request, AnneeUniversitaireLibelle $annee)
     {
+        $request->validate([
+            'libelle'        => ['required', new AnneeUniversitaireUpdate($request->libelle, $annee->id)]
+        ]);
+
         $annee->update($request->all());
 
         return back()->with('ok', 'Mise à jour a été un  succès');

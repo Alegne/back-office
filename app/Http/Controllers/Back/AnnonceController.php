@@ -8,6 +8,7 @@ use App\Http\Requests\Back\AnnonceRequest;
 use App\Models\Annonce;
 use App\Models\Niveau;
 use App\Models\Parcours;
+use App\Rules\AnnonceUpdate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -98,12 +99,19 @@ class AnnonceController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param AnnonceRequest $request
+     * @param Request $request
      * @param  \App\Models\Annonce $annonce
      * @return \Illuminate\Http\Response
      */
-    public function update(AnnonceRequest $request, Annonce $annonce)
+    public function update(Request $request, Annonce $annonce)
     {
+        $request->validate([
+            'titre'         => ['required', new AnnonceUpdate($request->titre, $annonce->id)],
+            'description'   => 'required',
+            'posteur'       => 'required',
+            'club_id'       => 'required',
+        ]);
+
         # dd($request->all());
 
         $inputs = $this->getInputs($request);

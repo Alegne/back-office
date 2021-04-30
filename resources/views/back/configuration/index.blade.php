@@ -37,16 +37,16 @@
                     <!-- Nav pills -->
                     <ul class="nav nav-pills">
                         <li class="nav-item">
-                            <a class="nav-link @if(session('active_apropos')) active @endif" data-toggle="pill" href="#apropos">A propos</a>
+                            <a class="nav-link active" data-toggle="pill" href="#apropos">A propos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link @if(session('active_contact')) active @endif" data-toggle="pill" href="#contact">Contact</a>
+                            <a class="nav-link"  data-toggle="pill" href="#contact">Contact</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link @if(session('active_contenu')) active @endif" data-toggle="pill" href="#contenu">Contenu</a>
+                            <a class="nav-link"  data-toggle="pill" href="#contenu">Contenu</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link @if(session('active_lien')) active @endif" data-toggle="pill" href="#lien">Lien</a>
+                            <a class="nav-link" data-toggle="pill" href="#lien">Lien</a>
                         </li>
                     </ul>
                 </div>
@@ -256,8 +256,16 @@
                                                 title='Configuration'>
 
                                             <x-back.input
+                                                    name='lien_ent'
+                                                    title='ENT'
+                                                    :value="getConfiguration('lien_ent')"
+                                                    input='text'
+                                                    :required="true">
+                                            </x-back.input>
+
+                                            <x-back.input
                                                     name='lien_facebook'
-                                                    title='Lien Facebook'
+                                                    title='Facebook'
                                                     :value="getConfiguration('lien_facebook')"
                                                     input='text'
                                                     :required="true">
@@ -265,7 +273,7 @@
 
                                             <x-back.input
                                                     name='lien_twitter'
-                                                    title='Lien Twitter'
+                                                    title='Twitter'
                                                     :value="getConfiguration('lien_twitter')"
                                                     input='text'
                                                     :required="true">
@@ -273,7 +281,7 @@
 
                                             <x-back.input
                                                     name='lien_youtube'
-                                                    title='Lien Youtube'
+                                                    title='Youtube'
                                                     :value="getConfiguration('lien_youtube')"
                                                     input='text'
                                                     :required="true">
@@ -281,7 +289,7 @@
 
                                             <x-back.input
                                                     name='lien_map'
-                                                    title='Lien Map'
+                                                    title='Map'
                                                     :value="getConfiguration('lien_map')"
                                                     input='text'
                                                     :required="true">

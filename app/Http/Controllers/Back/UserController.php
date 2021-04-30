@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Back\UserRequest;
 use App\Models\User;
 use App\Notifications\NouveauCompte;
+use App\Rules\GenericUpdate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
@@ -47,10 +48,10 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param UserRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
         $request->merge(['password' => Hash::make('password')]);
 
@@ -99,12 +100,20 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param UserRequest $request
+     * @param Request $request
      * @param  \App\Models\User $user
      * @return \Illuminate\Http\Response
      */
-    public function update(UserRequest $request, User $user)
+    public function update(Request $request, User $user)
     {
+        $request->validate([
+            'identifiant'        => ['required', new GenericUpdate('cactus_users', 'identifiant',
+                                                    $request->identifiant, $user->id)],
+            'email'        => ['required', 'email', new GenericUpdate('cactus_users', 'email',
+                                                    $request->email, $user->id)],
+            'role'         => 'required',
+        ]);
+
         $inputs = $this->getInputs($request);
 
         if ($request->has('photo') && $request->file('photo')) {
