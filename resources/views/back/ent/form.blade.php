@@ -132,7 +132,7 @@
                     <x-back.input
                             name='enseignant_id'
                             title='Enseignant'
-                            :value="isset($espaceNumerique->annee) ? $espaceNumerique->enseignant->id  : ''"
+                            :value="isset($espaceNumerique->enseignant) ? $espaceNumerique->enseignant->id  : ''"
                             input='select'
                             :options="$enseignants"
                             :required="true">

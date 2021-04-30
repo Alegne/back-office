@@ -109,9 +109,21 @@ class AlbumController extends Controller
      */
     public function destroy(Album $album)
     {
-        $album->delete();
+        try{
+            $album->delete();
 
-        return response()->json();
+        } catch (\Exception $e)
+        {
+            return response()->json([
+                'ok'      => false,
+                'message' => "Erreur de Suppresion, d'autres enregistrements dependent de cet album " .  $album->titre
+            ]);
+        }
+
+        return response()->json([
+            'ok'      => true,
+            'message' => "Success de Suppresion"
+        ]);
     }
 
 

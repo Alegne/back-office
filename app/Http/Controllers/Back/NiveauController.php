@@ -107,8 +107,20 @@ class NiveauController extends Controller
      */
     public function destroy(Niveau $niveau)
     {
-        $niveau->delete();
+        try{
+            $niveau->delete();
 
-        return response()->json();
+        } catch (\Exception $e)
+        {
+            return response()->json([
+                'ok'  => false,
+                'message' => "Erreur de Suppresion, d'autres enregistrements dependent de ce niveau " .  $niveau->tag
+            ]);
+        }
+
+        return response()->json([
+            'ok'  => true,
+            'message' => "Success de Suppresion"
+        ]);
     }
 }

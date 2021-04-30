@@ -113,10 +113,23 @@ class ClubController extends Controller
     {
         # supprimer staff
 
-        $club->delete();
-        $this->deleteImages($club);
+        try{
 
-        return response()->json();
+            $club->delete();
+            $this->deleteImages($club);
+
+        } catch (\Exception $e)
+        {
+            return response()->json([
+                'ok'      => false,
+                'message' => "Erreur de Suppresion, d'autres enregistrements dependent de ce club " .  $club->libelle
+            ]);
+        }
+
+        return response()->json([
+            'ok'      => true,
+            'message' => "Success de Suppresion"
+        ]);
     }
 
     /**

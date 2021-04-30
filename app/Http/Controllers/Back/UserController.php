@@ -134,10 +134,22 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        $user->delete();
-        $this->deleteImages($user);
 
-        return response()->json();
+        try{
+            $user->delete();
+            $this->deleteImages($user);
+        } catch (\Exception $e)
+        {
+            return response()->json([
+                'ok'      => false,
+                'message' => "Erreur de Suppresion, d'autres enregistrements dependent de cet utilisateur " .  $user->identifiant
+            ]);
+        }
+
+        return response()->json([
+            'ok'      => true,
+            'message' => "Success de Suppresion"
+        ]);
     }
 
 

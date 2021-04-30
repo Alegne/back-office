@@ -130,10 +130,23 @@ class EnseignantController extends Controller
      */
     public function destroy(Enseignant $enseignant)
     {
-        $enseignant->delete();
-        $this->deleteImages($enseignant);
+        try{
 
-        return response()->json();
+            $enseignant->delete();
+            $this->deleteImages($enseignant);
+
+        } catch (\Exception $e)
+        {
+            return response()->json([
+                'ok'      => false,
+                'message' => "Erreur de Suppresion, d'autres enregistrements dependent de cet enseignant " .  $enseignant->nom
+            ]);
+        }
+
+        return response()->json([
+            'ok'      => true,
+            'message' => "Success de Suppresion"
+        ]);
     }
 
 

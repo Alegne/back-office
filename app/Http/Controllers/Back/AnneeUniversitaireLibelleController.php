@@ -97,9 +97,22 @@ class AnneeUniversitaireLibelleController extends Controller
      */
     public function destroy(AnneeUniversitaireLibelle $annee)
     {
-        # Supprimer Annee Universitaire
-        $annee->delete();
 
-        return response()->json();
+        try{
+            # Supprimer Annee Universitaire
+            $annee->delete();
+
+        } catch (\Exception $e)
+        {
+            return response()->json([
+                'ok'      => false,
+                'message' => "Erreur de Suppresion, d'autres enregistrements dependent de cet annee universitaire " .  $annee->libelle
+            ]);
+        }
+
+        return response()->json([
+            'ok'      => true,
+            'message' => "Success de Suppresion"
+        ]);
     }
 }

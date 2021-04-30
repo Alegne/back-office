@@ -120,8 +120,19 @@ class MatiereController extends Controller
      */
     public function destroy(Matiere $matiere)
     {
-        $matiere->delete();
+        try{
+            $matiere->delete();
+        } catch (\Exception $e)
+        {
+            return response()->json([
+                'ok'      => false,
+                'message' => "Erreur de Suppresion, d'autres enregistrements dependent de cette matiere " .  $matiere->libelle
+            ]);
+        }
 
-        return response()->json();
+        return response()->json([
+            'ok'      => true,
+            'message' => "Success de Suppresion"
+        ]);
     }
 }

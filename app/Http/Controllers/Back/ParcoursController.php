@@ -100,8 +100,19 @@ class ParcoursController extends Controller
      */
     public function destroy(Parcours $parcours)
     {
-        $parcours->delete();
+        try{
+            $parcours->delete();
+        } catch (\Exception $e)
+        {
+            return response()->json([
+                'ok'      => false,
+                'message' => "Erreur de Suppresion, d'autres enregistrements dependent de ce parcours " .  $parcours->libelle
+            ]);
+        }
 
-        return response()->json();
+        return response()->json([
+            'ok'      => true,
+            'message' => "Success de Suppresion"
+        ]);
     }
 }

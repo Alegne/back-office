@@ -123,10 +123,23 @@ class ArticleController extends Controller
      */
     public function destroy(Article $article)
     {
-        $article->delete();
-        $this->deleteImages($article);
 
-        return response()->json();
+        try{
+            $article->delete();
+            $this->deleteImages($article);
+
+        } catch (\Exception $e)
+        {
+            return response()->json([
+                'ok'      => false,
+                'message' => "Erreur de Suppresion, d'autres enregistrements dependent de cet article " .  $article->titre
+            ]);
+        }
+
+        return response()->json([
+            'ok'      => true,
+            'message' => "Success de Suppresion"
+        ]);
     }
 
     /**

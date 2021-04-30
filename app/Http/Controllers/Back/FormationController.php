@@ -114,11 +114,22 @@ class FormationController extends Controller
      */
     public function destroy(Formation $formation)
     {
-        $formation->delete();
+        try{
+            $formation->delete();
 
-        $this->deleteImages($formation);
+            $this->deleteImages($formation);
+        } catch (\Exception $e)
+        {
+            return response()->json([
+                'ok'      => false,
+                'message' => "Erreur de Suppresion, d'autres enregistrements dependent de cette formation " .  $formation->libelle
+            ]);
+        }
 
-        return response()->json();
+        return response()->json([
+            'ok'      => true,
+            'message' => "Success de Suppresion"
+        ]);
     }
 
     ### Manage upload image

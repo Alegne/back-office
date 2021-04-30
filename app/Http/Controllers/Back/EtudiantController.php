@@ -205,12 +205,23 @@ class EtudiantController extends Controller
      */
     public function destroy(Etudiant $etudiant)
     {
-        # Supprimer Annee Universitaire
-        $etudiant->delete();
+        try{
+            # Supprimer Annee Universitaire
+            $etudiant->delete();
 
-        $this->deleteImages($etudiant);
+            $this->deleteImages($etudiant);
+        } catch (\Exception $e)
+        {
+            return response()->json([
+                'ok'      => false,
+                'message' => "Erreur de Suppresion, d'autres enregistrements dependent de cet etudiant " .  $etudiant->nom
+            ]);
+        }
 
-        return response()->json();
+        return response()->json([
+            'ok'      => true,
+            'message' => "Success de Suppresion"
+        ]);
     }
 
     ### Manage upload image
