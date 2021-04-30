@@ -33,7 +33,7 @@
             <div class="logo">
                 <a href="javascript:;" class="simple-text">
                     <img src="/logo.png" alt="Logo" class="img-circle" style="width: 50px !important; height: 50px !important;">
-                    <span>Espace Etudiant</span>
+                    <span>Espace Membre</span>
                 </a>
             </div>
 

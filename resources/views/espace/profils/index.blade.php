@@ -320,6 +320,10 @@
                     <p class="description text-center">
                         <table>
                             <tr>
+                                <td>Status</td>
+                                <td ><span class="btn btn-info">{{ $data->status }}</span></td>
+                            </tr>
+                            <tr>
                                 <td>Niveau</td>
                                 <td class="px-3">{{ $data->niveau[0]->tag }}</td>
                             </tr>
@@ -328,11 +332,35 @@
                                 <td class="px-3">{{ $data->parcours->tag }}</td>
                             </tr>
                             <tr>
-                                <td>Anne Univesitaire</td>
-                                <td class="px-3">{{ $data->annee[0]->tag }}</td>
+                                <td>Annee Univesitaire</td>
+                                <td class="px-3">{{ $data->annee[0]->libelle }}</td>
                             </tr>
                         </table>
                     </p>
+                    @endif
+
+                    {{--Enseignant--}}
+                    @if($type == 'enseignant')
+                        <p class="description text-center">
+                        <table>
+                            <tr>
+                                <td>Identifiant</td>
+                                <td >{{ $data->identifiant }}</td>
+                            </tr>
+                            <tr>
+                                <td>Email</td>
+                                <td class="px-3">{{ $data->email }}</td>
+                            </tr>
+                            <tr>
+                                <td>Titre</td>
+                                <td class="px-3">{{ $data->titre }}</td>
+                            </tr>
+                            <tr>
+                                <td>Grade</td>
+                                <td class="px-3">{{ $data->grade }}</td>
+                            </tr>
+                        </table>
+                        </p>
                     @endif
                 </div>
 

@@ -12,6 +12,7 @@
         </a>
     </li>
 
+    @if(isset($data))
     @if(!isset($data->identifiant))
         @if($data->status == 'actif')
             <li>
@@ -27,6 +28,7 @@
                 </a>
             </li>
         @endif
+    @endif
     @endif
 
     <li>
