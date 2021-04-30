@@ -20,33 +20,34 @@ class AnnoncesController extends Controller
         $utilisateur = getUtilisateur($request);
 
         $annonces = Annonce::query()
-            ->where('type', 'public')
-        ;
+            ->where('type', 'public');
 
-        if ($utilisateur)
-        {
-            if ($utilisateur->status == 'actif')
-            {
+        if ($utilisateur) {
+            # dd($utilisateur);
 
-                $etudiant = Etudiant::find($utilisateur->id);
+            if (!isset($utilisateur->identifiant)) {
+                if ($utilisateur->status == 'actif') {
 
-                $annonces = Annonce::query();
+                    $etudiant = Etudiant::find($utilisateur->id);
 
-                # dd($etudiant->niveau->pluck('id'), gettype($etudiant->niveau));
+                    $annonces = Annonce::query();
 
-                $niveaux = Niveau::whereIn('id', $etudiant->niveau->pluck('id'))->get();
-                $parcours = Parcours::where('id', $etudiant->parcours->id)->get();
+                    # dd($etudiant->niveau->pluck('id'), gettype($etudiant->niveau));
 
-                # dd(gettype($niveaux), gettype($niveaux->toArray()), $niveaux->toArray());
+                    $niveaux = Niveau::whereIn('id', $etudiant->niveau->pluck('id'))->get();
+                    $parcours = Parcours::where('id', $etudiant->parcours->id)->get();
 
-                $annonces = $annonces->whereHas('parcours', function ($q) use ($parcours) {
-                    $q->where('cactus_parcours.id', $parcours[0]->id);
-                })
-                    ->whereHas('niveau', function ($q) use ($niveaux) {
-                        $q->where('cactus_niveaux.id', $niveaux[0]->id);
+                    # dd(gettype($niveaux), gettype($niveaux->toArray()), $niveaux->toArray());
+
+                    $annonces = $annonces->whereHas('parcours', function ($q) use ($parcours) {
+                        $q->where('cactus_parcours.id', $parcours[0]->id);
                     })
-                    #->get()
-                ;
+                        ->whereHas('niveau', function ($q) use ($niveaux) {
+                            $q->where('cactus_niveaux.id', $niveaux[0]->id);
+                        })
+                        #->get()
+                    ;
+                }
             }
 
             $annonces = $annonces->latest('updated_at');
@@ -60,13 +61,11 @@ class AnnoncesController extends Controller
         }
 
         return redirect(config('app.front_office'));
-
     }
 
     public function show(Request $request,  Annonce $annonce)
     {
-        if ($request->ajax())
-        {
+        if ($request->ajax()) {
             return new AnnonceResource($annonce);
         }
 

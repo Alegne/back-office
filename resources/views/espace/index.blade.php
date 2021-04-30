@@ -18,7 +18,7 @@
 
             <p>Bienvenu {{ $data->nom }}, {{ $data->prenom }}</p>
 
-            <p variant="body1" align="center" color="textSecondary" paragraph>
+            <p>
                 Vous pouvez changer certaines de vos informations ainsi que votre photo de profile
                 dans le <a href="{{ route('espace.profils.index') }}">parametre de l'utilisateur</a>
             </p>
@@ -30,7 +30,13 @@
 
             <div class="row justify-content-center">
                 <div class="col">
-                    <a href="{{ route('espace.emploi_temps.index') }} " class="btn btn-info mr-2">Emploi du temps</a>
+                    @if(isset($data))
+                        @if(!isset($data->identifiant))
+                            @if($data->status == 'actif')
+                                <a href="{{ route('espace.emploi_temps.index') }} " class="btn btn-info mr-2">Emploi du temps</a>
+                            @endif
+                        @endif
+                    @endif
                     <a href="{{ route('espace.annonces.index') }}" class="btn btn-info">Annonces ou offre d'emploi</a>
                 </div>
             </div>
