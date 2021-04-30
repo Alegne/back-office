@@ -164,6 +164,7 @@ class EtudiantController extends Controller
             'adresse'        => 'required',
             'status'         => 'required',
             'parcours_id'    => 'required',
+            'photo'          => 'mimes:jpeg,jpg,png,gif|max:10000'
         ]);
 
         # dd($request->all(), $request->has('photo'), $request->photo);

@@ -92,6 +92,7 @@ class FormationController extends Controller
             'libelle'     => ['required', 'max:255', new GenericUpdate('cactus_formations', 'libelle',
                                                                     $request->libelle, $formation->id)],
             'description' => 'required',
+            'photo'          => 'mimes:jpeg,jpg,png,gif|max:10000'
         ]);
 
         $inputs = $this->getInputs($request);

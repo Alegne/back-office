@@ -29,6 +29,7 @@ class ArticleRequest extends FormRequest
             'description'   => 'required',
             'posteur'       => 'required',
             'club_id'       => 'required',
+            'image'         => 'mimes:jpeg,jpg,png,gif|max:10000'
         ];
     }
 }

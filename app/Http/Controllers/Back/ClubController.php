@@ -89,6 +89,7 @@ class ClubController extends Controller
             'libelle'        => ['required', new GenericUpdate('cactus_clubs', 'libelle', $request->libelle,
                                                                 $club->id, 'Nom du Club')],
             'description'   => 'required',
+            'image'         => 'mimes:jpeg,jpg,png,gif|max:10000'
         ]);
 
         $inputs = $this->getInputs($request);

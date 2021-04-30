@@ -26,6 +26,7 @@ class ClubRequest extends FormRequest
         return [
             'libelle'       => 'required|unique:cactus_clubs',
             'description'   => 'required',
+            'image'         => 'mimes:jpeg,jpg,png,gif|max:10000'
         ];
     }
 }

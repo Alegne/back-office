@@ -30,20 +30,20 @@ class AnnonceDataTable extends DataTable
 
                 if($annonce->approuve == 1) {
                     return $this->button(
-                        'annonce.desapprouve.update',
+                        'annonce.approuve.update',
                         $annonce->id,
-                        'warning',
-                        'Desapprouve',
-                        'thumbs-down',
+                        'success',
+                        'Approuve',
+                        'thumbs-up',
                         'valid'
                     );
                 }
                 return $this->button(
-                    'annonce.approuve.update',
+                    'annonce.desapprouve.update',
                     $annonce->id,
-                    'success',
-                    'Approuve',
-                    'thumbs-up',
+                    'warning',
+                    'Desapprouve',
+                    'thumbs-down',
                     'valid'
                 );
             })

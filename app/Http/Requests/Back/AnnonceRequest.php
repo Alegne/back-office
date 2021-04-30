@@ -25,7 +25,8 @@ class AnnonceRequest extends FormRequest
     {
         return [
             'titre'         => 'required|unique:cactus_annonces',
-            'description'   => 'required'
+            'description'   => 'required',
+            'image'         => 'mimes:jpeg,jpg,png,gif|max:10000'
         ];
     }
 }

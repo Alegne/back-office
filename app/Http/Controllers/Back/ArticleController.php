@@ -99,6 +99,7 @@ class ArticleController extends Controller
             'description'   => 'required',
             'posteur'       => 'required',
             'club_id'       => 'required',
+            'image'         => 'mimes:jpeg,jpg,png,gif|max:10000'
         ]);
 
         $inputs = $this->getInputs($request);
