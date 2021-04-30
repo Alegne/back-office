@@ -27,7 +27,7 @@
     <input type="hidden" id="calendar-route-redirect" value="{{ route('emploi-du-temps.create') }}">
 
     <div class="row justify-content-start mb-2 mx-1">
-        <a href="#" id="btn-validation-calendar" class="btn btn-outline-primary text-light font-weight-bolder">Valider</a>
+        <a href="#" id="btn-validation-calendar" class="btn btn-outline-primary text-dark font-weight-bolder">Valider</a>
     </div>
 
     <div class="row">

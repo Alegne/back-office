@@ -36,6 +36,14 @@ class AppServiceProvider extends ServiceProvider
             $view->with(compact('title'));
         });
 
+        # Menu Sidebar Espace Membre
+        View::composer('espace.parent.layout', function ($view) {
+
+            $data = json_decode(session('espace_utlisateur'));
+
+            $view->with(compact('data'));
+        });
+
         # Conditionnel personnaliser
         # @request
         Blade::if('request', function ($url) {

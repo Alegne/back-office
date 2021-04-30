@@ -68,5 +68,7 @@ class Kernel extends HttpKernel
         'redacteur'     => \App\Http\Middleware\Redacteur::class,
         'annonceur'     => \App\Http\Middleware\Annonceur::class,
         'administratif' => \App\Http\Middleware\Administratif::class,
+
+        'espace' => \App\Http\Middleware\EspaceMembre::class,
     ];
 }

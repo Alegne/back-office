@@ -7,7 +7,9 @@
  */
 
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 
 /**
  *  Helper use to Admin
@@ -148,6 +150,27 @@ if (!function_exists('parseRouteActive')) {
     }
 }
 
+
+if (!function_exists('parseRouteActiveSecond')) {
+    function parseRouteActiveSecond()
+    {
+        $route = Route::currentRouteName();
+
+        $arrayRoute = explode('.', $route);
+
+        $route = $arrayRoute[1];
+
+        if ($route == 'emploi_temps')
+            $route = 'emploi_du_temps';
+
+        # dd($route);
+
+        $route = strtoupper(str_replace("_", " ", $route));
+
+        return $route;
+    }
+}
+
 if (!function_exists('getConfiguration')) {
     function getConfiguration($cle)
     {
@@ -227,6 +250,29 @@ if (!function_exists('uploadFileMultiple')) {
     {
 
         return null;
+    }
+}
+
+
+/**
+ * Espace MEMBRE
+ */
+if (!function_exists('getUtilisateur')) {
+    function getUtilisateur(Request $request)
+    {
+        $data = null;
+
+        if(session('espace_utlisateur'))
+        {
+            $data = json_decode(session('espace_utlisateur'));
+        }
+
+        if(!isset($data) && $request->cookie('espace_utlisateur'))
+        {
+            $data = json_decode($request->cookie('espace_utlisateur'));
+        }
+
+        return $data;
     }
 }
 

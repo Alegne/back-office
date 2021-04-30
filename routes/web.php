@@ -20,7 +20,14 @@ use App\Http\Controllers\Back\AnneeUniversitaireLibelleController;
 use App\Http\Controllers\Back\LangueController;
 use App\Http\Controllers\Back\ConfigurationController;
 use App\Http\Controllers\Back\UserController;
+use App\Http\Controllers\Espace\EmploiTempsController;
+use App\Http\Controllers\Espace\HomeController;
+use App\Http\Controllers\Espace\ProfilsController;
 use Illuminate\Support\Facades\Route;
+
+
+use App\Http\Controllers\Espace\AnnoncesController;
+use App\Http\Controllers\Espace\EspaceNumeriquesController as EspaceEspaceNumeriquesController;
 
 
 /*
@@ -48,6 +55,49 @@ Route::get('/', function () {
 require __DIR__ . '/auth.php';
 
 
+/**
+ * Route Espace Membre
+ */
+
+Route::group(['prefix' => 'espace', 'middleware' => ['espace']], function (){
+
+    # Home
+    Route::get('/home', [HomeController::class, 'index'])->name('espace.index');
+
+    # Annonces
+    Route::get('/annonces', [AnnoncesController::class, 'index'])->name('espace.annonces.index');
+    Route::get('/annonces/{annonce}', [AnnoncesController::class, 'show'])->name('espace.annonces.show');
+    Route::get('/annonces/create/form', [AnnoncesController::class, 'create'])->name('espace.annonces.create.form');
+    Route::post('/annonces', [AnnoncesController::class, 'store'])->name('espace.annonces.store');
+    Route::get('/annonces/galeries/{annonce}', [AnnoncesController::class, 'galeriesView'])->name('espace.annonces.galeries.view');
+    Route::post('/annonces/{annonce}/galeries', [AnnoncesController::class, 'galeries'])->name('espace.annonces.galeries.upload');
+    Route::post('/annonce/galeries/delete/{annonce}', [AnnoncesController::class, 'deleteGaleries'])->name('espace.annonces.galeries.delete');
+
+    # Profile
+    Route::get('/profils', [ProfilsController::class, 'index'])->name('espace.profils.index');
+    Route::put('/profils/update/{id}/{type}', [ProfilsController::class, 'update'])->name('espace.profils.update');
+
+    # Emploi du temps
+    Route::get('/emploi-temps', [EmploiTempsController::class, 'index'])->name('espace.emploi_temps.index');
+    Route::get('/emploi-temps/show/{emploiTemps}', [EmploiTempsController::class, 'show'])->name('espace.emploi_temps.show');
+
+    # Espace Numerique
+    Route::get('/espace-numeriques', [EspaceEspaceNumeriquesController::class, 'index'])->name('espace.espace_numerique.index');
+    Route::get('/espace-numeriques/{numerique}', [EspaceEspaceNumeriquesController::class, 'show'])->name('espace.espace_numerique.show');
+    Route::get('/espace-numeriques/create/form', [EspaceEspaceNumeriquesController::class, 'create'])->name('espace.espace_numerique.create.form');
+    Route::post('/espace-numeriques', [EspaceEspaceNumeriquesController::class, 'store'])->name('espace.espace_numerique.store');
+    Route::get('/espace-numeriques/pieces/{numerique}', [EspaceEspaceNumeriquesController::class, 'piecesView'])->name('espace.espace_numerique.pieces.view');
+    Route::post('/espace-numeriques/{numerique}/pieces', [EspaceEspaceNumeriquesController::class, 'pieces'])->name('espace.espace_numerique.pieces.upload');
+    Route::post('/espace-numeriques/pieces/delete/{numerique}', [EspaceEspaceNumeriquesController::class, 'deletePieces'])->name('espace.espace_numerique.pieces.delete');
+
+
+
+    Route::get('/verification-compte', [HomeController::class, 'verification'])->name('espace.verification');
+    Route::get('/login', [HomeController::class, 'login'])->name('espace.login');
+    Route::get('/logout', [HomeController::class, 'logout'])->name('espace.logout');
+
+    # Route::view('/layout', 'espace.parent.layout')->name('espace.parent.layouts');
+});
 
 
 /**
