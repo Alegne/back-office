@@ -79,6 +79,7 @@ Route::group(['prefix' => 'espace', 'middleware' => ['espace']], function (){
 
     # Emploi du temps
     Route::get('/emploi-temps', [EmploiTempsController::class, 'index'])->name('espace.emploi_temps.index');
+    Route::get('/emploi-temps/show/{emploiTemps}', [EmploiTempsController::class, 'show'])->name('espace.emploi_temps.show');
 
     # Espace Numerique
     Route::get('/espace-numeriques', [EspaceEspaceNumeriquesController::class, 'index'])->name('espace.espace_numerique.index');

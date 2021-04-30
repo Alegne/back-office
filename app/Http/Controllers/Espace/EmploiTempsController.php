@@ -3,12 +3,82 @@
 namespace App\Http\Controllers\Espace;
 
 use App\Http\Controllers\Controller;
+use App\Models\Calendar;
+use App\Models\EmploiTemps;
+use App\Models\EmploiTempsItem;
+use App\Models\Enseignant;
+use App\Models\Matiere;
+use App\Models\Niveau;
+use App\Models\Parcours;
 use Illuminate\Http\Request;
 
 class EmploiTempsController extends Controller
 {
     public function index(Request $request)
     {
-        return view('espace.emploi_temps.index');
+        $utilisateur = getUtilisateur($request);
+
+        $emploiTemps = EmploiTemps::query();
+
+        if ($utilisateur)
+        {
+            if ($utilisateur->status == 'actif')
+            {
+                $niveaux = Niveau::whereIn('tag', $utilisateur->niveau)->first();
+                $parcours = Parcours::whereIn('tag', $utilisateur->parcours)->first();
+
+                $emploiTemps = $emploiTemps->whereHas('parcours', function ($q) use ($parcours) {
+                                        $q->where('cactus_parcours.tag', $parcours->tag);
+                                    })
+                                        ->where('niveau_id', $niveaux->id)
+                                        #->get()
+                                    ;
+            }
+
+            $emploiTemps = $emploiTemps->latest('updated_at');
+
+            # dd($emploiTemps->toSql());
+
+            $emploiTemps = $emploiTemps->paginate(8);
+            # $annonces = $annonces->get();
+
+            return view('espace.emploi_temps.index', compact('emploiTemps'));
+        }
+
+        return redirect(config('front_office'));
+    }
+
+    public function show(Request $request, EmploiTemps $emploiTemps)
+    {
+        if ($request->ajax() or $request->ajax == 1)
+        {
+
+            $items = EmploiTempsItem::where('emploi_du_temps_id', $emploiTemps->id)->get();
+
+            # dd($items);
+
+            $tab = [];
+
+            foreach ($items as $item) {
+                $enseignant = Enseignant::find($item->matiere->enseignant_id);
+                $matiere    = Matiere::find($item->matiere_id);
+
+                $calendar = new Calendar(
+                    $item->id,
+                    $item->matiere->libelle . ' : ' . $enseignant->nom . ' ' . $enseignant->prenom,
+                    $item->heure_debut,
+                    $item->heure_fin,
+                    $item->matiere->couleur,
+                    $item->matiere_id,
+                    json_encode($matiere->parcours->pluck('tag'))
+                );
+
+                array_push($tab, $calendar);
+            }
+
+            # dd($tab);
+            return response()->json($tab);
+        }
+        return view('espace.emploi_temps.show', compact('emploiTemps'));
     }
 }

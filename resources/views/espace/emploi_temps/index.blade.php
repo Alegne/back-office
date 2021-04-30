@@ -20,21 +20,32 @@
 
     <div class="col-12">
         <div class="row">
-            <div class="col-3">
 
-                <a href="#">
+            @foreach($emploiTemps as $item)
+            <div class="col-3">
+                <a href="{{ route('espace.emploi_temps.show', ['emploiTemps' => $item->id]) }}">
                     <div class="card card-emploi-temps">
                     <div class="card-img-top">
-                        <img src="/bg-eni.jpg" alt="image" class="img-fluid">
+                        <img src="/calendar.jpg" alt="image" class="img-fluid">
                     </div>
                     <div class="card-body">
                         <p class="card-text text-secondary">
-                            Semaine du <div class="text-primary">10/04/21-15/04/21</div>
+                            Semaine du
+                        <div class="text-primary">
+                            {{ formatDateItem($item->date_debut) }}
+                            -
+                            {{ formatDateItem($item->date_fin) }}
+                        </div>
                         </p>
                     </div>
                 </div>
                 </a>
             </div>
+            @endforeach
+        </div>
+
+        <div class="row justify-content-center">
+            {{ $emploiTemps->links() }}
         </div>
     </div>
 </div>

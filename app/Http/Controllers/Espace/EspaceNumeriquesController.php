@@ -39,9 +39,9 @@ class EspaceNumeriquesController extends Controller
 
                 $numeriques = $numeriques
                     ->where('niveau_id', $etudiant->niveau[0]->id)
-                    /*->whereHas('parcours', function ($q) use ($etudiant) {
+                    ->whereHas('parcours', function ($q) use ($etudiant) {
                         $q->where('cactus_parcours.id', $etudiant->parcours->id);
-                    })*/
+                    })
                 ;
 
                 $niveaux = $etudiant->niveau[0]->tag;
@@ -83,7 +83,7 @@ class EspaceNumeriquesController extends Controller
             {
                 $enseignant = $utilisateur->id;
             } else {
-                # return redirect()->route('espace.espace_numerique.index');
+                return redirect()->route('espace.espace_numerique.index');
             }
         }
 
