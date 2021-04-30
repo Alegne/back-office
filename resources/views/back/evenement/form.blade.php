@@ -4,7 +4,7 @@
 
     @include('back.parent.partial.breadcrumb', [
         'parent' => 'Actualites',
-        'parent_route' => '#',
+        'parent_route' => route('evenement.index'),
         'child' => 'Nouvelles',
     ])
 

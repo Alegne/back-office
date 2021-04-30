@@ -4,7 +4,7 @@
 
     @include('back.parent.partial.breadcrumb', [
         'parent' => 'Actualites',
-        'parent_route' => '#',
+        'parent_route' => route('album.index'),
         'child' => 'Album',
     ])
 

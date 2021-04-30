@@ -4,7 +4,7 @@
 
     @include('back.parent.partial.breadcrumb', [
         'parent' => 'Parametres',
-        'parent_route' => '#',
+        'parent_route' => route('configuration.index'),
         'child' => 'Configurations',
     ])
 

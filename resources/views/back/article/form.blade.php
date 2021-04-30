@@ -4,7 +4,7 @@
 
     @include('back.parent.partial.breadcrumb', [
         'parent' => 'Activites',
-        'parent_route' => '#',
+        'parent_route' => route('article.index'),
         'child' => 'Articles',
     ])
 

@@ -5,7 +5,7 @@
 
     @include('back.parent.partial.breadcrumb', [
         'parent' => 'Pedagogique',
-        'parent_route' => '#',
+        'parent_route' => route('espace-numerique-travail.index'),
         'child' => 'Espace Numerique',
     ])
 

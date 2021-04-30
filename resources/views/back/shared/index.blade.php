@@ -3,7 +3,7 @@
 @section('breadcrumb')
 
     @include('back.parent.partial.breadcrumb', [
-        'parent' => 'Tableau de ' . str_replace('-', ' ', explode('.', Route::currentRouteName())[0]),
+        'parent' => ucfirst(str_replace('-', ' ', explode('.', Route::currentRouteName())[0])),
         'parent_route' => '#',
         'child' => str_replace('-', ' ', explode('.', Route::currentRouteName())[0]),
     ])

@@ -4,7 +4,7 @@
 
     @include('back.parent.partial.breadcrumb', [
         'parent' => 'Pedadogique',
-        'parent_route' => '#',
+        'parent_route' => route('etudiant.index'),
         'child' => 'Etudiants',
     ])
 
