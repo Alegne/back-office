@@ -115,11 +115,22 @@ class EvenementController extends Controller
      */
     public function destroy(Evenement $evenement)
     {
-        $evenement->delete();
+        try{
+            $evenement->delete();
 
-        $this->deleteImages($evenement);
+            $this->deleteImages($evenement);
+        } catch (\Exception $e)
+        {
+            return response()->json([
+                'ok'      => false,
+                'message' => "Erreur de Suppresion, d'autres enregistrements dependent de cet evenement " .  $evenement->titre
+            ]);
+        }
 
-        return response()->json();
+        return response()->json([
+            'ok'      => true,
+            'message' => "Success de Suppresion"
+        ]);
     }
 
     /**

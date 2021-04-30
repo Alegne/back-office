@@ -4,7 +4,7 @@
 
     @include('back.parent.partial.breadcrumb', [
         'parent' => 'Actualites',
-        'parent_route' => '#',
+        'parent_route' => route('evenement.index'),
         'child' => 'Nouvelles',
     ])
 
@@ -75,7 +75,7 @@
 
                     <x-back.input
                             name='posteur'
-                            title='Posteur'
+                            title='Auteur'
                             :value="isset($evenement) ? $evenement->posteur : ''"
                             input='text'
                             :required="true">

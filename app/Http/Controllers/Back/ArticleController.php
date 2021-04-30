@@ -7,8 +7,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Back\ArticleRequest;
 use App\Models\Article;
 use App\Models\Club;
+use App\Rules\ArticleUpdate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 
 class ArticleController extends Controller
@@ -37,7 +39,6 @@ class ArticleController extends Controller
         $clubs = Club::all()->pluck('libelle', 'id');
 
         if ($request->ok) {
-            # dd($request->ok);
             $ok = 'Enregistrement succès';
             return view('back.article.form', compact('article', 'clubs', 'ok'));
         }
@@ -87,12 +88,19 @@ class ArticleController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param ArticleRequest $request
+     * @param Request $request
      * @param  \App\Models\Article $article
      * @return \Illuminate\Http\Response
      */
-    public function update(ArticleRequest $request, Article $article)
+    public function update(Request $request, Article $article)
     {
+        $request->validate([
+            'titre'         => ['required', new ArticleUpdate($request->titre, $article->id)],
+            'description'   => 'required',
+            'posteur'       => 'required',
+            'club_id'       => 'required',
+        ]);
+
         $inputs = $this->getInputs($request);
 
         if ($request->has('image') && $request->image) {
@@ -115,10 +123,23 @@ class ArticleController extends Controller
      */
     public function destroy(Article $article)
     {
-        $article->delete();
-        $this->deleteImages($article);
 
-        return response()->json();
+        try{
+            $article->delete();
+            $this->deleteImages($article);
+
+        } catch (\Exception $e)
+        {
+            return response()->json([
+                'ok'      => false,
+                'message' => "Erreur de Suppresion, d'autres enregistrements dependent de cet article " .  $article->titre
+            ]);
+        }
+
+        return response()->json([
+            'ok'      => true,
+            'message' => "Success de Suppresion"
+        ]);
     }
 
     /**
@@ -242,7 +263,7 @@ class ArticleController extends Controller
     {
         $inputs = $request->except(['image']);
 
-        # $inputs['active'] = $request->has('active');
+        $inputs['slug'] = Str::slug(Str::random(25)) .  Str::slug($request->titre);
 
         if ($request->image) {
             $inputs['image'] = $this->saveImages($request);

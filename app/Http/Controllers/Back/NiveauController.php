@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Back\NiveauRequest;
 use App\Models\Formation;
 use App\Models\Niveau;
+use App\Rules\GenericUpdate;
 use Illuminate\Http\Request;
 
 class NiveauController extends Controller
@@ -79,12 +80,18 @@ class NiveauController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param NiveauRequest $request
+     * @param Request $request
      * @param  \App\Models\Niveau $niveau
      * @return \Illuminate\Http\Response
      */
-    public function update(NiveauRequest $request, Niveau $niveau)
+    public function update(Request $request, Niveau $niveau)
     {
+        $request->validate([
+            'libelle'     => ['required', 'max:255', new GenericUpdate('cactus_niveaux', 'libelle',
+                                                    $request->libelle, $niveau->id)],
+            'tag'         => ['required', 'max:10', new GenericUpdate('cactus_niveaux', 'tag',
+                                                    $request->tag, $niveau->id)],
+        ]);
         $niveau->update($request->all());
         # $niveau->formation()->sync($request->formation);
 
@@ -100,8 +107,20 @@ class NiveauController extends Controller
      */
     public function destroy(Niveau $niveau)
     {
-        $niveau->delete();
+        try{
+            $niveau->delete();
 
-        return response()->json();
+        } catch (\Exception $e)
+        {
+            return response()->json([
+                'ok'  => false,
+                'message' => "Erreur de Suppresion, d'autres enregistrements dependent de ce niveau " .  $niveau->tag
+            ]);
+        }
+
+        return response()->json([
+            'ok'  => true,
+            'message' => "Success de Suppresion"
+        ]);
     }
 }

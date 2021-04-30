@@ -15,6 +15,7 @@ use App\Models\Formation;
 use App\Models\Niveau;
 use App\Models\Parcours;
 use App\Notifications\NouveauCompte;
+use App\Rules\GenericUpdate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -63,10 +64,10 @@ class EtudiantController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param EtudiantRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(EtudiantRequest $request)
     {
 
         # dd($request->all(), $request->has('photo'), $request->photo);
@@ -143,15 +144,31 @@ class EtudiantController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param EtudiantRequest $request
+     * @param Request $request
      * @param  \App\Models\Etudiant $etudiant
      * @return \Illuminate\Http\Response
      */
-    public function update(EtudiantRequest $request, Etudiant $etudiant)
+    public function update(Request $request, Etudiant $etudiant)
     {
+        $request->validate([
+            'numero'         => ['required', new GenericUpdate('cactus_etudiants', 'numero',
+                                                                $request->numero, $etudiant->id)],
+            'nom'            => 'required',
+            'prenom'         => 'required',
+            'cin'            => ['required','numeric', new GenericUpdate('cactus_etudiants', 'cin',
+                                                                 $request->cin, $etudiant->id)],
+            'email'          => ['required','email', new GenericUpdate('cactus_etudiants', 'email',
+                                                                $request->email, $etudiant->id)],
+            'date_naissance' => 'required',
+            'lieu_naissance' => 'required',
+            'adresse'        => 'required',
+            'status'         => 'required',
+            'parcours_id'    => 'required',
+        ]);
+
         # dd($request->all(), $request->has('photo'), $request->photo);
 
-        $request->merge(['password' => Hash::make($request->password)]);
+        # $request->merge(['password' => Hash::make($request->password)]);
 
         $inputs = $this->getInputs($request);
 
@@ -188,12 +205,23 @@ class EtudiantController extends Controller
      */
     public function destroy(Etudiant $etudiant)
     {
-        # Supprimer Annee Universitaire
-        $etudiant->delete();
+        try{
+            # Supprimer Annee Universitaire
+            $etudiant->delete();
 
-        $this->deleteImages($etudiant);
+            $this->deleteImages($etudiant);
+        } catch (\Exception $e)
+        {
+            return response()->json([
+                'ok'      => false,
+                'message' => "Erreur de Suppresion, d'autres enregistrements dependent de cet etudiant " .  $etudiant->nom
+            ]);
+        }
 
-        return response()->json();
+        return response()->json([
+            'ok'      => true,
+            'message' => "Success de Suppresion"
+        ]);
     }
 
     ### Manage upload image

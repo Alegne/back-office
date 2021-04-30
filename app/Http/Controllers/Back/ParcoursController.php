@@ -6,6 +6,7 @@ use App\DataTables\ParcoursDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Back\ParcoursRequest;
 use App\Models\Parcours;
+use App\Rules\GenericUpdate;
 use Illuminate\Http\Request;
 
 class ParcoursController extends Controller
@@ -73,12 +74,18 @@ class ParcoursController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param ParcoursRequest $request
+     * @param Request $request
      * @param  \App\Models\Parcours $parcours
      * @return \Illuminate\Http\Response
      */
-    public function update(ParcoursRequest $request, Parcours $parcours)
+    public function update(Request $request, Parcours $parcours)
     {
+        $request->validate([
+            'libelle'     => ['required', 'max:255', new GenericUpdate('cactus_parcours', 'libelle',
+                                                        $request->libelle, $parcours->id)],
+            'tag'         => ['required', 'max:20', new GenericUpdate('cactus_parcours', 'tag',
+                                                        $request->tag, $parcours->id)],
+        ]);
         $parcours->update($request->all());
 
         return back()->with('ok', 'Mise à jour a été un  succès');
@@ -93,8 +100,19 @@ class ParcoursController extends Controller
      */
     public function destroy(Parcours $parcours)
     {
-        $parcours->delete();
+        try{
+            $parcours->delete();
+        } catch (\Exception $e)
+        {
+            return response()->json([
+                'ok'      => false,
+                'message' => "Erreur de Suppresion, d'autres enregistrements dependent de ce parcours " .  $parcours->libelle
+            ]);
+        }
 
-        return response()->json();
+        return response()->json([
+            'ok'      => true,
+            'message' => "Success de Suppresion"
+        ]);
     }
 }

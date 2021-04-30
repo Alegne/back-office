@@ -24,7 +24,7 @@ class AnnonceRequest extends FormRequest
     public function rules()
     {
         return [
-            'titre'         => 'required',
+            'titre'         => 'required|unique:cactus_annonces',
             'description'   => 'required'
         ];
     }

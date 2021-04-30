@@ -4,7 +4,7 @@
 
     @include('back.parent.partial.breadcrumb', [
         'parent' => 'Pedagogique',
-        'parent_route' => '#',
+        'parent_route' => route('formation.index'),
         'child' => 'Formations',
     ])
 
@@ -60,13 +60,15 @@
                                 :required="true">
                         </x-back.input>
 
-                        <x-back.input
-                                name='slug'
-                                title='Slug'
-                                :value="isset($formation) ? $formation->slug : ''"
-                                input='text'
-                                :required="true">
-                        </x-back.input>
+                        <div class="d-none">
+                            <x-back.input
+                                    name='slug'
+                                    title='Slug'
+                                    :value="isset($formation) ? $formation->slug : ''"
+                                    input='text'
+                                    :required="false">
+                            </x-back.input>
+                        </div>
 
                         <x-back.input
                                 name='description'
@@ -74,7 +76,7 @@
                                 :value="isset($formation) ? $formation->description : ''"
                                 input='textarea'
                                 rows=10
-                                :required="true">
+                                :required="false">
                         </x-back.input>
 
                         <button type="submit" class="btn btn-primary">Valider</button>
@@ -151,6 +153,9 @@
 @section('js')
     {{--@include('back.shared.editorScript')--}}
     @include('back.shared.slugScript')
+    @include('back.shared.ckeditor')
+
+
     <script>
         $(document).ready(() => {
             $('form').on('change', '#image_upload', e => {

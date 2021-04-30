@@ -135,9 +135,21 @@ class EspaceNumeriqueController extends Controller
      */
     public function destroy(EspaceNumerique $espaceNumerique)
     {
-        $espaceNumerique->delete();
+        try{
+            $espaceNumerique->delete();
 
-        return response()->json();
+        } catch (\Exception $e)
+        {
+            return response()->json([
+                'ok'      => false,
+                'message' => "Erreur de Suppresion, d'autres enregistrements dependent de cet espace numerique " .  $espaceNumerique->libelle
+            ]);
+        }
+
+        return response()->json([
+            'ok'      => true,
+            'message' => "Success de Suppresion"
+        ]);
     }
 
     public function piecesJointesView(EspaceNumerique $espaceNumerique)

@@ -5,7 +5,7 @@
 
     @include('back.parent.partial.breadcrumb', [
         'parent' => 'Pedagogique',
-        'parent_route' => '#',
+        'parent_route' => route('enseignant.index'),
         'child' => 'Enseignants',
     ])
 
@@ -50,7 +50,9 @@
                         type='primary'
                         title='Enseignant'>
 
-                    <input type="hidden" name="mot_de_passe" value="password">
+                    @if(Route::currentRouteName() !== 'enseignant.edit')
+                        <input type="hidden" name="mot_de_passe" value="password">
+                    @endif
 
                     <div class="form-row">
                         <x-back.input
@@ -95,7 +97,7 @@
                         <x-back.input
                                 col="col-md-6"
                                 name='identifiant'
-                                title='identifiant'
+                                title='Identifiant'
                                 :value="isset($enseignant) ? $enseignant->identifiant : ''"
                                 input='text'
                                 :required="true">

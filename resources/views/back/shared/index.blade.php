@@ -3,7 +3,7 @@
 @section('breadcrumb')
 
     @include('back.parent.partial.breadcrumb', [
-        'parent' => str_replace('-', ' ', explode('.', Route::currentRouteName())[0]),
+        'parent' => ucfirst(str_replace('-', ' ', explode('.', Route::currentRouteName())[0])),
         'parent_route' => '#',
         'child' => str_replace('-', ' ', explode('.', Route::currentRouteName())[0]),
     ])
@@ -24,6 +24,14 @@
 @endsection
 
 @section('main')
+
+
+    <div id="alert" class="alert alert-danger alert-dismissible fade show d-none" role="alert">
+        <p class="text-light " id="message">Message</p>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
 
     <div class="row">
         <div class="col-12">
@@ -115,6 +123,10 @@
   <script>
     (() => {
 
+        /*$(".alert").delay(4000).slideUp(200, function() {
+            $(this).alert('close');
+        });*/
+
         // Token
         /*$.ajaxSetup({
             headers: {
@@ -146,8 +158,9 @@
                       method: 'DELETE',
                       headers: headers
                   })
+                  .then(response => response.json())
                   .then(response => {
-                      console.log(response.statusText)
+                      console.log(response.statusText, response)
                       if (response.ok) {
                           // Si la réponse est OK on supprime la ligne du tableau
                           e.target.parentNode.parentNode.remove();
@@ -157,7 +170,14 @@
                             title: 'Whoops!',
                             text: "Il y a quelques problemes"
                         });
+
+                        console.log(response, response.message)
+
+                          $('#alert').removeClass('d-none')
+
+                          $('#message').text(response.message);
                       }
+
                   });
               }
             });

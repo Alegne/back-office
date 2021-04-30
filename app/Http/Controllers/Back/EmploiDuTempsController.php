@@ -138,10 +138,22 @@ class EmploiDuTempsController extends Controller
      */
     public function destroy(EmploiTemps $emploiDuTemps)
     {
-        # $emploiDuTemps = EmploiTemps::find($id);
-        $emploiDuTemps->delete();
+        try{
+            # $emploiDuTemps = EmploiTemps::find($id);
+            $emploiDuTemps->delete();
 
-        return response()->json();
+        } catch (\Exception $e)
+        {
+            return response()->json([
+                'ok'      => false,
+                'message' => "Erreur de Suppresion, d'autres enregistrements dependent de cet emploi du temps "
+            ]);
+        }
+
+        return response()->json([
+            'ok'      => true,
+            'message' => "Success de Suppresion"
+        ]);
     }
 
     /**

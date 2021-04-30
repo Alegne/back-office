@@ -8,6 +8,7 @@ use App\Http\Requests\Back\AnnonceRequest;
 use App\Models\Annonce;
 use App\Models\Niveau;
 use App\Models\Parcours;
+use App\Rules\AnnonceUpdate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -98,12 +99,19 @@ class AnnonceController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param AnnonceRequest $request
+     * @param Request $request
      * @param  \App\Models\Annonce $annonce
      * @return \Illuminate\Http\Response
      */
-    public function update(AnnonceRequest $request, Annonce $annonce)
+    public function update(Request $request, Annonce $annonce)
     {
+        $request->validate([
+            'titre'         => ['required', new AnnonceUpdate($request->titre, $annonce->id)],
+            'description'   => 'required',
+            'posteur'       => 'required',
+            'club_id'       => 'required',
+        ]);
+
         # dd($request->all());
 
         $inputs = $this->getInputs($request);
@@ -131,21 +139,33 @@ class AnnonceController extends Controller
      */
     public function destroy(Annonce $annonce)
     {
-        $annonce_parcours = DB::table('cactus_annonces_parcours')
+        /*$annonce_parcours = DB::table('cactus_annonces_parcours')
             ->where('annonce_id', $annonce->id)
             ->update(['annonce_id' => null]);
 
         $annonce_niveaux = DB::table('cactus_annonces_niveaux')
             ->where('annonce_id', $annonce->id)
-            ->update(['annonce_id' => null]);
-
-        # dd($annonce);
-        $annonce->delete();
+            ->update(['annonce_id' => null]);*/
 
 
-        $this->deleteImages($annonce);
+        try{
+            $annonce->delete();
 
-        return response()->json();
+
+            $this->deleteImages($annonce);
+
+        } catch (\Exception $e)
+        {
+            return response()->json([
+                'ok'      => false,
+                'message' => "Erreur de Suppresion, d'autres enregistrements dependent de cet annonce " .  $annonce->titre
+            ]);
+        }
+
+        return response()->json([
+            'ok'      => true,
+            'message' => "Success de Suppresion"
+        ]);
     }
 
     public function approuve(Annonce $annonce)

@@ -8,9 +8,11 @@ use App\Http\Requests\Back\EnseignantRequest;
 use App\Http\Requests\Back\EtudiantRequest;
 use App\Models\Enseignant;
 use App\Notifications\NouveauCompte;
+use App\Rules\GenericUpdate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 
 class EnseignantController extends Controller
@@ -46,7 +48,11 @@ class EnseignantController extends Controller
      */
     public function store(EnseignantRequest $request)
     {
+        # dd( Str::length($request->telephone));
+
         $request->merge(['mot_de_passe' => Hash::make($request->mot_de_passe)]);
+
+        # dd($request->all());
 
         $inputs = $this->getInputs($request);
 
@@ -89,6 +95,18 @@ class EnseignantController extends Controller
      */
     public function update(Request $request, Enseignant $enseignant)
     {
+        # dd( Str::length($request->telephone));
+        $request->validate([
+            'identifiant'   => ['required', new GenericUpdate('cactus_enseignants', 'identifiant',
+                                                                $request->identifiant, $enseignant->id)],
+            'nom'           => 'required',
+            'prenom'        => 'required',
+            'email'         => ['required', 'email', new GenericUpdate('cactus_enseignants', 'email',
+                                                                $request->email, $enseignant->id)],
+            'telephone'     => 'required|numeric',
+            'adresse'       => 'required',
+        ]);
+
         #dd($request->all());
         # $request->merge(['mot_de_passe' => Hash::make($request->mot_de_passe)]);
 
@@ -112,10 +130,23 @@ class EnseignantController extends Controller
      */
     public function destroy(Enseignant $enseignant)
     {
-        $enseignant->delete();
-        $this->deleteImages($enseignant);
+        try{
 
-        return response()->json();
+            $enseignant->delete();
+            $this->deleteImages($enseignant);
+
+        } catch (\Exception $e)
+        {
+            return response()->json([
+                'ok'      => false,
+                'message' => "Erreur de Suppresion, d'autres enregistrements dependent de cet enseignant " .  $enseignant->nom
+            ]);
+        }
+
+        return response()->json([
+            'ok'      => true,
+            'message' => "Success de Suppresion"
+        ]);
     }
 
 

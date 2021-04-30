@@ -6,8 +6,10 @@ use App\DataTables\FormationDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Back\FormationRequest;
 use App\Models\Formation;
+use App\Rules\GenericUpdate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 
 class FormationController extends Controller
@@ -80,12 +82,18 @@ class FormationController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param FormationRequest $request
+     * @param Request $request
      * @param  \App\Models\Formation $formation
      * @return \Illuminate\Http\Response
      */
-    public function update(FormationRequest $request, Formation $formation)
+    public function update(Request $request, Formation $formation)
     {
+        $request->validate([
+            'libelle'     => ['required', 'max:255', new GenericUpdate('cactus_formations', 'libelle',
+                                                                    $request->libelle, $formation->id)],
+            'description' => 'required',
+        ]);
+
         $inputs = $this->getInputs($request);
 
         if ($request->has('photo') && $request->photo) {
@@ -106,11 +114,22 @@ class FormationController extends Controller
      */
     public function destroy(Formation $formation)
     {
-        $formation->delete();
+        try{
+            $formation->delete();
 
-        $this->deleteImages($formation);
+            $this->deleteImages($formation);
+        } catch (\Exception $e)
+        {
+            return response()->json([
+                'ok'      => false,
+                'message' => "Erreur de Suppresion, d'autres enregistrements dependent de cette formation " .  $formation->libelle
+            ]);
+        }
 
-        return response()->json();
+        return response()->json([
+            'ok'      => true,
+            'message' => "Success de Suppresion"
+        ]);
     }
 
     ### Manage upload image
@@ -120,6 +139,7 @@ class FormationController extends Controller
         $inputs = $request->except(['photo']);
 
         # $inputs['active'] = $request->has('active');
+        $inputs['slug'] = Str::slug(Str::random(25)) . Str::slug($request->libelle);
 
         if ($request->photo) {
             $inputs['photo'] = $this->saveImages($request);

@@ -25,7 +25,7 @@ class ArticleRequest extends FormRequest
     public function rules()
     {
         return [
-            'titre'         => 'required',
+            'titre'         => 'required|unique:cactus_articles',
             'description'   => 'required',
             'posteur'       => 'required',
             'club_id'       => 'required',
