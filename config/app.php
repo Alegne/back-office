@@ -3,7 +3,7 @@
 return [
 
 
-    'front_office' => env('APP_URL_FRONT_OFFICE', 'http://localhost:4200'),
+    'front_office' => env('APP_URL_FRONT_OFFICE', 'http://cactus.eni.mg/'),
 
     /*
     |--------------------------------------------------------------------------
