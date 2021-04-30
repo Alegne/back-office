@@ -47,18 +47,18 @@ class EspaceMembreController extends Controller
                 $type = 'etudiant';
 
                 # Session | Cookie
-                Cookie::forget('espace_utlisateur');
-                $request->session()->forget('espace_utlisateur');
+                # Cookie::forget('espace_utlisateur');
+                # $request->session()->forget('espace_utlisateur');
 
 
-                session(['espace_utlisateur' => json_encode($data)]);
+                #session(['espace_utlisateur' => json_encode($data)]);
                 # $cookie = cookie('name', 'value', $minutes);
 
                 # Cookie::queue('espace_utlisateur', json_encode($data), $minutes);
-                Cookie::queue(cookie()->forever('espace_utlisateur', json_encode($data)));
+                # Cookie::queue(cookie()->forever('espace_utlisateur', json_encode($data)));
 
 
-                return view('espace.index', compact('data', 'type'));
+                return view('espace.example', compact('data', 'type'));
 
                 /*return response()->json([
                     'ok'    => true,
