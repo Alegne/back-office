@@ -47,7 +47,7 @@
 
                 <x-back.card
                         type='primary'
-                        title='Annee Universitaire'>
+                        title="Ajout d'une année Universitaire">
 
 
 
