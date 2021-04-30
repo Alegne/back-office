@@ -43,6 +43,7 @@ class EnseignantRequest extends FormRequest
             'email'         => 'required|unique:cactus_enseignants|email',
             'telephone'     => 'required|numeric',
             'adresse'       => 'required',
+            'photo'         => 'mimes:jpeg,jpg,png,gif|max:10000'
         ];
         # |size:10
     }

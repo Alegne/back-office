@@ -121,7 +121,7 @@
                             <div>
                                 <p>
                                     @if($article->image)
-                                        <img src="{{ getImageSingle($article->image, true) }}" style="width:100%;">
+                                        <img src="{{ getImageSingle($article->image, 'card') }}" style="width:100%;">
                                     @else
                                         <img src="{{ asset('/default.png') }}" style="width:100%;">
                                     @endif

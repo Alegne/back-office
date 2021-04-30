@@ -90,7 +90,7 @@
                             <div class="item">
                                 <div class="card  justify-content-center mx-1" >
                                     @if(in_array(Str::lower(explode('.', $piece)[1]), ['jpeg','pjpeg','png','gif','jpg']))
-                                        <img class="card-img-top m-auto" src="{{ getImageSingle($piece, true) }}" alt="Card image cap">
+                                        <img class="card-img-top m-auto" src="{{ getImageSingle($piece, 'card') }}" alt="Card image cap">
                                     @else
                                         <img class="card-img-top m-auto" src="/default.png" alt="Card image cap">
                                     @endif

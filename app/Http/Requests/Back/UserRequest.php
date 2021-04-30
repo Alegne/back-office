@@ -24,9 +24,10 @@ class UserRequest extends FormRequest
     public function rules()
     {
         return [
-            'identifiant'  => 'required|unique:cactus_users',
-            'email'        => 'required|email|unique:cactus_users',
-            'role'         => 'required',
+            'identifiant'   => 'required|unique:cactus_users',
+            'email'         => 'required|email|unique:cactus_users',
+            'role'          => 'required',
+            'photo'         => 'mimes:jpeg,jpg,png,gif|max:10000'
             #'password'     => 'required'
         ];
     }

@@ -105,6 +105,7 @@ class EnseignantController extends Controller
                                                                 $request->email, $enseignant->id)],
             'telephone'     => 'required|numeric',
             'adresse'       => 'required',
+            'photo'         => 'mimes:jpeg,jpg,png,gif|max:10000'
         ]);
 
         #dd($request->all());

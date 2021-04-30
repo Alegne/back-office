@@ -77,7 +77,7 @@
                         id="photo_upload"
                         type='primary'
                         :outline="false"
-                        title='Image dimz'>
+                        title='Image'>
 
                     <div class="form-group{{ $errors->has('image') ? ' is-invalid' : '' }}">
                         <label for="changeImage">Image</label>
@@ -85,7 +85,7 @@
                             <div>
                                 <p>
                                     @if($club->image)
-                                        <img src="{{ getImageSingle($club->image, true) }}" style="width:100%;">
+                                        <img src="{{ getImageSingle($club->image, 'card') }}" style="width:100%;">
                                     @else
                                         <img src="{{ asset('/default.png') }}" style="width:100%;">
                                     @endif

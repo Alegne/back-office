@@ -202,6 +202,8 @@ if (!function_exists('getImageSingle')) {
 
         if($thumb) $url .= '/thumbs';
 
+        elseif ($thumb == 'card') $url .= '/thumbs';
+
         return asset("{$url}/{$image}");
     }
 }

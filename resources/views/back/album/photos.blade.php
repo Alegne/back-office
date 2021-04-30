@@ -60,7 +60,7 @@
         <div class="col-md-8">
             <x-back.card
                     type='primary'
-                    title='Galeries | Glisser ici vos fichiers'>
+                    title='Galeries | Glisser ici vos images'>
 
                 <form action="{{ route('album.photos.upload', ['album' => $album->id]) }}"
                       method="post"
@@ -80,13 +80,12 @@
                             type='primary'
                             title='Vos fichiers'>
 
-
                         <div class="owl-carousel owl-theme">
                             @foreach($album->photos as $photo)
                                 <div class="item">
                                     <div class="card  justify-content-center mx-1" >
                                         @if(in_array(Str::lower(explode('.', $photo)[1]), ['jpeg','pjpeg','png','gif','jpg']))
-                                            <img class="card-img-top m-auto" src="{{ getImageSingle($photo, true) }}" alt="Card image cap">
+                                            <img class="card-img-top m-auto" src="{{ getImageSingle($photo, 'card') }}" alt="Card image cap">
                                         @else
                                             <img class="card-img-top m-auto" src="/default.png" alt="Card image cap">
                                         @endif
@@ -116,6 +115,7 @@
 
     <script type="text/javascript">
         Dropzone.options.dropzone = {
+            acceptedFiles: ".jpeg,.jpg,.png,.PNG,.gif",
             resizeWidth: 800,
             resizeHeight: 800,
             maxFilesize: 12,

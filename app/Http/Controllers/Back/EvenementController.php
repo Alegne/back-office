@@ -9,6 +9,7 @@ use App\Models\Evenement;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 
 class EvenementController extends Controller
@@ -253,7 +254,7 @@ class EvenementController extends Controller
     {
         $inputs = $request->except(['image']);
 
-        # $inputs['active'] = $request->has('active');
+        $inputs['slug'] = Str::slug(Str::random(25)) .  Str::slug($request->titre);
 
         if ($request->image) {
             $inputs['image'] = $this->saveImages($request);

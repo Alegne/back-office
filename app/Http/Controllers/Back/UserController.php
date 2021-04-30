@@ -112,6 +112,7 @@ class UserController extends Controller
             'email'        => ['required', 'email', new GenericUpdate('cactus_users', 'email',
                                                     $request->email, $user->id)],
             'role'         => 'required',
+            'photo'          => 'mimes:jpeg,jpg,png,gif|max:10000'
         ]);
 
         $inputs = $this->getInputs($request);

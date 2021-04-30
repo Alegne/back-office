@@ -108,8 +108,7 @@ class AnnonceController extends Controller
         $request->validate([
             'titre'         => ['required', new AnnonceUpdate($request->titre, $annonce->id)],
             'description'   => 'required',
-            'posteur'       => 'required',
-            'club_id'       => 'required',
+            'image'         => 'mimes:jpeg,jpg,png,gif|max:10000'
         ]);
 
         # dd($request->all());

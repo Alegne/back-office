@@ -474,31 +474,34 @@
                     if (!confirm("Etes-vous sure?")) {
                         info.revert();
                         console.log('eventResize reset')
-                    }
+                    } else {
 
-                    let requete = {
-                        id                  : info.event.id,
-                        emploi_du_temps_id  : $('#parent').val(),
-                        matiere_id          : info.event.extendedProps.matiere,
-                        specification       : info.event.extendedProps.specification,
-                        heure_debut         : moment(info.event.start.toISOString()).format(formatDateCalendar),
-                        heure_fin           : moment(info.event.end.toISOString()).format(formatDateCalendar),
-                        type                : 'update-resize'
-                    }
+                        console.log('eventResize')
 
-                    console.log('eventResize', JSON.stringify(requete))
-
-                    $.ajax({
-                        url    : route,
-                        type   : "POST",
-                        data   : requete,
-                        success :function(response)
-                        {
-                            calendar.removeAllEvents()
-                            calendar.refetchEvents()
-                            displayMessage("Event updated Successfully")
+                        let requete = {
+                            id                  : info.event.id,
+                            emploi_du_temps_id  : $('#parent').val(),
+                            matiere_id          : info.event.extendedProps.matiere,
+                            specification       : info.event.extendedProps.specification,
+                            heure_debut         : moment(info.event.start.toISOString()).format(formatDateCalendar),
+                            heure_fin           : moment(info.event.end.toISOString()).format(formatDateCalendar),
+                            type                : 'update-resize'
                         }
-                    })
+
+                        console.log('eventResize', JSON.stringify(requete))
+
+                        $.ajax({
+                            url    : route,
+                            type   : "POST",
+                            data   : requete,
+                            success :function(response)
+                            {
+                                calendar.removeAllEvents()
+                                calendar.refetchEvents()
+                                displayMessage("Event updated Successfully")
+                            }
+                        })
+                    }
                 },
                 eventDrop: function(info) {
                     // alert(info.event.title + " was dropped on " + info.event.start.toISOString())
@@ -516,31 +519,35 @@
 
                     if (!confirm("Etes-vous sure de le changer?")) {
                         info.revert();
-                    }
+                        console.log('eventDrop Reset')
+                    } else {
 
-                    let requete = {
-                        id                  : info.event.id,
-                        emploi_du_temps_id  : $('#parent').val(),
-                        matiere_id          : info.event.extendedProps.matiere,
-                        specification       : info.event.extendedProps.specification,
-                        heure_debut         : moment(info.event.start.toISOString()).format(formatDateCalendar),
-                        heure_fin           : moment(end).format(formatDateCalendar),
-                        type                : 'update-resize'
-                    }
+                        console.log('eventDrop')
 
-                    console.log('eventDrop', JSON.stringify(requete))
-
-                    $.ajax({
-                        url    : route,
-                        type   : "POST",
-                        data   : requete,
-                        success :function(response)
-                        {
-                            calendar.removeAllEvents()
-                            calendar.refetchEvents()
-                            displayMessage("Event updated Successfully")
+                        let requete = {
+                            id                  : info.event.id,
+                            emploi_du_temps_id  : $('#parent').val(),
+                            matiere_id          : info.event.extendedProps.matiere,
+                            specification       : info.event.extendedProps.specification,
+                            heure_debut         : moment(info.event.start.toISOString()).format(formatDateCalendar),
+                            heure_fin           : moment(end).format(formatDateCalendar),
+                            type                : 'update-resize'
                         }
-                    })
+
+                        console.log('eventDrop', JSON.stringify(requete))
+
+                        $.ajax({
+                            url    : route,
+                            type   : "POST",
+                            data   : requete,
+                            success :function(response)
+                            {
+                                calendar.removeAllEvents()
+                                calendar.refetchEvents()
+                                displayMessage("Event updated Successfully")
+                            }
+                        })
+                    }
                 },
 
                 // Delete Event

@@ -28,6 +28,7 @@ class EvenementRequest extends FormRequest
             'description'   => 'required',
             'posteur'       => 'required',
             'type'          => 'required',
+            'image'         => 'mimes:jpeg,jpg,png,gif|max:10000'
         ];
     }
 }

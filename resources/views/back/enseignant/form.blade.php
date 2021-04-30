@@ -153,7 +153,7 @@
                             <div>
                                 <p>
                                     @if($enseignant->photo)
-                                        <img src="{{ getImageSingle($enseignant->photo, true) }}" style="width:100%;">
+                                        <img src="{{ getImageSingle($enseignant->photo, 'card') }}" style="width:100%;">
                                     @else
                                         <img src="{{ asset('/default.png') }}" style="width:100%;">
                                     @endif

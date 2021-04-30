@@ -24,7 +24,7 @@
 
                         @if($user->photo)
                             <img class="profile-user-img img-fluid img-circle"
-                                 src="{{ getImageSingle($user->photo, true) }}" alt="User profile picture">
+                                 src="{{ getImageSingle($user->photo, 'card') }}" alt="User profile picture">
                         @else
                             <img src="{{ asset('/default.png') }}" style="width:100%;">
                         @endif

@@ -191,7 +191,7 @@
                                                     <div>
                                                         <p>
                                                             @if(getConfiguration('image_directeur'))
-                                                                <img src="{{ getImageSingle(getConfiguration('image_directeur'), true) }}" style="width:100%;">
+                                                                <img src="{{ getImageSingle(getConfiguration('image_directeur'), 'card') }}" style="width:100%;">
                                                             @else
                                                                 <img src="{{ asset('/default.png') }}" style="width:100%;">
                                                             @endif
