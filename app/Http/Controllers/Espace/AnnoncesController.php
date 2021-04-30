@@ -65,13 +65,26 @@ class AnnoncesController extends Controller
         return view('espace.annonces.show', compact('annonce'));
     }
 
-    public function create()
+    public function create(Request $request)
     {
-        return view('espace.annonces.create');
+        $parcours = Parcours::all()->pluck('tag', 'id');
+        $niveaux  = Niveau::all()->pluck('tag', 'id');
+        $types    = ['public' => 'Publique', 'private' => 'Prive'];
+
+        if ($request->ok) {
+            # dd($request->ok);
+            $ok = 'Enregistrement succès';
+            return view('espace.annonces.create', compact('parcours', 'niveaux', 'types', 'ok'));
+        }
+
+        return view('espace.annonces.create', compact('parcours', 'niveaux', 'types'));
     }
 
     public function store(AnnonceRequest $request)
-    {$inputs = $this->getInputs($request);
+    {
+        # dd($request->all());
+
+        $inputs = $this->getInputs($request);
 
         $annonce = Annonce::create($inputs);
 

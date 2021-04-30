@@ -17,9 +17,35 @@
 
 @section('content')
 
+
+
     <form action="{{ route('espace.annonces.store') }}"
           method="post"
           enctype="multipart/form-data">
+
+        @csrf
+
+        <x-back.validation-errors :errors="$errors" />
+
+        @if(session('ok'))
+
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {!! session('ok') !!}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
+
+        @if(isset($ok))
+
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {!! $ok !!}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
 
         <div class="row">
 
@@ -42,14 +68,15 @@
 
                         </div>
 
-
                         <div class="form-row">
                             <div class="col-4">
                                 <div class="form-group">
                                     <label>Type</label>
-                                    <select class="form-control" name="type" id="select-type">
-                                        <option value="public">Public</option>
-                                        <option value="private">Private</option>
+                                    <select class="form-control" name="type" id="select-type" required>
+
+                                        @foreach($types as $key => $valeur)
+                                            <option value="{{ $key }}">{{ $valeur }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
 
@@ -60,10 +87,10 @@
                                     <div class="form-group">
                                         <label>Niveau</label>
                                         <select class="form-control" name="niveau_id" multiple>
-                                            <option value="1">L1</option>
-                                            <option value="2">L2</option>
-                                            <option value="3">L3</option>
-                                            <option value="4">M1</option>
+
+                                            @foreach($niveaux as $key => $valeur)
+                                                <option value="{{ $key }}">{{ $valeur }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
 
@@ -72,8 +99,10 @@
                                     <div class="form-group">
                                         <label>Parcous</label>
                                         <select class="form-control" name="parcours_id" multiple>
-                                            <option value="1">GB</option>
-                                            <option value="1">SR</option>
+
+                                            @foreach($parcours as $key => $valeur)
+                                                <option value="{{ $key }}">{{ $valeur }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -83,7 +112,15 @@
 
                         <div class="form-group">
                             <label>Description</label>
-                            <textarea name="descrption" class="form-control" id="" cols="30" rows="10"></textarea>
+                            <textarea name="description" class="form-control {{ $errors->has('description') ? ' is-invalid' : '' }}"
+                                      id="" cols="30" rows="10"></textarea>
+
+
+                            @if ($errors->has('description'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('description') }}
+                                </div>
+                            @endif
                         </div>
 
                     </div>
@@ -150,7 +187,31 @@
                     $('#option-parcours').addClass('d-none')
                 }
             })
+
+            $('#input-image').change( e => {
+                // $(e.currentTarget).next('.custom-file-label').text(e.target.files[0].name);
+
+                console.log('change input-photo')
+
+                previewFile(e.currentTarget)
+            });
         });
+
+        function previewFile(input){
+            let file = $(input).get(0).files[0]
+
+            if(file){
+                let reader = new FileReader()
+
+                reader.onload = function(){
+                    $('#img-preview').attr("src", reader.result)
+
+                    $('#img-preview').css("height", "320px")
+                }
+
+                reader.readAsDataURL(file)
+            }
+        }
     </script>
 
 @endsection

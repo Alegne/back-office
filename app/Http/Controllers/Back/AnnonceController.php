@@ -88,7 +88,6 @@ class AnnonceController extends Controller
      */
     public function edit(Annonce $annonce)
     {
-
         $parcours = Parcours::all()->pluck('tag', 'id');
         $niveaux  = Niveau::all()->pluck('tag', 'id');
         $types    = ['public' => 'Publique', 'private' => 'Prive'];

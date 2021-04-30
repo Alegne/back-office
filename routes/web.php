@@ -69,9 +69,9 @@ Route::group(['prefix' => 'espace', 'middleware' => ['espace']], function (){
     Route::get('/annonces/{annonce}', [AnnoncesController::class, 'show'])->name('espace.annonces.show');
     Route::get('/annonces/create/form', [AnnoncesController::class, 'create'])->name('espace.annonces.create.form');
     Route::post('/annonces', [AnnoncesController::class, 'store'])->name('espace.annonces.store');
-    Route::get('/annonces/galeries', [AnnoncesController::class, 'galeriesView'])->name('espace.annonces.galeries.view');
-    Route::post('/annonces/{annonce}/galeries', [AnnoncesController::class, 'galeries'])->name('espace.annonces.galeries.store');
-    Route::post('/annonce/galeries/delete/{annonce}', [AnnoncesController::class, 'deleteGaleries'])->name('espace.annonce.galeries.delete');
+    Route::get('/annonces/galeries/{annonce}', [AnnoncesController::class, 'galeriesView'])->name('espace.annonces.galeries.view');
+    Route::post('/annonces/{annonce}/galeries', [AnnoncesController::class, 'galeries'])->name('espace.annonces.galeries.upload');
+    Route::post('/annonce/galeries/delete/{annonce}', [AnnoncesController::class, 'deleteGaleries'])->name('espace.annonces.galeries.delete');
 
     # Profile
     Route::get('/profils', [ProfilsController::class, 'index'])->name('espace.profils.index');
@@ -82,6 +82,13 @@ Route::group(['prefix' => 'espace', 'middleware' => ['espace']], function (){
 
     # Espace Numerique
     Route::get('/espace-numeriques', [EspaceEspaceNumeriquesController::class, 'index'])->name('espace.espace_numerique.index');
+    Route::get('/espace-numeriques/{numerique}', [EspaceEspaceNumeriquesController::class, 'show'])->name('espace.espace_numerique.show');
+    Route::get('/espace-numeriques/create/form', [EspaceEspaceNumeriquesController::class, 'create'])->name('espace.espace_numerique.create.form');
+    Route::post('/espace-numeriques', [EspaceEspaceNumeriquesController::class, 'store'])->name('espace.espace_numerique.store');
+    Route::get('/espace-numeriques/pieces/{numerique}', [EspaceEspaceNumeriquesController::class, 'piecesView'])->name('espace.espace_numerique.pieces.view');
+    Route::post('/espace-numeriques/{numerique}/pieces', [EspaceEspaceNumeriquesController::class, 'pieces'])->name('espace.espace_numerique.pieces.upload');
+    Route::post('/espace-numeriques/pieces/delete/{numerique}', [EspaceEspaceNumeriquesController::class, 'deletePieces'])->name('espace.espace_numerique.pieces.delete');
+
 
 
     Route::get('/verification-compte', [HomeController::class, 'verification'])->name('espace.verification');
