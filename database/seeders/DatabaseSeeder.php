@@ -50,21 +50,21 @@ class DatabaseSeeder extends Seeder
         // });
 
         // # Call Seeder
-        // $this->call([
-        //     FormationSeeder::class,
-        //     NiveauSeeder::class,
-        //     ParcoursSeeder::class,
-        //     AnneUniversitaireSeeder::class,
-        //     LangueSeeder::class,
-        //     ConfigurationSeeder::class,
-        //     EtudiantSeeder::class,
-        //     NewsletterSeeder::class,
-        //     ClubSeeder::class,
-        //     ArticleSeeder::class,
-        //     EvenementSeeder::class,
-        //     EnseignantSeeder::class,
-        //     MatiereSeeder::class,
-        //     AnnonceSeeder::class,
-        // ]);
+        $this->call([
+            ConfigurationSeeder::class,
+            //     FormationSeeder::class,
+            //     NiveauSeeder::class,
+            //     ParcoursSeeder::class,
+            //     AnneUniversitaireSeeder::class,
+            //     LangueSeeder::class,    
+            //     EtudiantSeeder::class,
+            //     NewsletterSeeder::class,
+            //     ClubSeeder::class,
+            //     ArticleSeeder::class,
+            //     EvenementSeeder::class,
+            //     EnseignantSeeder::class,
+            //     MatiereSeeder::class,
+            //     AnnonceSeeder::class,
+        ]);
     }
 }

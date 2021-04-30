@@ -28,7 +28,7 @@ class ConfigurationSeeder extends Seeder
         Configuration::insert([
             [
                 'cle' => 'mot_directeur',
-                'valeur' => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book",
+                'valeur' => "_",
             ],
             [
                 'cle' => 'image_directeur',
@@ -36,31 +36,31 @@ class ConfigurationSeeder extends Seeder
             ],
             [
                 'cle' => 'nom_directeur',
-                'valeur' => 'Monsieur Bertin Olivier',
+                'valeur' => '_',
             ],
             [
                 'cle' => 'lien_facebook',
-                'valeur' => 'facebook',
+                'valeur' => '_',
             ],
             [
                 'cle' => 'lien_twitter',
-                'valeur' => 'twitter',
+                'valeur' => '_',
             ],
             [
                 'cle' => 'lien_youtube',
-                'valeur' => 'youtube',
+                'valeur' => '_',
             ],
             [
                 'cle' => 'lien_instagram',
-                'valeur' => 'instagram',
+                'valeur' => '_',
             ],
             [
                 'cle' => 'lien_map',
-                'valeur' => 'lien_map',
+                'valeur' => '_',
             ],
             [
                 'cle' => 'telephone',
-                'valeur' => '0341202021',
+                'valeur' => '_',
             ],
             [
                 'cle' => 'email',
@@ -72,27 +72,27 @@ class ConfigurationSeeder extends Seeder
             ],
             [
                 'cle' => 'apropos_informations',
-                'valeur' => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book",
+                'valeur' => "_",
             ],
             [
                 'cle' => 'apropos_historiques',
-                'valeur' => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book",
+                'valeur' => "_",
             ],
             [
                 'cle' => 'apropos_missions',
-                'valeur' => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book",
+                'valeur' => "_",
             ],
             [
                 'cle' => 'apropos_specifications',
-                'valeur' => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book",
+                'valeur' => "_",
             ],
             [
                 'cle' => 'apropos_reference',
-                'valeur' => "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+                'valeur' => "_",
             ],
             [
                 'cle' => 'apropos_albums',
-                'valeur' => "",
+                'valeur' => "_",
             ],
 
         ]);
