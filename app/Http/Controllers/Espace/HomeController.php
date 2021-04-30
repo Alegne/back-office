@@ -7,9 +7,6 @@ use App\Models\Enseignant;
 use App\Models\Etudiant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
-use function PHPSTORM_META\type;
 
 class HomeController extends Controller
 {
@@ -102,7 +99,19 @@ class HomeController extends Controller
         # Get Session
         # dd(session('espace_utlisateur'), $request->token, $request->id, $request->type);
 
-        return redirect(config('front_office'));
+        return redirect(config('app.front_office'));
 
+    }
+
+    public function logout(Request $request)
+    {
+        #### Delete Session | Coockie
+        # Cookie::expire('espace_utlisateur');
+        Cookie::forget('espace_utlisateur');
+        $request->session()->forget('espace_utlisateur');
+
+        # dd(config('app.front_office'));
+
+        return redirect(config('app.front_office'));
     }
 }

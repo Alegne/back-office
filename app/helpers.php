@@ -7,6 +7,7 @@
  */
 
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
@@ -144,6 +145,27 @@ if (!function_exists('parseRouteActive')) {
         $arrayRoute = explode('.', $route);
 
         $route = $arrayRoute[0] . '.' . 'create';
+
+        return $route;
+    }
+}
+
+
+if (!function_exists('parseRouteActiveSecond')) {
+    function parseRouteActiveSecond()
+    {
+        $route = Route::currentRouteName();
+
+        $arrayRoute = explode('.', $route);
+
+        $route = $arrayRoute[1];
+
+        if ($route == 'emploi_temps')
+            $route = 'emploi_du_temps';
+
+        # dd($route);
+
+        $route = strtoupper(str_replace("_", " ", $route));
 
         return $route;
     }

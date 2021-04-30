@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Back\AnnonceRequest;
 use App\Http\Resources\API\AnnonceResource;
 use App\Models\Annonce;
+use App\Models\Etudiant;
 use App\Models\Niveau;
 use App\Models\Parcours;
 use Illuminate\Http\Request;
@@ -26,16 +27,23 @@ class AnnoncesController extends Controller
         {
             if ($utilisateur->status == 'actif')
             {
+
+                $etudiant = Etudiant::find($utilisateur->id);
+
                 $annonces = Annonce::query();
 
-                $niveaux = Niveau::whereIn('tag', $utilisateur->niveau)->first();
-                $parcours = Parcours::whereIn('tag', $utilisateur->parcours)->first();
+                # dd($etudiant->niveau->pluck('id'), gettype($etudiant->niveau));
+
+                $niveaux = Niveau::whereIn('id', $etudiant->niveau->pluck('id'))->get();
+                $parcours = Parcours::where('id', $etudiant->parcours->id)->get();
+
+                # dd(gettype($niveaux), gettype($niveaux->toArray()), $niveaux->toArray());
 
                 $annonces = $annonces->whereHas('parcours', function ($q) use ($parcours) {
-                    $q->where('cactus_parcours.tag', $parcours->tag);
+                    $q->where('cactus_parcours.id', $parcours[0]->id);
                 })
                     ->whereHas('niveau', function ($q) use ($niveaux) {
-                        $q->where('cactus_niveaux.tag', $niveaux->tag);
+                        $q->where('cactus_niveaux.id', $niveaux[0]->id);
                     })
                     #->get()
                 ;
@@ -43,7 +51,7 @@ class AnnoncesController extends Controller
 
             $annonces = $annonces->latest('updated_at');
 
-            # dd($annonces->toSql());
+            # dd($annonces->toSql(), $annonces->get());
 
             $annonces = $annonces->paginate(8);
             # $annonces = $annonces->get();
@@ -51,7 +59,7 @@ class AnnoncesController extends Controller
             return view('espace.annonces.index', compact('annonces'));
         }
 
-        return redirect(config('front_office'));
+        return redirect(config('app.front_office'));
 
     }
 

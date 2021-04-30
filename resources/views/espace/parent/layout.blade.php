@@ -44,7 +44,9 @@
     </div>
     <div class="main-panel">
         <!-- Navbar -->
-        @include('espace.parent.menu.navbar', ['title' => 'title'])
+
+
+        @include('espace.parent.menu.navbar', ['title' => parseRouteActiveSecond()])
         <!-- End Navbar -->
 
         <div class="content">

@@ -45,7 +45,7 @@ class EmploiTempsController extends Controller
             return view('espace.emploi_temps.index', compact('emploiTemps'));
         }
 
-        return redirect(config('front_office'));
+        return redirect(config('app.front_office'));
     }
 
     public function show(Request $request, EmploiTemps $emploiTemps)

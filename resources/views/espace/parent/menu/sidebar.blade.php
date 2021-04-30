@@ -12,8 +12,8 @@
         </a>
     </li>
 
-{{--    @if($type == 'etudiant')--}}
-{{--        @if($data->status == 'actif')--}}
+    @if(!isset($data->identifiant))
+        @if($data->status == 'actif')
             <li>
                 <a class="nav-link" href="{{ route('espace.emploi_temps.index') }}">
                     <i class="nc-icon nc-notes"></i>
@@ -26,8 +26,8 @@
                     <p>Espace Numerique</p>
                 </a>
             </li>
-        {{--@endif--}}
-    {{--@endif--}}
+        @endif
+    @endif
 
     <li>
         <a class="nav-link" href="{{ route('espace.profils.index') }}">

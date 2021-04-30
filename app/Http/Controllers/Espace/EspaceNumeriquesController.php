@@ -60,7 +60,7 @@ class EspaceNumeriquesController extends Controller
         }
 
 
-        return redirect(config('front_office'));
+        return redirect(config('app.front_office'));
     }
 
     public function show(EspaceNumerique $numerique)

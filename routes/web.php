@@ -94,6 +94,7 @@ Route::group(['prefix' => 'espace', 'middleware' => ['espace']], function (){
 
     Route::get('/verification-compte', [HomeController::class, 'verification'])->name('espace.verification');
     Route::get('/login', [HomeController::class, 'login'])->name('espace.login');
+    Route::get('/logout', [HomeController::class, 'logout'])->name('espace.logout');
 
     # Route::view('/layout', 'espace.parent.layout')->name('espace.parent.layouts');
 });

@@ -25,6 +25,6 @@ class EspaceMembre
             return $next($request);
         }
 
-        return redirect(config('front_office'));
+        return redirect(config('app.front_office'));
     }
 }

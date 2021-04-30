@@ -162,7 +162,7 @@
                                     <label>Mot de passe</label>
                                     <input type="password" class="form-control {{ $errors->has('mot_de_passe') ? ' is-invalid' : '' }}"
                                            name="mot_de_passe"
-                                           value="{{ old('mot_de_passe', $data->mot_de_passe) }}" required>
+                                           value="{{ old('mot_de_passe', 'password') }}" required>
 
                                     @if ($errors->has('mot_de_passe'))
                                         <div class="invalid-feedback">
@@ -180,7 +180,7 @@
                                 <label>Mot de passe</label>
                                 <input type="password" class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}"
                                        name="password"
-                                       value="{{ old('password', $data->password) }}" required>
+                                       value="{{ old('password', 'password') }}" required>
 
                                 @if ($errors->has('password'))
                                     <div class="invalid-feedback">
