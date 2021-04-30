@@ -17,12 +17,12 @@ return [
     | Set Menu
     */
 
-    'Dashboard' => [
+    'Tableau de Bord' => [
         'role'   => 'user',
         'route'  => 'dashboard.webcup',
         'icon'   => 'tachometer-alt',
     ],
-    'Activites' => [
+    'Activités' => [
         'icon' => 'school',
         'role'   => 'redacteur',
         'children' => [
@@ -38,12 +38,12 @@ return [
             ]
         ]
     ],
-    'Actualites' => [
+    'Actualités' => [
         'icon' => 'book',
         'role'   => 'annonceur',
         'children' => [
             [
-                'name'  => 'Albums ',
+                'name'  => 'Galerie ',
                 'role'  => 'annonceur',
                 'route' => 'album.index',
             ],
@@ -58,22 +58,6 @@ return [
                 'route' => 'evenement.index',
             ]
         ],
-    ],
-    'Messages' => [
-        'icon' => 'envelope',
-        'role'   => 'admin',
-        'children' => [
-            [
-                'name'  => 'News letters',
-                'role'  => 'admin',
-                'route' => 'newsletter.index',
-            ],
-            [
-                'name'  => 'Messages',
-                'role'  => 'admin',
-                'route' => 'message.index',
-            ]
-        ]
     ],
     'Pedadogique' => [
         'icon' => 'university',
@@ -145,11 +129,6 @@ return [
                 'role'  => 'admin',
                 'route' => 'journal.index',
             ],
-            [
-                'name'  => 'SEO',
-                'role'  => 'admin',
-                'route' => '',
-            ]
         ]
     ]
 ];

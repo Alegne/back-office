@@ -11,7 +11,7 @@
         <div class="collapse navbar-collapse justify-content-end" id="navigation">
             <ul class="nav navbar-nav mr-auto"></ul>
             <ul class="navbar-nav ml-auto">
-                <li class="dropdown nav-item">
+                {{-- <li class="dropdown nav-item">
                     <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
                         <i class="nc-icon nc-planet"></i>
                         <span class="notification">5</span>
@@ -22,12 +22,12 @@
                         <a class="dropdown-item" href="#">Notification 2</a>
                         <a class="dropdown-item" href="#">Another notification</a>
                     </ul>
-                </li>
-                <li class="nav-item">
+                </li> --}}
+                {{-- <li class="nav-item">
                     <a class="nav-link" href="{{ route('espace.profils.index') }}">
                         <span class="no-icon">Compte</span>
                     </a>
-                </li>
+                </li> --}}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('espace.logout') }}">
                         <span class="no-icon">Se deconnecter</span>
