@@ -59,37 +59,40 @@ require __DIR__ . '/auth.php';
  * Route Espace Membre
  */
 
-Route::group(['prefix' => 'espace', 'middleware' => ['espace']], function (){
+Route::group(['prefix' => 'espace'], function () {
 
     # Home
     Route::get('/home', [HomeController::class, 'index'])->name('espace.index');
 
-    # Annonces
-    Route::get('/annonces', [AnnoncesController::class, 'index'])->name('espace.annonces.index');
-    Route::get('/annonces/{annonce}', [AnnoncesController::class, 'show'])->name('espace.annonces.show');
-    Route::get('/annonces/create/form', [AnnoncesController::class, 'create'])->name('espace.annonces.create.form');
-    Route::post('/annonces', [AnnoncesController::class, 'store'])->name('espace.annonces.store');
-    Route::get('/annonces/galeries/{annonce}', [AnnoncesController::class, 'galeriesView'])->name('espace.annonces.galeries.view');
-    Route::post('/annonces/{annonce}/galeries', [AnnoncesController::class, 'galeries'])->name('espace.annonces.galeries.upload');
-    Route::post('/annonce/galeries/delete/{annonce}', [AnnoncesController::class, 'deleteGaleries'])->name('espace.annonces.galeries.delete');
+    Route::group(['middleware' => 'espace'], function () {
 
-    # Profile
-    Route::get('/profils', [ProfilsController::class, 'index'])->name('espace.profils.index');
-    Route::put('/profils/update/{id}/{type}', [ProfilsController::class, 'update'])->name('espace.profils.update');
 
-    # Emploi du temps
-    Route::get('/emploi-temps', [EmploiTempsController::class, 'index'])->name('espace.emploi_temps.index');
-    Route::get('/emploi-temps/show/{emploiTemps}', [EmploiTempsController::class, 'show'])->name('espace.emploi_temps.show');
+        # Annonces
+        Route::get('/annonces', [AnnoncesController::class, 'index'])->name('espace.annonces.index');
+        Route::get('/annonces/{annonce}', [AnnoncesController::class, 'show'])->name('espace.annonces.show');
+        Route::get('/annonces/create/form', [AnnoncesController::class, 'create'])->name('espace.annonces.create.form');
+        Route::post('/annonces', [AnnoncesController::class, 'store'])->name('espace.annonces.store');
+        Route::get('/annonces/galeries/{annonce}', [AnnoncesController::class, 'galeriesView'])->name('espace.annonces.galeries.view');
+        Route::post('/annonces/{annonce}/galeries', [AnnoncesController::class, 'galeries'])->name('espace.annonces.galeries.upload');
+        Route::post('/annonce/galeries/delete/{annonce}', [AnnoncesController::class, 'deleteGaleries'])->name('espace.annonces.galeries.delete');
 
-    # Espace Numerique
-    Route::get('/espace-numeriques', [EspaceEspaceNumeriquesController::class, 'index'])->name('espace.espace_numerique.index');
-    Route::get('/espace-numeriques/{numerique}', [EspaceEspaceNumeriquesController::class, 'show'])->name('espace.espace_numerique.show');
-    Route::get('/espace-numeriques/create/form', [EspaceEspaceNumeriquesController::class, 'create'])->name('espace.espace_numerique.create.form');
-    Route::post('/espace-numeriques', [EspaceEspaceNumeriquesController::class, 'store'])->name('espace.espace_numerique.store');
-    Route::get('/espace-numeriques/pieces/{numerique}', [EspaceEspaceNumeriquesController::class, 'piecesView'])->name('espace.espace_numerique.pieces.view');
-    Route::post('/espace-numeriques/{numerique}/pieces', [EspaceEspaceNumeriquesController::class, 'pieces'])->name('espace.espace_numerique.pieces.upload');
-    Route::post('/espace-numeriques/pieces/delete/{numerique}', [EspaceEspaceNumeriquesController::class, 'deletePieces'])->name('espace.espace_numerique.pieces.delete');
+        # Profile
+        Route::get('/profils', [ProfilsController::class, 'index'])->name('espace.profils.index');
+        Route::put('/profils/update/{id}/{type}', [ProfilsController::class, 'update'])->name('espace.profils.update');
 
+        # Emploi du temps
+        Route::get('/emploi-temps', [EmploiTempsController::class, 'index'])->name('espace.emploi_temps.index');
+        Route::get('/emploi-temps/show/{emploiTemps}', [EmploiTempsController::class, 'show'])->name('espace.emploi_temps.show');
+
+        # Espace Numerique
+        Route::get('/espace-numeriques', [EspaceEspaceNumeriquesController::class, 'index'])->name('espace.espace_numerique.index');
+        Route::get('/espace-numeriques/{numerique}', [EspaceEspaceNumeriquesController::class, 'show'])->name('espace.espace_numerique.show');
+        Route::get('/espace-numeriques/create/form', [EspaceEspaceNumeriquesController::class, 'create'])->name('espace.espace_numerique.create.form');
+        Route::post('/espace-numeriques', [EspaceEspaceNumeriquesController::class, 'store'])->name('espace.espace_numerique.store');
+        Route::get('/espace-numeriques/pieces/{numerique}', [EspaceEspaceNumeriquesController::class, 'piecesView'])->name('espace.espace_numerique.pieces.view');
+        Route::post('/espace-numeriques/{numerique}/pieces', [EspaceEspaceNumeriquesController::class, 'pieces'])->name('espace.espace_numerique.pieces.upload');
+        Route::post('/espace-numeriques/pieces/delete/{numerique}', [EspaceEspaceNumeriquesController::class, 'deletePieces'])->name('espace.espace_numerique.pieces.delete');
+    });
 
 
     Route::get('/verification-compte', [HomeController::class, 'verification'])->name('espace.verification');
@@ -104,23 +107,23 @@ Route::group(['prefix' => 'espace', 'middleware' => ['espace']], function (){
  * Route Back-office
  */
 
-Route::group(['prefix' => 'toor', 'middleware' => ['auth']], function (){
+Route::group(['prefix' => 'toor', 'middleware' => ['auth']], function () {
 
     Route::get('/', [AdminController::class, 'index'])->name('dashboard.webcup');
 
-# Formation
+    # Formation
     Route::resource('formation', FormationController::class);
 
-# Parcours
+    # Parcours
     Route::resource('parcours', ParcoursController::class)->parameters(['parcours' => 'parcours']);
 
-# Annee Universitaire
+    # Annee Universitaire
     Route::resource('annee-universitaire', AnneeUniversitaireLibelleController::class)->parameters(['annee-universitaire' => 'annee']);
 
-# Niveau
+    # Niveau
     Route::resource('niveau', NiveauController::class);
 
-# Etudiants
+    # Etudiants
     Route::resource('etudiant', EtudiantController::class);
     Route::name('etudiant.show.modal')->get('/etudiant/modal/{email}', [EtudiantController::class, 'modal']);
     Route::name('etudiant.indexactif')->get('/etudiant-actif', [EtudiantController::class, 'index']);
@@ -133,20 +136,20 @@ Route::group(['prefix' => 'toor', 'middleware' => ['auth']], function (){
     Route::name('etudiant.excel.export')->get('/etudiant/excel/export', [EtudiantController::class, 'excelExport']);
     Route::name('etudiant.excel.import')->post('/etudiant/excel/import', [EtudiantController::class, 'excelImport']);
 
-# Enseignants
+    # Enseignants
     Route::resource('enseignant', EnseignantController::class);
 
-# Clubs
+    # Clubs
     Route::resource('club', ClubController::class);
     Route::view('/configuration/lien', 'back.configuration.lien')->name('configuration.lien');
     Route::get('/club/{club}/staff', [ClubController::class, 'addStaffView'])->name('club.staff.view');
     Route::post('/club/staff/add', [ClubController::class, 'addStaffStore'])->name('club.staff.add');
     Route::get('/club/staff/pull/{staff}', [ClubController::class, 'deleteStaff'])->name('club.staff.add.pull');
 
-# Langue
+    # Langue
     Route::resource('langue', LangueController::class);
 
-# Album
+    # Album
     Route::resource('album', AlbumController::class);
     Route::get('/album/photos/{album}', [AlbumController::class, 'photosView'])
         ->name('album.photos.view');
@@ -155,7 +158,7 @@ Route::group(['prefix' => 'toor', 'middleware' => ['auth']], function (){
     Route::post('/album/photos/delete/{album}', [AlbumController::class, 'deletephotos'])
         ->name('album.photos.delete');
 
-# Articles
+    # Articles
     Route::resource('article', ArticleController::class);
     Route::get('/article/galeries/{article}', [ArticleController::class, 'galeriesView'])
         ->name('article.galeries.view');
@@ -164,7 +167,7 @@ Route::group(['prefix' => 'toor', 'middleware' => ['auth']], function (){
     Route::post('/article/galeries/delete/{article}', [ArticleController::class, 'deleteGaleries'])
         ->name('article.galeries.delete');
 
-# Evenements
+    # Evenements
     Route::resource('evenement', EvenementController::class);
     Route::get('/evenement/galeries/{evenement}', [EvenementController::class, 'galeriesView'])
         ->name('evenement.galeries.view');
@@ -173,7 +176,7 @@ Route::group(['prefix' => 'toor', 'middleware' => ['auth']], function (){
     Route::post('/evenement/galeries/delete/{evenement}', [EvenementController::class, 'deleteGaleries'])
         ->name('evenement.galeries.delete');
 
-# Annonces
+    # Annonces
     Route::resource('annonce', AnnonceController::class);
     Route::get('/annonce/galeries/{annonce}', [AnnonceController::class, 'galeriesView'])
         ->name('annonce.galeries.view');
@@ -185,13 +188,13 @@ Route::group(['prefix' => 'toor', 'middleware' => ['auth']], function (){
     Route::name('annonce.approuve.update')->put('/annonce/approuve/{annonce}', [AnnonceController::class, 'approuve']);
     Route::name('annonce.desapprouve.update')->put('/annonce/desapprouve/{annonce}', [AnnonceController::class, 'desapprouve']);
 
-# Message
+    # Message
     Route::resource('message', MessageController::class);
 
-# Newsletter
+    # Newsletter
     Route::resource('newsletter', NewsletterController::class);
 
-# Configuration
+    # Configuration
     Route::view('/configuration/contenu', 'back.configuration.contenu')->name('configuration.contenu');
     Route::view('/configuration/contact', 'back.configuration.contact')->name('configuration.contact');
     Route::view('/configuration/lien', 'back.configuration.lien')->name('configuration.lien');
@@ -200,7 +203,7 @@ Route::group(['prefix' => 'toor', 'middleware' => ['auth']], function (){
     Route::put('/configuration/update', [ConfigurationController::class, 'update'])->name('configuration.update');
     Route::get('/configuration/update', [ConfigurationController::class, 'edit'])->name('configuration.edit');
 
-# Espace Numerique
+    # Espace Numerique
     Route::resource('espace-numerique-travail', EspaceNumeriqueController::class)
         ->parameters(['espace-numerique-travail' => 'espaceNumerique']);
     Route::get('/espace-numerique-travail/pieces-jointes/{espaceNumerique}', [EspaceNumeriqueController::class, 'piecesJointesView'])
@@ -211,7 +214,7 @@ Route::group(['prefix' => 'toor', 'middleware' => ['auth']], function (){
         ->name('espace-numerique-travail.pieces.delete');
 
 
-# Emploi du Temps
+    # Emploi du Temps
     Route::resource('emploi-du-temps', EmploiDuTempsController::class)
         ->parameters(['emploi-du-temps' => 'emploiDuTemps']);
     Route::get('/emploi-du-temps/calendar/{id}/{niveau}/{parcours}/{start?}/{end?}', [EmploiDuTempsController::class, 'showCalendar'])
@@ -221,10 +224,10 @@ Route::group(['prefix' => 'toor', 'middleware' => ['auth']], function (){
     Route::get('/emploi-du-temps/calendar/seed', [EmploiDuTempsController::class, 'seed'])
         ->name('emploi-du-temps.calendar.seed');
 
-# Matiere
+    # Matiere
     Route::resource('matiere', MatiereController::class);
 
-# User
+    # User
     Route::resource('user', UserController::class);
 });
 
