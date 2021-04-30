@@ -11,6 +11,7 @@ use App\Http\Controllers\Back\EspaceNumeriqueController;
 use App\Http\Controllers\Back\EtudiantController;
 use App\Http\Controllers\Back\EvenementController;
 use App\Http\Controllers\Back\FormationController;
+use App\Http\Controllers\Back\JournalController;
 use App\Http\Controllers\Back\MatiereController;
 use App\Http\Controllers\Back\MessageController;
 use App\Http\Controllers\Back\NewsletterController;
@@ -193,6 +194,9 @@ Route::group(['prefix' => 'toor', 'middleware' => ['auth']], function () {
 
     # Newsletter
     Route::resource('newsletter', NewsletterController::class);
+
+    # Journal
+    Route::resource('journal', JournalController::class);
 
     # Configuration
     Route::view('/configuration/contenu', 'back.configuration.contenu')->name('configuration.contenu');

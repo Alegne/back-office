@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\Journal;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,9 +31,17 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request)
     {
+
         $request->authenticate();
 
         $request->session()->regenerate();
+
+        ###
+        Journal::create([
+            'ip' => $request->ip(),
+            'date_debut' => Carbon::now(),
+            'action' => Auth::user()->id,
+        ]);
 
         return redirect()->intended(RouteServiceProvider::HOME);
     }
@@ -43,6 +54,10 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request)
     {
+        Journal::where('action', Auth::user()->id)->update([
+            'date_debut' => Carbon::now()
+        ]);
+
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();

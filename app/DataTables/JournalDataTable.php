@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\Journal;
+use App\Models\User;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
@@ -22,9 +23,15 @@ class JournalDataTable extends DataTable
         return datatables()
             ->eloquent($query)
             ->editColumn('date_debut', function ($journal) {
-                return formatDate($journal->created_at);
+                return formatDateTime($journal->created_at);
             })
-            ->editColumn('action', function ($journal) {
+            ->editColumn('date_fin', function ($journal) {
+                return formatDateTime($journal->updated_at);
+            })
+            ->editColumn('utilisateur', function ($journal) {
+                return User::find($journal->action)->identifiant;
+            })
+            /*->editColumn('action', function ($journal) {
                 return $this->button(
                         'journal.edit',
                         $journal->id,
@@ -40,7 +47,7 @@ class JournalDataTable extends DataTable
                         __('Etes-vous sure de le supprimer ?')
                     );
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['action'])*/
             ;
     }
 
@@ -81,9 +88,11 @@ class JournalDataTable extends DataTable
         return [
             Column::make('id')->title('ID')->addClass('align-middle text-center'),
             Column::make('ip')->title('IP')->addClass('align-middle text-center font-weight-bold'),
+            Column::make('utilisateur')->title('Utilisateur')->addClass('align-middle text-center font-weight-bold'),
             Column::make('date_debut')->title('Date debut')->addClass('align-middle text-center font-weight-bold'),
+            Column::make('date_fin')->title('Date fin')->addClass('align-middle text-center font-weight-bold'),
 
-            Column::computed('action')->title('Action')->addClass('align-middle text-center')
+            #Column::computed('action')->title('Action')->addClass('align-middle text-center')
         ];
     }
 

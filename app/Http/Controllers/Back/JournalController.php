@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Back;
 
+use App\DataTables\JournalDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Journal;
 use Illuminate\Http\Request;
@@ -11,11 +12,12 @@ class JournalController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param JournalDataTable $dataTable
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(JournalDataTable $dataTable)
     {
-        //
+        return $dataTable->render('back.shared.index');
     }
 
     /**

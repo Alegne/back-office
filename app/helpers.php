@@ -76,6 +76,15 @@ if (!function_exists('formatDate')) {
     }
 }
 
+
+if (!function_exists('formatDateTime')) {
+    function formatDateTime($date)
+    {
+        return $date->format('d-m-Y H:i:s');
+        # return ucfirst(utf8_encode ($date->formatLocalized('%d %B %Y')));
+    }
+}
+
 if (!function_exists('formatDateItem')) {
     function formatDateItem($date)
     {

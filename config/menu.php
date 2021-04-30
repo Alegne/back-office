@@ -143,7 +143,7 @@ return [
             [
                 'name'  => 'Journal',
                 'role'  => 'admin',
-                'route' => '',
+                'route' => 'journal.index',
             ],
             [
                 'name'  => 'SEO',
