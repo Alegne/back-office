@@ -49,7 +49,8 @@ class EmploiTempsController extends Controller
             }
 
 
-            $emploiTemps = $emploiTemps->latest('updated_at');
+            # $emploiTemps = $emploiTemps->latest('updated_at');
+            $emploiTemps = $emploiTemps->orderBy('id', 'DESC');
 
             # dd($emploiTemps->toSql());
 
