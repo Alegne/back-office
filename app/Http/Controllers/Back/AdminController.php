@@ -45,6 +45,8 @@ class AdminController extends Controller
             ->join('cactus_etudiants', 'cactus_annee_universitaires.etudiant_id', 'cactus_etudiants.id')
             ->where('cactus_etudiants.status', 'actif')
                                             ->groupBy('libelle')
+                                            ->latest('updated')
+                                            ->take(5)
                                             ->pluck('total','libelle')->all();
 
         if ($request->ajax())

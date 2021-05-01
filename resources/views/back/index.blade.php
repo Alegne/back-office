@@ -11,6 +11,9 @@
 @endsection
 
 @section('css')
+
+  <link rel="stylesheet" href="/admin/plugins/chart.js/Chart.min.css">
+
 @endsection
 
 @section('main')
@@ -191,7 +194,7 @@
 
                 <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
                   <!-- Sales Chart Canvas -->
-                  <canvas id="salesChart" height="180" style="height: 180px; display: block; width: 680px;" width="680" class="chartjs-render-monitor"></canvas>
+                  <canvas id="salesChart" data-route="{{ route('dashboard.webcup') }}" height="180" style="height: 180px; display: block; width: 680px;" width="680" class="chartjs-render-monitor"></canvas>
                 </div>
                 <!-- /.chart-responsive -->
               </div>
@@ -272,4 +275,78 @@
 @endsection
 
 @section('js')
+
+  <script type="text/javascript" src="/admin/plugins/chart.js/Chart.min.js"></script>
+  <script type="text/javascript">
+
+    $(function () {
+      const labels = [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+      ];
+      const data = {
+        labels: [],
+        datasets: [{
+          display: false,
+          label: 'Evolution',
+          backgroundColor: 'rgb(4, 73, 115)',
+          data: [],
+          fill: false,
+        }]
+      };
+
+      const config = {
+        type: 'line',
+        data,
+        options: {}
+      };
+
+      let myChart = new Chart(
+              document.getElementById('salesChart'),
+              config
+      );
+
+      let route = $('#salesChart').data('route')
+
+      console.log('Route', route)
+
+      // logic to get new data
+      let getData = function() {
+        $.ajax({
+          url: route,
+          success: function(data) {
+
+            console.log(data, data.annees)
+
+            let items = data.annees
+
+            for (const item in items) {
+              console.log(`${item}: ${items[item]}`);
+              // 2022-2023: 603
+
+              // Loop
+              myChart.data.labels.push(item);
+              myChart.data.datasets[0].data.push(items[item]);
+            }
+
+
+            myChart.update();
+          }
+        });
+      };
+
+      getData()
+
+// get new data every 3 seconds
+      // setInterval(getData, 3000);
+
+
+    })
+
+
+  </script>
 @endsection
