@@ -10,13 +10,14 @@
 
             <div class="card-img-top">
                 @if($data->photo)
-                    <img src="{{ getImageSingle($data->photo, true) }}" class="img-circle w-25 h-25" alt="image">
+                    <img src="{{ getImageSingle($data->photo, 'card') }}"
+                         class="img-circle img-fluid rounded-circle w-25 h-100" style="height: 200px !important;" alt="image">
                 @else
                     <img src="/logo.png" class="img-circle w-25 h-25" alt="image">
                 @endif
             </div>
 
-            <p>Bienvenu {{ $data->nom }}, {{ $data->prenom }}</p>
+            <p class="mt-2">Bienvenu {{ $data->nom }}, {{ $data->prenom }}</p>
 
             <p>
                 Vous pouvez changer certaines de vos informations ainsi que votre photo de profile

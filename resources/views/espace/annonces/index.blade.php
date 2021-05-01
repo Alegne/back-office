@@ -1,6 +1,17 @@
 @extends('espace.parent.layout')
 
-@section('css')@endsection
+@section('css')
+
+    <style>
+
+        .img-pero{
+            width: 233px !important;
+            height:  160px !important;
+        }
+
+    </style>
+
+@endsection
 
 @section('content')
 
@@ -32,17 +43,17 @@
                         <div class="card card-annonces">
                             <div class="card-img-top">
                                 @if($annonce->image)
-                                    <img src="{{ getImageSingle($annonce->image, true) }}" alt="image" class="img-fluid">
+                                    <img src="{{ getImageSingle($annonce->image, 'card') }}" alt="image" class="img-fluid img-pero">
                                 @else
-                                    <img src="/bg-eni.jpg" alt="image" class="img-fluid">
+                                    <img src="/bg-eni.jpg" alt="image" class="img-fluid img-pero">
                                 @endif
                             </div>
                             <div class="card-body">
                                 <p class="card-text text-secondary">
                                     {{ $annonce->titre }}
                                 </p>
-                                <p class="text-muted">publier le
-                                    <strong>{{ formatDate($annonce->created_at) }}</strong></p>
+                                <p class="text-muted">publié le
+                                    <strong>{{ formatDateAnnonce($annonce->created_at) }}</strong></p>
                             </div>
                         </div>
                     </a>

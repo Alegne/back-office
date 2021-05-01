@@ -18,6 +18,11 @@
             width:100%;
             margin-bottom:10px;
         }
+
+        .image-carourel-nrh{
+            width: 324px !important;
+            height: 324px !important;
+        }
     </style>
 
 @endsection
@@ -54,12 +59,11 @@
         </div>
     </div>
 
-{{--    @if($annonce->galerie)@endif--}}
 
     <div class="col-12">
-{{--        @isset($annonce->galerie)--}}
+        @isset($annonce->galerie)
 
-            {{--@if(count($annonce->galerie) > 0)--}}
+            @if(count($annonce->galerie) > 0)
 
                 <div class="card">
                     <div class="card-header">
@@ -68,46 +72,26 @@
                     <div class="card-body">
                         <div class="owl-carousel owl-theme">
 
-                            <div class="item">
-                                <div class="card  justify-content-center mx-1" >
-                                    <img class="card-img-top m-auto" src="/default.png" alt="Card image cap">
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="card  justify-content-center mx-1" >
-                                    <img class="card-img-top m-auto" src="/default.png" alt="Card image cap">
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="card  justify-content-center mx-1" >
-                                    <img class="card-img-top m-auto" src="/default.png" alt="Card image cap">
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="card  justify-content-center mx-1" >
-                                    <img class="card-img-top m-auto" src="/default.png" alt="Card image cap">
-                                </div>
-                            </div>
-
-                            {{--@foreach($annonce->galerie as $galerie)
+                            @foreach($annonce->galerie as $galerie)
                                 <div class="item">
                                     <div class="card  justify-content-center mx-1" >
                                         @if(in_array(Str::lower(explode('.', $galerie)[1]), ['jpeg','pjpeg','png','gif','jpg']))
-                                            <img class="card-img-top m-auto" src="{{ getImageSingle($galerie, true) }}" alt="Card image cap">
+                                            <img class="card-img-top m-auto image-carourel-nrh" src="{{ getImageSingle($galerie, true) }}"
+                                                 alt="Card image cap">
                                         @else
-                                            <img class="card-img-top m-auto" src="/default.png" alt="Card image cap">
+                                            <img class="card-img-top m-auto image-carourel-nrh" src="/default.png" alt="Card image cap">
                                         @endif
                                     </div>
                                 </div>
-                            @endforeach--}}
+                            @endforeach
 
                         </div>
                     </div>
                 </div>
-            {{--@endif
+            @endif
         @else
             <p class="text-secondary">AUCUN Galeries</p>
-        @endisset--}}
+        @endisset
     </div>
 
 </div>

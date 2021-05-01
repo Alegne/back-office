@@ -30,21 +30,25 @@ class AnnoncesController extends Controller
 
                     $etudiant = Etudiant::find($utilisateur->id);
 
-                    $annonces = Annonce::query();
+                    $annonces = Annonce::query()
+                        ->where('approuve', 1);
 
-                    $niveaux = Niveau::whereIn('id', $etudiant->niveau->pluck('id'))->get();
-                    $parcours = Parcours::where('id', $etudiant->parcours->id)->get();
+                    $niveaux = Niveau::whereIn('id', $etudiant->niveau->pluck('id'))->get(); # Collection
+                    $parcours = Parcours::where('id', $etudiant->parcours->id)->first();    # Object
 
                     # dd(gettype($niveaux), gettype($niveaux->toArray()), $niveaux->toArray());
 
                     $annonces = $annonces->whereHas('parcours', function ($q) use ($parcours) {
-                        $q->where('cactus_parcours.id', $parcours[0]->id);
+                        $q->where('cactus_parcours.id', $parcours->id);
                     })
                         ->whereHas('niveau', function ($q) use ($niveaux) {
-                            $q->where('cactus_niveaux.id', $niveaux[0]->id);
+                            $q->whereIn('cactus_niveaux.id', $niveaux->pluck('id'));
                         })
                         #->get()
                     ;
+
+                    # dd($annonces->toSql(), $annonces->get(), $niveaux, $parcours);
+
                 }
             }
 

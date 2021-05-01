@@ -37,7 +37,7 @@
                         <tr>
                             <td>{{ $numerique->libelle }}</td>
                             <td>{{ $numerique->enseignant->nom }}</td>
-                            <td>{{ formatDate($numerique->created_at) }}</td>
+                            <td>{{ formatDateAnnonce($numerique->created_at) }}</td>
                             <td>
                                 <a href="{{ route('espace.espace_numerique.show', ['numerique' => $numerique->id]) }}"
                                    style=""

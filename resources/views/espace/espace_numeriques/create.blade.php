@@ -45,6 +45,10 @@
 
         <div class="row">
 
+            <div class="col-12 justify-content-start mx-1 mb-2">
+                <a href="{{ route('espace.espace_numerique.index') }}" class="btn btn-primary">Retour</a>
+            </div>
+
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">
@@ -82,7 +86,7 @@
                             <div id="option-parcours" class="col-6 ">
                                 <div class="form-group">
                                     <label>Parcous</label>
-                                    <select class="form-control" name="parcours_id" multiple>
+                                    <select class="form-control" name="parcours_id[]" multiple>
 
                                         @foreach($parcours as $key => $valeur)
                                             <option value="{{ $key }}">{{ $valeur }}</option>

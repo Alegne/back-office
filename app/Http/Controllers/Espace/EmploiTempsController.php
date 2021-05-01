@@ -32,14 +32,14 @@ class EmploiTempsController extends Controller
                     # $niveaux = Niveau::whereIn('tag', $utilisateur->niveau)->first();
                     # $parcours = Parcours::whereIn('tag', $utilisateur->parcours)->first();
 
-                    $niveaux = Niveau::whereIn('id', $etudiant->niveau->pluck('id'))->get();
-                    $parcours = Parcours::where('id', $etudiant->parcours->id)->get();
+                    $niveaux = Niveau::whereIn('id', $etudiant->niveau->pluck('id'))->get(); # Collection
+                    $parcours = Parcours::where('id', $etudiant->parcours->id)->first();     # Object
 
 
 
                     $emploiTemps = $emploiTemps->whereHas('parcours', function ($q) use ($parcours) {
                         # $q->where('cactus_parcours.tag', $parcours->tag);
-                        $q->where('cactus_parcours.id', $parcours[0]->id);
+                        $q->where('cactus_parcours.id', $parcours->id);
                     })
                         # ->where('niveau_id', $niveaux->id)
                         ->where('niveau_id', $niveaux[0]->id)

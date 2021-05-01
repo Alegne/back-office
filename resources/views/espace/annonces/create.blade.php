@@ -19,6 +19,8 @@
 
 
 
+
+
     <form action="{{ route('espace.annonces.store') }}"
           method="post"
           enctype="multipart/form-data">
@@ -46,6 +48,11 @@
                 </button>
             </div>
         @endif
+
+        <div class="row justify-content-start m-2">
+            <a href="{{ route('espace.annonces.index') }}"
+               class="btn btn-primary">Retour</a>
+        </div>
 
         <div class="row">
 
@@ -83,10 +90,10 @@
                             </div>
 
                             {{--<div id="vue-specification" class="row d-none">--}}
-                                <div id="option-niveau" class="col-4 d-none">
+                                <div id="option-niveau" class="col-4 @if (old('niveau_id') == null) d-none @endif ">
                                     <div class="form-group">
                                         <label>Niveau</label>
-                                        <select class="form-control" name="niveau_id" multiple>
+                                        <select class="form-control" name="niveau_id[]" multiple>
 
                                             @foreach($niveaux as $key => $valeur)
                                                 <option value="{{ $key }}">{{ $valeur }}</option>
@@ -95,10 +102,10 @@
                                     </div>
 
                                 </div>
-                                <div id="option-parcours" class="col-4 d-none ">
+                                <div id="option-parcours" class="col-4 @if (old('parcours_id') == null) d-none @endif  ">
                                     <div class="form-group">
                                         <label>Parcous</label>
-                                        <select class="form-control" name="parcours_id" multiple>
+                                        <select class="form-control" name="parcours_id[]" multiple>
 
                                             @foreach($parcours as $key => $valeur)
                                                 <option value="{{ $key }}">{{ $valeur }}</option>

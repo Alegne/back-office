@@ -77,6 +77,23 @@ if (!function_exists('formatDate')) {
 }
 
 
+if (!function_exists('formatDateENT')) {
+    function formatDateENT($date)
+    {
+        return $date->format('d-m-Y');
+        # return ucfirst(utf8_encode ($date->formatLocalized('%d %B %Y')));
+    }
+}
+
+if (!function_exists('formatDateAnnonce')) {
+    function formatDateAnnonce($date)
+    {
+        return $date->format('d-m-Y H:i');
+        # return ucfirst(utf8_encode ($date->formatLocalized('%d %B %Y')));
+    }
+}
+
+
 if (!function_exists('formatDateTime')) {
     function formatDateTime($date)
     {

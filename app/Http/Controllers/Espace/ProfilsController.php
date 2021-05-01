@@ -7,6 +7,7 @@ use App\Models\Enseignant;
 use App\Models\Etudiant;
 use App\Models\Niveau;
 use App\Models\Parcours;
+use App\Rules\GenericUpdate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
@@ -42,11 +43,13 @@ class ProfilsController extends Controller
         if ($type == 'etudiant')
         {
             $request->validate([
-                'email'          => 'required|email',
+                'email'          => ['required', 'email', new GenericUpdate('cactus_etudiants', 'email',
+                                                                $request->email, $id) ],
                 'nom'            => 'required',
                 'prenom'         => 'required',
                 'password'       => 'required',
-                'cin'            => 'required|numeric',
+                'cin'            => ['required', 'numeric', new GenericUpdate('cactus_etudiants', 'cin',
+                                                                $request->cin, $id)],
                 'date_naissance' => 'required',
                 'lieu_naissance' => 'required',
                 'adresse'        => 'required',
@@ -55,10 +58,12 @@ class ProfilsController extends Controller
         } elseif ($type == 'enseignant')
         {
             $request->validate([
-                'identifiant'   => 'required|unique:cactus_enseignants',
+                'identifiant'   => ['required', new GenericUpdate('cactus_enseignants', 'identifiant',
+                                                                $request->identifiant, $id)],
                 'nom'           => 'required',
                 'prenom'        => 'required',
-                'email'         => 'required|emal',
+                'email'         => ['required', 'email', new GenericUpdate('cactus_enseignants', 'email',
+                                                                $request->email, $id)],
                 'telephone'     => 'required|numeric',
                 'adresse'       => 'required',
                 'photo'         => 'file|mimes:jpeg,jpg,png,gif|max:10000'

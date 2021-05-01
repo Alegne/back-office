@@ -22,6 +22,7 @@ use App\Http\Controllers\Back\LangueController;
 use App\Http\Controllers\Back\ConfigurationController;
 use App\Http\Controllers\Back\UserController;
 use App\Http\Controllers\Espace\EmploiTempsController;
+use App\Http\Controllers\Espace\GalerieController;
 use App\Http\Controllers\Espace\HomeController;
 use App\Http\Controllers\Espace\ProfilsController;
 use Illuminate\Support\Facades\Route;
@@ -84,6 +85,12 @@ Route::group(['prefix' => 'espace'], function () {
         # Emploi du temps
         Route::get('/emploi-temps', [EmploiTempsController::class, 'index'])->name('espace.emploi_temps.index');
         Route::get('/emploi-temps/show/{emploiTemps}', [EmploiTempsController::class, 'show'])->name('espace.emploi_temps.show');
+
+
+        # Galeries
+        Route::get('/galeries', [GalerieController::class, 'index'])->name('espace.galeries.index');
+        Route::get('/galeries/show/{album}', [GalerieController::class, 'show'])->name('espace.galeries.show');
+
 
         # Espace Numerique
         Route::get('/espace-numeriques', [EspaceEspaceNumeriquesController::class, 'index'])->name('espace.espace_numerique.index');
