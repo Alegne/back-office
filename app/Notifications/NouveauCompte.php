@@ -48,7 +48,8 @@ class NouveauCompte extends Notification
         $this->numero      = $numero;
         $this->identifiant = $identifiant;
         $this->back        = $back;
-        $this->HOME        = $back ? route('dashboard.webcup') : config('app.front_office');
+        # $this->HOME        = $back ? route('dashboard.webcup') : config('app.front_office');
+        $this->HOME        = config('app.front_office') ? config('app.front_office') : route('dashboard.webcup');
         $this->nom         = $nom;
     }
 
