@@ -59,6 +59,10 @@ class ConfigurationSeeder extends Seeder
                 'valeur' => '_',
             ],
             [
+                'cle' => 'lien_ent',
+                'valeur' => '_',
+            ],
+            [
                 'cle' => 'telephone',
                 'valeur' => '_',
             ],
