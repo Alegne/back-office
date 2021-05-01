@@ -12,21 +12,21 @@ class EvenementController extends Controller
 
     public function topActualite()
     {
-        $articles = Evenement::where('type', 'actualite')->latest('id', 'updated_at')->take(3)->get();
+        $articles = Evenement::where('type', 'actualite')->latest('updated_at')->take(3)->get();
 
         return EvenementResource::collection($articles);
     }
 
     public function topNouvelle()
     {
-        $articles = Evenement::where('type', 'nouvelle')->latest('id', 'updated_at')->take(3)->get();
+        $articles = Evenement::where('type', 'nouvelle')->latest('updated_at')->take(3)->get();
 
         return EvenementResource::collection($articles);
     }
 
     public function all(Request $request)
     {
-        $evenements = Evenement::query()->latest('id', 'updated_at');
+        $evenements = Evenement::query()->latest('updated_at');
 
         $evenements = $request->pagination ?
             $evenements->paginate(10) :
