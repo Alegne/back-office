@@ -7,7 +7,7 @@
             "  style="width: 200px !important;">
         <i class="
 
-        @isset($sub) far fa-circle @endisset
+        {{-- @isset($sub) far fa-circle @endisset --}}
 
         nav-icon
 
