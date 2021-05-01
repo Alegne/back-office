@@ -167,14 +167,16 @@ class AnnonceController extends Controller
         ]);
     }
 
-    public function approuve(Annonce $annonce)
+    #public function approuve(Annonce $annonce)
+    public function desapprouve(Annonce $annonce)
     {
         $annonce->approuve = 1;
         $annonce->save();
         return response()->json(['message' => 'suceess']);
     }
 
-    public function desapprouve(Annonce $annonce)
+    # public function desapprouve(Annonce $annonce)
+    public function approuve(Annonce $annonce)
     {
         $annonce->approuve = 0;
         $annonce->save();

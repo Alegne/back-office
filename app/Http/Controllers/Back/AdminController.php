@@ -40,12 +40,14 @@ class AdminController extends Controller
                             ->groupBy('tag')
                             ->pluck('total','tag')->all();
 
-        $annees = AnneeUniversitaireLibelle::select('libelle', DB::raw('count(*) as total'))
+        $annees = AnneeUniversitaireLibelle::
+        select('libelle', DB::raw('count(*) as total'))
             ->join('cactus_annee_universitaires', 'cactus_annee_universitaires.annee_id', 'cactus_annee_universitaire_libelles.id')
             ->join('cactus_etudiants', 'cactus_annee_universitaires.etudiant_id', 'cactus_etudiants.id')
             ->where('cactus_etudiants.status', 'actif')
                                             ->groupBy('libelle')
-                                            ->latest('updated')
+                                            #->latest('updated')
+                                            # ->latest('id')
                                             ->take(5)
                                             ->pluck('total','libelle')->all();
 
