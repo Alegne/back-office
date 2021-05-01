@@ -20,7 +20,7 @@ class CreateFormationsTable extends Migration
             $table->string('slug');
             $table->string('photo')->nullable();
 
-            # $table->timestamps();
+            $table->timestamps();
         });
     }
 

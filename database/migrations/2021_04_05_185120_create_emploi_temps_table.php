@@ -31,7 +31,7 @@ class CreateEmploiTempsTable extends Migration
                 ->onDelete('restrict')
                 ->onUpdate('restrict');
 
-            # $table->timestamps();
+            $table->timestamps();
         });
     }
 

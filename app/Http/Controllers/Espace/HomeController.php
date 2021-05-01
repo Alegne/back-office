@@ -76,6 +76,11 @@ class HomeController extends Controller
 
         if ($data) {
             $data = json_decode($data);
+            # dd(isset($data->identifiant));
+
+            $data = isset($data->identifiant) ? Enseignant::find($data->id) : Etudiant::find($data->id);
+
+            # dd($data, $data->id);
 
             return view('espace.index', compact('data', 'type'));
         }
@@ -84,6 +89,8 @@ class HomeController extends Controller
 
         if ($data) {
             $data = json_decode($data);
+
+            $data = isset($data->identifiant) ? Enseignant::find($data->id) : Etudiant::find($data->id);
 
             return view('espace.index', compact('data', 'type'));
         }
