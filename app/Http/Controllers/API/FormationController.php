@@ -13,8 +13,15 @@ class FormationController extends Controller
 
     public function all()
     {
+        /*$formations = Formation::
+        #lastest('id')->
+        # groupBy('libelle')->
+        orderBy('id', 'ASC')
+            ->get()
+        ;*/
 
         return FormationResource::collection(Formation::all());
+        # return FormationResource::collection($formations);
     }
 
     public function get(Formation $formation)
