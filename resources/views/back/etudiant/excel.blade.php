@@ -72,17 +72,17 @@
                         <div class="card col-md-2 ml-1">
                             <div class="card-header">Niveaux</div>
                             <div class="card-body">
-                                @foreach($niveaux as $niveau)
+                                @foreach($niveaux as $key => $value)
                                     <div class="form-check">
                                         <input class="form-check-input" name="niveaux[]" type="checkbox"
-                                               value="L1"
+                                               value="{{ $key }}"
                                         @isset($data['niveaux'])
-                                            @foreach($data['niveaux'] as $niveaux)
-                                                {{ $niveaux == $niveau ? 'checked' : '' }}
+                                            @foreach($data['niveaux'] as $niveau_get)
+                                                {{ $niveau_get == $key ? 'checked' : '' }}
                                                     @endforeach
                                                 @endisset
                                         >
-                                        <label class="form-check-label">{{ $niveau }}</label>
+                                        <label class="form-check-label">{{ $value }}</label>
                                     </div>
                                 @endforeach
                             </div>
@@ -92,37 +92,37 @@
                         <div class="card col-md-2 ml-1">
                             <div class="card-header">Parcours</div>
                             <div class="card-body">
-                                @foreach($parcours as $parcours_item)
+                                @foreach($parcours as $key => $value)
                                     <div class="form-check">
                                         <input class="form-check-input" name="parcours[]" type="checkbox"
-                                               value="GB"
+                                               value="{{ $key }}"
                                         @isset($data['parcours'])
-                                            @foreach($data['parcours'] as $niveaux)
-                                                {{ $niveaux == $parcours_item ? 'checked' : '' }}
+                                            @foreach($data['parcours'] as $parcours_get)
+                                                {{ $parcours_get == $key ? 'checked' : '' }}
                                                     @endforeach
                                                 @endisset
                                         >
-                                        <label class="form-check-label">{{ $parcours_item }} </label>
+                                        <label class="form-check-label">{{ $value }} </label>
                                     </div>
                                 @endforeach
                             </div>
                         </div>
 
                         {{-- Annee Univesitaire --}}
-                        <div class="card col-md-2 ml-1">
+                        <div class="card col-md-3 ml-1">
                             <div class="card-header">Annee Univesitaire</div>
                             <div class="card-body">
-                                @foreach($annees as $annee)
+                                @foreach($annees as $key => $value)
                                     <div class="form-check">
                                         <input class="form-check-input" name="annees[]" type="checkbox"
-                                               value="2020-2021"
+                                               value="{{ $key }}"
                                         @isset($data['annees'])
-                                            @foreach($data['annees'] as $niveaux)
-                                                {{ $niveaux == $annee ? 'checked' : '' }}
+                                            @foreach($data['annees'] as $annees_get)
+                                                {{ $annees_get == $key ? 'checked' : '' }}
                                                     @endforeach
                                                 @endisset
                                         >
-                                        <label class="form-check-label">{{ $annee }}</label>
+                                        <label class="form-check-label">{{ $value }}</label>
                                     </div>
                                 @endforeach
                             </div>

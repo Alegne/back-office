@@ -20,7 +20,7 @@ class FormationResource extends JsonResource
             'libelle'     => $this->libelle,
             'slug'        => $this->slug,
             'description' => $this->description,
-            'photo'       => getImageSingle($this->photo),
+            'photo'       => $this->photo ? getImageSingle($this->photo) : null,
         ];
     }
 }

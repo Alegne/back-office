@@ -42,17 +42,15 @@ trait FilterTrait
 
         if ($request->has('niveaux') && $request->niveaux)
         {
-            # dd($request->niveaux, gettype($request->niveaux));
-
             $query->whereHas('niveau', function ($q) use ($request) {
-                $q->whereIn('cactus_niveaux.tag', $request->niveaux);
+                $q->whereIn('cactus_niveaux.id', $request->niveaux);
             });
         }
 
         if ($request->has('annees') && $request->annees)
         {
             $query->whereHas('annee', function ($q) use ($request) {
-                $q->whereIn('cactus_annee_universitaire_libelles.libelle', $request->annees);
+                $q->whereIn('cactus_annee_universitaire_libelles.id', $request->annees);
             });
         }
 
@@ -65,7 +63,7 @@ trait FilterTrait
             $query
                 ->join('cactus_niveaux', 'cactus_annee_universitaires.niveau_id', 'cactus_niveaux.id')
                 ->join('cactus_formations', 'cactus_formations.id', 'cactus_niveaux.formation_id')
-                ->whereIn('cactus_formations.libelle', $request->formations)
+                ->whereIn('cactus_formations.id', $request->formations)
                 # ->select('cactus_etudiants.*', )
             ;
         }

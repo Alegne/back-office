@@ -6,9 +6,9 @@
      data-route="{{ route('etudiant.show.modal', ['email' => $etudiant->email]) }}">
 
     @if($etudiant->photo)
-        <img class="card-img-top" src="{{ getImageSingle($etudiant->photo, 'card') }}" alt="Card image cap">
+        <img class="card-img-top image-card" src="{{ getImageSingle($etudiant->photo, 'card') }}" alt="Card image cap">
     @else
-        <img class="card-img-top" src="/default.png" alt="Card image cap">
+        <img class="card-img-top image-card" src="/default.png" alt="Card image cap">
     @endif
 
     <div class="card-body">

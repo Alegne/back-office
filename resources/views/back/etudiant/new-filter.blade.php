@@ -14,7 +14,10 @@
     <link rel="stylesheet" href="/admin/dist/css/loading.css">
 
     <style>
-
+        .image-card{
+            width: 150px !important;
+            height: 150px !important;
+        }
     </style>
 @endsection
 
@@ -68,7 +71,7 @@
                                     @endif
 
                                 @else
-                                    <p class="text-center text-danger"> NO CRITERE</p>
+                                    <p class="text-center text-danger"> PAS DE CRITERE</p>
                                 @endisset
 
                             </div>

@@ -19,7 +19,7 @@ class ClubResource extends JsonResource
             'id'          => $this->id,
             'libelle'     => $this->libelle,
             'description' => $this->description,
-            'image'       => getImageSingle($this->image),
+            'image'       => $this->image ? getImageSingle($this->image) : null,
         ];
     }
 }

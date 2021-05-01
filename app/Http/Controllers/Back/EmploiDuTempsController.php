@@ -174,12 +174,12 @@ class EmploiDuTempsController extends Controller
         #dd(explode('-', $parcours));
 
         $matiereParcours = MatiereParcours::whereIn('parcours_id', explode('-', $parcours))
-            ->select('matiere_id');
+                                    ->select('matiere_id');
 
-        $matieres = Matiere::whereIn('id', $matiereParcours)
-            ->where('niveau_id', $niveau)
-            # ->whereIn('parcours_id', json_decode($parcours))
-            ->get();
+        $matieres        = Matiere::whereIn('id', $matiereParcours)
+                                    ->where('niveau_id', $niveau)
+                                    # ->whereIn('parcours_id', json_decode($parcours))
+                                    ->get();
 
         # dd($matieres);
 

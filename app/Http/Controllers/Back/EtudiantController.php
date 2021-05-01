@@ -253,7 +253,7 @@ class EtudiantController extends Controller
         # $img->resize(width, height);
 
         $img->resize(1000,800)->encode()->save(public_path('/storage/images/') . $name);
-        $img->resize(1000,400)->encode()->save(public_path('/storage/images/thumbs/') . $name);
+        $img->resize(400,400)->encode()->save(public_path('/storage/images/thumbs/') . $name);
 
         return $name;
     }
@@ -291,11 +291,18 @@ class EtudiantController extends Controller
         $data      = null;
 
 
-        $parcours = Parcours::all()->pluck('tag');
-        $niveaux = Niveau::all()->pluck('tag');
-        $annees = AnneeUniversitaireLibelle::all()->pluck('libelle');
+        # $parcours = Parcours::all()->pluck('tag');
+        # $niveaux = Niveau::all()->pluck('tag');
+        # $annees = AnneeUniversitaireLibelle::all()->pluck('libelle');
+        # $status = ['ancien' => 'Ancien', 'actif' => 'Actif'];
+        # $formations = Formation::all()->pluck('libelle');
+
+        $parcours = Parcours::all()->pluck('tag', 'id');
+        $niveaux = Niveau::all()->pluck('tag', 'id');
+        $annees = AnneeUniversitaireLibelle::all()->pluck('libelle', 'id');
         $status = ['ancien' => 'Ancien', 'actif' => 'Actif'];
-        $formations = Formation::all()->pluck('libelle');
+        $formations = Formation::all()->pluck('libelle', 'id');
+
 
         if ($request->ajax())
         {
@@ -314,7 +321,10 @@ class EtudiantController extends Controller
 
             $query = $this->contraintes($request, Etudiant::query());
 
+            # dd($query->toSql(), $request->all(), $query->get());
             # dd($query->toSql(), $request->all(), $query->get(), $query->paginate(10), $query->simplePaginate(15));
+
+            # dd($query->get());
 
             # $etudiants = $query->get();
             $etudiants = $query->paginate(10);
