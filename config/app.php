@@ -4,6 +4,7 @@ return [
 
 
     'front_office' => env('APP_URL_FRONT_OFFICE', 'http://cactus.eni.mg/'),
+    'mail_admin'   => env('MAIL_ADMIN', 'admin@eni.mg'),
 
     /*
     |--------------------------------------------------------------------------

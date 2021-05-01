@@ -20,7 +20,7 @@ class AnnoncesController extends Controller
         $utilisateur = getUtilisateur($request);
 
         $annonces = Annonce::query()
-            ->where('type', 'public');
+            ->where('approuve', 1);
 
         if ($utilisateur) {
             # dd($utilisateur);
@@ -31,8 +31,6 @@ class AnnoncesController extends Controller
                     $etudiant = Etudiant::find($utilisateur->id);
 
                     $annonces = Annonce::query();
-
-                    # dd($etudiant->niveau->pluck('id'), gettype($etudiant->niveau));
 
                     $niveaux = Niveau::whereIn('id', $etudiant->niveau->pluck('id'))->get();
                     $parcours = Parcours::where('id', $etudiant->parcours->id)->get();

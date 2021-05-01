@@ -23,6 +23,12 @@
                     </a>
                 </li>
                 <li>
+                    <a class="nav-link" href="{{ getConfiguration('lien_ent') }}">
+                        <i class="nc-icon nc-map-big"></i>
+                        <p>ENT</p>
+                    </a>
+                </li>
+                <li>
                     <a class="nav-link" href="{{ route('espace.espace_numerique.index') }}">
                         <i class="nc-icon nc-paper-2"></i>
                         <p>Espace Numerique</p>

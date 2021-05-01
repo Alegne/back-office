@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office"><head>
     <title>
@@ -121,7 +122,7 @@
                                         <tbody>
                                         <tr>
                                             <td style="width:100px;">
-                                                <img alt="" height="auto" src="{{asset('logo.png')}}" style="border:none;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="100">
+                                                <img alt="" height="auto" src="{{ asset('logo.png') }}" style="border:none;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="100">
                                             </td>
                                         </tr>
                                         </tbody>
@@ -185,7 +186,7 @@
                             <tbody><tr>
                                 <td align="center" style="font-size:0px;padding:10px 25px;padding-top:28px;padding-right:25px;padding-bottom:18px;padding-left:25px;word-break:break-word;">
                                     <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:center;color:#ABCDEA;">
-                                        Bonjour <p style="font-size:16px; color:white">{{ $nom }}</p>
+                                        Bonjour <p style="font-size:16px; color:white">{{ $email }}</p>
                                     </div>
                                 </td>
                             </tr>
@@ -249,8 +250,10 @@
                             </tr>
                             <tr>
                                 <td align="center" style="font-size:0px;padding:10px 25px;padding-top:28px;padding-right:25px;padding-bottom:28px;padding-left:25px;word-break:break-word;">
-                                    <div style="font-family:Helvetica;font-size:13px;line-height:1;text-align:center;color:#FFFFFF;"><span style="font-size:20px; font-weight:bold">
-                                            Cliquer sur le lien suivant pour reinitialiser votre mot de passe</span>
+                                    <div style="font-family:Helvetica;font-size:13px;line-height:1;text-align:justify;color:#FFFFFF;">
+                                        <span style="font-size:15px; font-weight:bold">
+                                            {!! $message_nrh !!}
+                                        </span>
                                     </div>
                                 </td>
                             </tr>
@@ -279,9 +282,46 @@
         <tr>
             <td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;">
     <![endif]-->
+    <div style="background:#044973;background-color:#044973;margin:0px auto;max-width:600px;">
+        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#044973;background-color:#044973;width:100%;">
+            <tbody>
+            <tr>
+                <td style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:15px;text-align:center;">
+                    <!--[if mso | IE]>
+                    <table role="presentation" border="0" cellpadding="0" cellspacing="0">
 
+                        <tr>
 
+                            <td
+                                    class="" style="vertical-align:top;width:200px;"
+                            >
+                    <![endif]-->
+                    <!--[if mso | IE]>
+                    </td>
 
+                    <td
+                            class="" style="vertical-align:top;width:200px;"
+                    >
+                    <![endif]-->
+                    <!--[if mso | IE]>
+                    </td>
+
+                    <td
+                            class="" style="vertical-align:top;width:200px;"
+                    >
+                    <![endif]-->
+                    <!--[if mso | IE]>
+                    </td>
+
+                    </tr>
+
+                    </table>
+                    <![endif]-->
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 
     <!--[if mso | IE]>
     </td>
@@ -294,6 +334,7 @@
         <tr>
             <td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;">
     <![endif]-->
+
     <div style="background:#044973;background-color:#044973;margin:0px auto;max-width:600px;">
         <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#044973;background-color:#044973;width:100%;">
             <tbody>
@@ -308,21 +349,13 @@
                                     class="" style="vertical-align:top;width:300px;"
                             >
                     <![endif]-->
-                    <div class="mj-column-per-50 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
-                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%">
-                            <tbody><tr>
-                                <td align="center" vertical-align="middle" style="font-size:0px;padding:15px 30px;padding-right:25px;padding-bottom:10px;padding-left:25px;word-break:break-word;">
-                                    <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:separate;line-height:100%;">
-                                        <tbody><tr>
-                                            <td align="center" bgcolor="#ffae00" role="presentation" style="border:none;border-radius:10px;cursor:auto;mso-padding-alt:10px 25px;background:#ffae00;" valign="middle">
-                                                <a href="https://mjml.io" style="display:inline-block;background:#ffae00;color:#FFFFFF;font-family:Helvetica;font-size:14px;font-weight:bold;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px;mso-padding-alt:0px;border-radius:10px;" target="_blank"> Cliquer ici </a>
-                                            </td>
-                                        </tr>
-                                        </tbody></table>
-                                </td>
-                            </tr>
-                            </tbody></table>
-                    </div>
+                    <!--[if mso | IE]>
+                    </td>
+
+                    <td
+                            class="" style="vertical-align:top;width:300px;"
+                    >
+                    <![endif]-->
                     <!--[if mso | IE]>
                     </td>
 
@@ -382,7 +415,7 @@
                             <tr>
                                 <td align="center" style="font-size:0px;padding:10px 25px;padding-top:20px;padding-right:25px;padding-bottom:20px;padding-left:25px;word-break:break-word;">
                                     <div style="font-family:Helvetica;font-size:15px;line-height:1;text-align:center;color:#FFFFFF;">Cordialement, <br>
-                                        <span style="font-size:15px">Ecole Nationa d'Informatique, <br> Universite de Fianarantsoa</span>
+                                        <span style="font-size:15px">Ecole Nationale d'Informatique, <br> Universite de Fianarantsoa</span>
                                     </div>
                                 </td>
                             </tr>

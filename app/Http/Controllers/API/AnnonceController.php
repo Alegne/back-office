@@ -13,7 +13,10 @@ class AnnonceController extends Controller
 {
     public function top()
     {
-        $annonces = Annonce::latest('id', 'updated_at')->take(3)->get();
+        $annonces = Annonce::
+            where('type', 'public')
+            ->where('approuve', 1)
+            ->latest('updated_at')->take(3)->get();
 
         return AnnonceResource::collection($annonces);
     }
@@ -39,11 +42,12 @@ class AnnonceController extends Controller
             ;
         }
 
-        $annonces = $annonces->latest('id', 'updated_at');
+        $annonces = $annonces->latest('updated_at');
 
         $annonces = $request->pagination ?
             $annonces->paginate(10) :
-            $annonces->get()
+            $annonces->where('type', 'public')
+                      ->where('approuve', 1)->get()
         ;
 
         return AnnonceResource::collection($annonces);

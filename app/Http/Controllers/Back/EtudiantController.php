@@ -351,7 +351,7 @@ class EtudiantController extends Controller
             $message = "Exportation Success";
 
             ## Query
-            dd($data);
+            # dd($data);
 
             # return view('back.etudiant.excel', compact('parcours', 'niveaux', 'annees', 'status', 'message', 'data'));
         }
