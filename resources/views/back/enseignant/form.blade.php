@@ -94,16 +94,17 @@
                     </div>
 
                     <div class="form-row">
-                        <x-back.input
+<!--                        <x-back.input
                                 col="col-md-6"
                                 name='identifiant'
                                 title='Identifiant'
                                 :value="isset($enseignant) ? $enseignant->identifiant : ''"
                                 input='text'
                                 :required="true">
-                        </x-back.input>
+                        </x-back.input>-->
+
                         <x-back.input
-                                col="col-md-6"
+                                col="col-md-12"
                                 name='email'
                                 title='Email'
                                 :value="isset($enseignant) ? $enseignant->email : ''"

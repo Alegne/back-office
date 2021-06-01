@@ -24,6 +24,13 @@ class AnnonceDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
+            ->editColumn('type', function ($annonce) {
+                if($annonce->type == 'public') {
+                    return "Public";
+                } elseif($annonce->type == 'private') {
+                    return "Prive";
+                }
+            })
             ->editColumn('approuve', function($annonce) {
 
                 #dd($annonce->approuve);
@@ -63,7 +70,7 @@ class AnnonceDataTable extends DataTable
                         __('Etes-vous sure de le supprimer ?')
                     );
             })
-            ->rawColumns(['approuve', 'action'])
+            ->rawColumns(['approuve', 'type', 'action'])
             ;
     }
 
@@ -104,6 +111,7 @@ class AnnonceDataTable extends DataTable
         return [
             Column::make('id')->title('ID')->addClass('align-middle text-center'),
             Column::make('titre')->title('Titre')->addClass('align-middle text-center font-weight-bold'),
+            Column::make('type')->title('VIsibilite')->addClass('align-middle text-center font-weight-bold'),
             Column::computed('approuve')->title('Approbation')->addClass('align-middle text-center'),
 
             Column::computed('action')->title('Action')->addClass('align-middle text-center')

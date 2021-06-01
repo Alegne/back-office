@@ -52,9 +52,17 @@ class EnseignantController extends Controller
 
         $request->merge(['mot_de_passe' => Hash::make($request->mot_de_passe)]);
 
+        # Identifiant
+        $nom = Str::lower($request->nom);
+        $prenom = Str::lower($request->prenom);
+        $identiiant = Str::slug($nom . '-' . $prenom);
+        $request->merge(['identifiant' => $identiiant]);
+
         # dd($request->all());
 
         $inputs = $this->getInputs($request);
+
+        #dd($inputs);
 
         $enseignant = Enseignant::create($inputs);
 
@@ -97,8 +105,8 @@ class EnseignantController extends Controller
     {
         # dd( Str::length($request->telephone));
         $request->validate([
-            'identifiant'   => ['required', new GenericUpdate('cactus_enseignants', 'identifiant',
-                                                                $request->identifiant, $enseignant->id)],
+            /*'identifiant'   => ['required', new GenericUpdate('cactus_enseignants', 'identifiant',
+                                                                $request->identifiant, $enseignant->id)],*/
             'nom'           => 'required',
             'prenom'        => 'required',
             'email'         => ['required', 'email', new GenericUpdate('cactus_enseignants', 'email',
@@ -111,7 +119,15 @@ class EnseignantController extends Controller
         #dd($request->all());
         # $request->merge(['mot_de_passe' => Hash::make($request->mot_de_passe)]);
 
+        # Identifiant
+        $nom = Str::lower($request->nom);
+        $prenom = Str::lower($request->prenom);
+        $identiiant = Str::slug($nom . '-' . $prenom);
+        $request->merge(['identifiant' => $identiiant]);
+
         $inputs = $this->getInputs($request);
+
+        # dd($inputs);
 
         if ($request->has('photo') && $request->photo) {
             $this->deleteImages($enseignant);

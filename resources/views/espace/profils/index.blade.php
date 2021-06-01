@@ -143,21 +143,23 @@
 
                         {{-- Enseignant --}}
                         @if($type == 'enseignant')
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Identifiant</label>
-                                    <input type="text" class="form-control {{ $errors->has('identifiant') ? ' is-invalid' : '' }}"
-                                           name="identifiant"
-                                           value="{{ old('identifiant', $data->identifiant) }}" required>
 
-                                    @if ($errors->has('identifiant'))
-                                        <div class="invalid-feedback">
-                                            {{ $errors->first('identifiant') }}
-                                        </div>
-                                    @endif
+                            {{--<div class="col-md-4">
+                                  <div class="form-group">
+                                      <label>Identifiant</label>
+                                      <input type="text" class="form-control {{ $errors->has('identifiant') ? ' is-invalid' : '' }}"
+                                             name="identifiant"
+                                             value="{{ old('identifiant', $data->identifiant) }}" required>
+
+                                      @if ($errors->has('identifiant'))
+                                          <div class="invalid-feedback">
+                                              {{ $errors->first('identifiant') }}
+                                          </div>
+                                      @endif
                                 </div>
-                            </div>
-                            <div class="col-md-4">
+                            </div>--}}
+
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Mot de passe</label>
                                     <input type="password" class="form-control {{ $errors->has('mot_de_passe') ? ' is-invalid' : '' }}"
@@ -215,6 +217,7 @@
                                 <label>CIN</label>
                                 <input type="text" class="form-control {{ $errors->has('cin') ? ' is-invalid' : '' }}"
                                        name="cin"
+                                       maxlength="12"
                                        value="{{ old('cin', $data->cin) }}" required>
 
                                 @if ($errors->has('cin'))

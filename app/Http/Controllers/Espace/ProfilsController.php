@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 
 class ProfilsController extends Controller
@@ -58,8 +59,8 @@ class ProfilsController extends Controller
         } elseif ($type == 'enseignant')
         {
             $request->validate([
-                'identifiant'   => ['required', new GenericUpdate('cactus_enseignants', 'identifiant',
-                                                                $request->identifiant, $id)],
+                /*'identifiant'   => ['required', new GenericUpdate('cactus_enseignants', 'identifiant',
+                                                                $request->identifiant, $id)],*/
                 'nom'           => 'required',
                 'prenom'        => 'required',
                 'email'         => ['required', 'email', new GenericUpdate('cactus_enseignants', 'email',
@@ -68,6 +69,12 @@ class ProfilsController extends Controller
                 'adresse'       => 'required',
                 'photo'         => 'file|mimes:jpeg,jpg,png,gif|max:10000'
             ]);
+
+            # Identifiant
+            $nom = Str::lower($request->nom);
+            $prenom = Str::lower($request->prenom);
+            $identiiant = Str::slug($nom . '-' . $prenom);
+            $request->merge(['identifiant' => $identiiant]);
         }
 
         # dd($validator->fails());

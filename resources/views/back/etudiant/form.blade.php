@@ -43,6 +43,12 @@
                             title="{!! session('ok') !!}">
                     </x-back.alert>
                 @endif
+                @if(session('nombre_error'))
+                    <x-back.alert
+                            type='danger'
+                            title="{!! session('nombre_error') !!}">
+                    </x-back.alert>
+                @endif
 
                 <x-back.card
                         type='primary'
@@ -66,7 +72,7 @@
                                 name='cin'
                                 title='CIN'
                                 :value="isset($etudiant) ? $etudiant->cin : ''"
-                                input='number'
+                                input='text'
                                 maxlength="12"
                                 :required="true">
                         </x-back.input>
@@ -200,7 +206,7 @@
 
                 @if(Route::currentRouteName() === 'etudiant.edit')
                 <x-back.card
-                        type='success'
+                        type='primary'
                         :outline="false"
                         title='Niveau avec Anne Universitaire'>
 

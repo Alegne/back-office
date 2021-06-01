@@ -37,7 +37,7 @@ class EnseignantRequest extends FormRequest
     public function rules()
     {
         return [
-            'identifiant'   => 'required|unique:cactus_enseignants',
+            #'identifiant'   => 'required|unique:cactus_enseignants',
             'nom'           => 'required',
             'prenom'        => 'required',
             'email'         => 'required|unique:cactus_enseignants|email',

@@ -12,8 +12,8 @@
 @endsection
 
 @section('css')
-    <link rel="stylesheet" href="/admin/plugins/fullcalendar/main.min.css">
-    <link rel="stylesheet" href="/admin/plugins/toastr/toastr.min.css">
+    <link rel="stylesheet" href="/admin/plugins/fullcalendar/main.min.css" />
+    <link rel="stylesheet" href="/admin/plugins/toastr/toastr.min.css" />
 @endsection
 
 @section('main')

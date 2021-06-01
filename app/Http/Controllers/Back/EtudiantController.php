@@ -150,6 +150,12 @@ class EtudiantController extends Controller
      */
     public function update(Request $request, Etudiant $etudiant)
     {
+        if (count($request->niveau_id) != count($request->annee_id)) {
+            return back()
+                ->withInput()
+                ->with('nombre_error', 'Veuillez verifier, Un niveau doit etre affecter à une seule annee univesitaire');
+        }
+
         $request->validate([
             'numero'         => ['required', new GenericUpdate('cactus_etudiants', 'numero',
                                                                 $request->numero, $etudiant->id)],

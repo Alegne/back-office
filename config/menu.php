@@ -59,7 +59,65 @@ return [
             ]
         ],
     ],
-    'Pedadogique' => [
+    'Enseignement' => [
+        'icon' => 'university',
+        'role'   => 'pedagogique',
+        'children' => [
+            [
+                'name'  => 'Emploi du Temps',
+                'role'  => 'pedagogique',
+                'route' => 'emploi-du-temps.index',
+            ],
+            [
+                'name'  => 'Enseignants',
+                'role'  => 'pedagogique',
+                'route' => 'enseignant.index',
+            ],
+            [
+                'name'  => 'ENT',
+                'role'  => 'pedagogique',
+                'route' => 'espace-numerique-travail.index',
+            ],
+            [
+                'name'  => 'Etudiants',
+                'role'  => 'pedagogique',
+                'route' => 'etudiant.index',
+            ],
+            [
+                'name'  => 'Matieres',
+                'role'  => 'pedagogique',
+                'route' => 'matiere.index',
+            ]
+        ]
+    ],
+    'Etude' => [
+        'icon' => 'university',
+        'role'   => 'pedagogique',
+        'children' => [
+            [
+                'name'  => 'Annee Universitaire',
+                'role'  => 'pedagogique',
+                'route' => 'annee-universitaire.index',
+            ],
+            [
+                'name'  => 'Formations',
+                'role'  => 'pedagogique',
+                'route' => 'formation.index',
+            ],
+            [
+                'name'  => 'Niveaux',
+                'role'  => 'pedagogique',
+                'route' => 'niveau.index',
+            ],
+            [
+                'name'  => 'Parcours',
+                'role'  => 'pedagogique',
+                'route' => 'parcours.index',
+            ],
+        ]
+    ],
+
+    /*'Pedadogique' => [
         'icon' => 'university',
         'role'   => 'pedagogique',
         'children' => [
@@ -109,7 +167,8 @@ return [
                 'route' => 'parcours.index',
             ],
         ],
-    ],
+    ],*/
+
     'Parametres' => [
         'icon' => 'cog',
         'role'   => 'admin',
